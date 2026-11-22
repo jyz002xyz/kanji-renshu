@@ -434,13 +434,30 @@ main.scroll{overflow-y:auto;-webkit-overflow-scrolling:touch}
 .tool.speak2{background:#f4efe6}
 .q .qm{font-size:16px;line-height:1.5;margin:6px auto 2px;padding:6px 10px;border-radius:12px;background:#fff6df;color:#5a4500;max-width:560px}
 .q .qm b{display:inline-block;font-size:12px;background:#ffd23f;color:#5a4500;border-radius:8px;padding:1px 6px;margin-right:4px;vertical-align:1px}
+
+/* ---- テーマ ---- */
+body[data-theme=yume]{--bg:#fff0f8;--accent:#ff6fae;--accent2:#9b7bff;--line:#f3d6e6}
+body[data-theme=yume] #app{background-color:#fff0f8;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cpath d='M20 22c-4-4-1-9 3-6 4-3 7 2 3 6l-3 3z' fill='%23ffc2dc' opacity='.55'/%3E%3Cpath d='M86 70l2 5 5 2-5 2-2 5-2-5-5-2 5-2z' fill='%23e3d3ff'/%3E%3Ccircle cx='60' cy='104' r='2.5' fill='%23c9f5e6'/%3E%3C/svg%3E")}
+body[data-theme=yume] header{background:rgba(255,240,248,.94)}
+body[data-theme=yume] .big-btn{box-shadow:0 5px 0 #d94f8f}
+body[data-theme=yume] .big-btn.blue{background:#9b7bff;box-shadow:0 5px 0 #7457d9}
+body[data-theme=yume] .big-btn.green{background:#3cc4a0;box-shadow:0 5px 0 #24957a}
+body[data-theme=yume] .big-btn.gray{box-shadow:0 5px 0 var(--line)}
+body[data-theme=yume] .me,body[data-theme=yume] .card,body[data-theme=yume] .lv,body[data-theme=yume] .sec{box-shadow:0 4px 0 #f3d6e6}
+body[data-theme=sora]{--bg:#eef7ff;--accent:#3a9bff;--accent2:#7b61ff;--line:#d3e4f5}
+body[data-theme=sora] #app{background-color:#eef7ff;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='120'%3E%3Cg fill='%23fff'%3E%3Ccircle cx='30' cy='30' r='9'/%3E%3Ccircle cx='42' cy='26' r='11'/%3E%3Ccircle cx='54' cy='30' r='8'/%3E%3Crect x='30' y='30' width='24' height='8'/%3E%3C/g%3E%3Cpath d='M120 80l2 5 5 2-5 2-2 5-2-5-5-2 5-2z' fill='%23ffe08a'/%3E%3C/svg%3E")}
+body[data-theme=sora] header{background:rgba(238,247,255,.94)}
+body[data-theme=sora] .big-btn{box-shadow:0 5px 0 #1a75cc}
+body[data-theme=sora] .big-btn.gray{box-shadow:0 5px 0 var(--line)}
+.av-tabs{grid-template-columns:repeat(9,1fr)}
+@media (max-width:699px){.av-tabs{grid-template-columns:repeat(5,1fr)}}
 </style>
 </head>
 <body>
 <div id="app">
   <header>
     <button class="hbtn" id="backBtn" aria-label="もどる">◀<span class="bt"> もどる</span></button>
-    <div class="htitle"><h1 id="title">かんじ れんしゅう</h1><button class="ver" id="verBtn" aria-label="バージョン">v1.8.0・2026-11-22 16:36</button></div>
+    <div class="htitle"><h1 id="title">かんじ れんしゅう</h1><button class="ver" id="verBtn" aria-label="バージョン">v1.9.0・2026-11-22 16:46</button></div>
     <button class="hbtn" id="soundBtn" aria-label="おと">🔊</button>
     <button class="hbtn" id="setBtn" aria-label="せってい">⚙️</button>
   </header>
@@ -479,7 +496,7 @@ const store = {
   set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
 };
 let prog = store.get('kkr.prog', {});
-let settings = Object.assign({sound:true, penMode:'auto', strict:'normal', nums:true, penColor:'#1f2235', penSize:'normal'}, store.get('kkr.settings', {}));
+let settings = Object.assign({sound:true, penMode:'auto', strict:'normal', nums:true, penColor:'#1f2235', penSize:'normal', theme:'normal'}, store.get('kkr.settings', {}));
 const saveProg = () => { store.set('kkr.prog', prog); touch(); };
 const saveSet = () => { store.set('kkr.settings', settings); touch(); };
 const P = k => (prog[k] = prog[k] || {});
@@ -608,27 +625,32 @@ function judge(u, r, tol){
 }
 
 /* ===== アバター ===== */
-const AV_DEFAULT = {face:'round', skin:'#f7cfae', cheek:true, hair:'short', hairColor:'#2b211c', eyes:'round', mouth:'smile', outfit:'tshirt', clothes:'#3a9bff', bg:'#ffe8a3', acc:'none', pet:'none', effect:'none', name:''};
+const AV_DEFAULT = {face:'round', skin:'#f7cfae', cheek:'normal', hair:'short', hairColor:'#2b211c', hairShine:'none', eyes:'round', eyeColor:'#2b2d42', mouth:'smile', outfit:'tshirt', clothes:'#3a9bff', bg:'#ffe8a3', acc:'none', item:'none', pet:'none', effect:'none', name:''};
 let AV = store.get('kkr.avatar', null);
 let hasAV = !!AV;
 AV = Object.assign({}, AV_DEFAULT, AV || {});
+if (AV.cheek === true) AV.cheek = 'normal'; else if (AV.cheek === false) AV.cheek = 'none';
 const saveAV = () => { store.set('kkr.avatar', AV); hasAV = true; touch(); };
 const FACES = [['round','まる'],['oval','たまご'],['square','しかく'],['wide','よこなが']];
 const SKINS = ['#fde3cf','#f7cfae','#eab38c','#c98b62','#8d5a3b'];
 const HAIRS = [['short','みじかい','none','short'],['spiky','つんつん','none','spiky'],['mohawk','モヒカン','none','mohawk'],['buzz','ぼうず','none','buzz'],['side','わけめ','none','side'],['curly','くるくる','none','curly'],['afro','アフロ','afro','curly'],['bangs','ぱっつん','none','bangs'],
-  ['bob','ボブ','bob','bangs'],['long','ロング','long','side'],['twin','ツインテール','twin','bangs'],['pony','ポニーテール','pony','short'],['bun','おだんご','bun','bangs']];
-const HAIR_COLORS = ['#2b211c','#5a3a26','#8a5a2b','#d9a441','#e8774f','#7a7f8c','#5b6cff','#ff7eb6','#3cc47c','#ffffff'];
-const EYES = [['round','くりくり'],['dot','てん'],['sparkle','キラキラ'],['cool','キリッ'],['smile','にっこり'],['sleepy','ねむそう'],['wink','ウインク']];
+  ['bob','ボブ','bob','bangs'],['long','ロング','long','side'],['wavy','ふわふわロング','wavy','bangs'],['sidepony','サイドテール','sidepony','bangs'],['twin','ツインテール','twin','bangs'],['pony','ポニーテール','pony','short'],['bun','おだんご','bun','bangs']];
+const HAIR_COLORS = ['#2b211c','#5a3a26','#8a5a2b','#d9a441','#e8774f','#7a7f8c','#5b6cff','#ff7eb6','#3cc47c','#ffffff','#ffb3d1','#c9b6ff','#a8e6cf','#9ad0ff','#ffe08a'];
+const HAIR_SHINES = [['none','なし'],['tsuya','つや'],['kira','キラキラ']];
+const EYE_COLORS = ['#2b2d42','#7a4a2a','#3a7bff','#20a86b','#8a4bdc','#ff5d9e','#e0a100'];
+const CHEEKS = [['normal','ぽっ'],['heart','ハート'],['tere','てれ'],['none','なし']];
+const EYES = [['kira','うるうる'],['heart','ハート'],['star','ほし'],['lash','まつげ'],['round','くりくり'],['dot','てん'],['sparkle','キラキラ'],['cool','キリッ'],['smile','にっこり'],['sleepy','ねむそう'],['wink','ウインク']];
 const MOUTHS = [['smile','にこっ'],['open','わーい'],['grin','にかっ'],['cat','ねこ'],['small','おちょぼ'],['flat','まじめ'],['fang','キバ']];
-const CLOTHES = ['#3a9bff','#ff6b6b','#3cc47c','#f2b705','#9b7bff','#ff9f43','#ff7eb6','#2b2d42','#ffffff'];
+const CLOTHES = ['#3a9bff','#ff6b6b','#3cc47c','#f2b705','#9b7bff','#ff9f43','#ff7eb6','#2b2d42','#ffffff','#ffc2dc','#d9c8ff','#bdf0dc','#bfe3ff'];
 const BGS = ['#ffe8a3','#cdeefd','#ffd6e0','#d8f5d0','#e7dcff','#ffe0c2','#ffffff'];
-const BG_PATTERNS = [['p_stars','ほしぞら',60],['p_hearts','ハート',60],['p_sunset','ゆうやけ',80],['p_rainbow','にじ',100],['p_space','うちゅう',150]];
-const OUTFITS = [['tshirt','Tシャツ',0],['hoodie','パーカー',0],['jersey','ユニフォーム',60],['sailor','セーラー',60],['suit','スーツ',80],['kimono','きもの',100],['hero','ヒーロー',120]];
+const BG_PATTERNS = [['p_yume','ゆめかわ',80],['p_cloud','そらと くも',60],['p_candy','キャンディ',60],['p_stars','ほしぞら',60],['p_hearts','ハート',60],['p_sunset','ゆうやけ',80],['p_rainbow','にじ',100],['p_space','うちゅう',150]];
+const OUTFITS = [['tshirt','Tシャツ',0],['hoodie','パーカー',0],['jersey','ユニフォーム',60],['sailor','セーラー',60],['suit','スーツ',80],['kimono','きもの',100],['hero','ヒーロー',120],['frill','フリルドレス',80],['magical','まほうの ドレス',150]];
 const ACCS = [['none','なし',0],['glasses','めがね',0],['ribbon','リボン',0],['cap','ぼうし',0],['headphones','ヘッドホン',0],['star','ほしピン',0],
-  ['headband','はちまき',40],['flower','はなかんむり',60],['sunglasses','サングラス',80],['catears','ねこみみ',100],['wizard','まほうの ぼうし',120],['horns','ドラゴンの つの',120],['halo','てんしの わ',150],['crown','おうかん',200]];
-const PETS = [['none','なし',0],['chick','ひよこ',50],['cat','ねこ',80],['dog','いぬ',80],['robot','ロボ',150],['dragon','ドラゴン',200]];
-const EFFECTS = [['none','なし',0],['sparkle','キラキラ',80],['rainbow','にじの わく',100],['aura','オーラ',120],['fire','ほのお',150]];
-const SHOP = {outfit:OUTFITS, acc:ACCS, pet:PETS, effect:EFFECTS, bg:BG_PATTERNS};
+  ['heartclip','ハートピン',30],['flowerclip','はなピン',30],['bigribbon','おおきな リボン',60],['tiara','ティアラ',150],['bunny','うさみみ',100],['headband','はちまき',40],['flower','はなかんむり',60],['sunglasses','サングラス',80],['catears','ねこみみ',100],['wizard','まほうの ぼうし',120],['horns','ドラゴンの つの',120],['halo','てんしの わ',150],['crown','おうかん',200]];
+const PETS = [['none','なし',0],['chick','ひよこ',50],['hamster','ハムスター',60],['bunny','うさぎ',80],['bear','くま',80],['cat','ねこ',80],['dog','いぬ',80],['unicorn','ユニコーン',200],['robot','ロボ',150],['dragon','ドラゴン',200]];
+const ITEMS = [['none','なし',0],['balloon','ふうせん',40],['icecream','ソフトクリーム',50],['bouquet','はなたば',60],['starwand','ほしの ステッキ',100],['heartwand','ハートの ステッキ',100]];
+const EFFECTS = [['none','なし',0],['sparkle','キラキラ',80],['bubbles','しゃぼんだま',80],['petals','はなびら',80],['hearts','ハート',100],['rainbow','にじの わく',100],['aura','オーラ',120],['fire','ほのお',150]];
+const SHOP = {outfit:OUTFITS, acc:ACCS, pet:PETS, effect:EFFECTS, bg:BG_PATTERNS, item:ITEMS};
 const priceOf = (key, val) => { const l = SHOP[key]; if (!l) return 0; const f = l.find(x => x[0] === val); return f ? f[2] : 0; };
 const owns = (key, val) => priceOf(key, val) === 0 || (META.owned || []).includes(key + ':' + val);
 const totalStars = () => DATA.reduce((a,d) => a + stars(d.k), 0);
@@ -637,7 +659,7 @@ let avSeq = 0;
 function avatarSVG(a, expr='normal', vb='0 0 120 120', live=false){
   const A = Object.assign({}, AV_DEFAULT, a || {});
   const id = 'av' + (++avSeq);
-  const hc = A.hairColor, sk = A.skin, dk = '#2b2d42', C = A.clothes, Cd = shade(C === '#ffffff' ? '#e6e6e6' : C, 0.82);
+  const hc = A.hairColor, sk = A.skin, dk = '#2b2d42', EC = /^#[0-9a-f]{6}$/i.test(A.eyeColor) ? A.eyeColor : dk, C = A.clothes, Cd = shade(C === '#ffffff' ? '#e6e6e6' : C, 0.82);
   const hs = HAIRS.find(h => h[0] === A.hair) || HAIRS[0];
   const star = (cx, cy, r, f, cls='') => { let p=''; for (let i=0;i<10;i++){ const rr = i%2 ? r*0.45 : r; const an = -Math.PI/2 + i*Math.PI/5; p += (i?'L':'M') + (cx+Math.cos(an)*rr).toFixed(1) + ',' + (cy+Math.sin(an)*rr).toFixed(1); } return `<path class="${cls}" d="${p}Z" fill="${f}" stroke="#e0a100" stroke-width=".8"/>`; };
   const spark = (x, y, r, f) => `<path class="av-tw" d="M${x},${y-r} Q${x+r*.18},${y-r*.18} ${x+r},${y} Q${x+r*.18},${y+r*.18} ${x},${y+r} Q${x-r*.18},${y+r*.18} ${x-r},${y} Q${x-r*.18},${y-r*.18} ${x},${y-r}Z" fill="${f}"/>`;
@@ -646,7 +668,10 @@ function avatarSVG(a, expr='normal', vb='0 0 120 120', live=false){
   // background
   let bg = '';
   const STARPTS = [[16,20],[34,10],[90,14],[104,40],[12,58],[22,90],[100,70],[50,8],[110,96],[8,36]];
-  if (A.bg === 'p_stars') bg = `<rect width="120" height="120" fill="#2b3a67"/>` + STARPTS.map(([x,y],i) => spark(x,y,i%3?2.4:3.6,i%2?'#fff':'#ffd23f')).join('');
+  if (A.bg === 'p_yume'){ defs += `<linearGradient id="${id}y" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd1ea"/><stop offset=".5" stop-color="#e3d3ff"/><stop offset="1" stop-color="#c9f5e6"/></linearGradient>`; bg = `<rect width="120" height="120" fill="url(#${id}y)"/>` + STARPTS.map(([x,y],i) => i%3 === 0 ? heart(x,y,.7,'#ff9ccc') : spark(x,y,i%2?2.2:3.2,'#fff')).join(''); }
+  else if (A.bg === 'p_cloud') bg = `<rect width="120" height="120" fill="#bfe6ff"/>` + [[22,26,1],[92,18,.8],[100,62,.9],[14,74,.85]].map(([x,y,s]) => `<g fill="#fff" opacity=".95"><circle cx="${x}" cy="${y}" r="${7*s}"/><circle cx="${x+8*s}" cy="${y-3*s}" r="${8*s}"/><circle cx="${x+16*s}" cy="${y}" r="${6.5*s}"/><rect x="${x}" y="${y}" width="${16*s}" height="${6*s}"/></g>`).join('');
+  else if (A.bg === 'p_candy') bg = `<rect width="120" height="120" fill="#fff0f6"/>` + [0,1,2,3,4,5,6,7].map(i => `<rect x="${-60 + i*30}" y="-20" width="12" height="170" fill="${['#ffc2dc','#c9f5e6','#e3d3ff','#fff1a8'][i%4]}" transform="rotate(30 60 60)"/>`).join('');
+  else if (A.bg === 'p_stars') bg = `<rect width="120" height="120" fill="#2b3a67"/>` + STARPTS.map(([x,y],i) => spark(x,y,i%3?2.4:3.6,i%2?'#fff':'#ffd23f')).join('');
   else if (A.bg === 'p_hearts') bg = `<rect width="120" height="120" fill="#ffd6e0"/>` + [[16,22],[100,18],[14,70],[106,66],[30,104],[92,104],[60,6]].map(([x,y],i) => heart(x,y,i%2?.9:1.2,i%2?'#ff8fb1':'#ff5d8f')).join('');
   else if (A.bg === 'p_sunset'){ defs += `<linearGradient id="${id}s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffcf6b"/><stop offset=".55" stop-color="#ff7a9a"/><stop offset="1" stop-color="#8a63d2"/></linearGradient>`; bg = `<rect width="120" height="120" fill="url(#${id}s)"/><circle cx="96" cy="30" r="10" fill="#fff3b0" opacity=".9"/>`; }
   else if (A.bg === 'p_rainbow') bg = `<rect width="120" height="120" fill="#cdeefd"/>` + ['#ff6b6b','#ff9f43','#ffd23f','#3cc47c','#3a9bff','#9b7bff'].map((c,i) => `<circle cx="60" cy="128" r="${104 - i*8}" fill="none" stroke="${c}" stroke-width="8"/>`).join('') + `<circle cx="60" cy="128" r="56" fill="#cdeefd"/>`;
@@ -663,6 +688,8 @@ function avatarSVG(a, expr='normal', vb='0 0 120 120', live=false){
     twin:`<ellipse cx="21" cy="68" rx="10" ry="19" fill="${hc}"/><ellipse cx="99" cy="68" rx="10" ry="19" fill="${hc}"/><circle cx="26" cy="50" r="4" fill="#ff5d8f"/><circle cx="94" cy="50" r="4" fill="#ff5d8f"/>`,
     pony:`<path d="M82,32 Q110,38 101,82 Q95,64 84,54Z" fill="${hc}"/>`,
     bun:`<circle cx="60" cy="19" r="13" fill="${hc}"/>`,
+    wavy:`<path d="M24,58 Q22,20 60,20 Q98,20 96,58 Q101,70 95,80 Q101,92 93,104 Q97,113 86,117 L34,117 Q23,113 27,104 Q19,92 25,80 Q19,70 24,58Z" fill="${hc}"/>`,
+    sidepony:`<path d="M32,38 Q4,48 13,96 Q21,76 36,58Z" fill="${hc}"/><circle cx="31" cy="41" r="4.5" fill="#ff8fb1"/>`,
     afro:`<circle cx="60" cy="42" r="36" fill="${hc}"/><circle cx="28" cy="54" r="14" fill="${hc}"/><circle cx="92" cy="54" r="14" fill="${hc}"/>`
   }[hs[2]] || '';
   const curly = [[32,46],[36,34],[46,26],[60,23],[74,26],[84,34],[88,46]].map(([x,y]) => `<circle cx="${x}" cy="${y}" r="10" fill="${hc}"/>`).join('');
@@ -675,6 +702,8 @@ function avatarSVG(a, expr='normal', vb='0 0 120 120', live=false){
     mohawk:`<path d="M31,50 Q31,28 60,28 Q89,28 89,50 Q75,41 60,41 Q45,41 31,50Z" fill="${hc}" opacity=".55"/><path d="M52,42 L49,18 L55,22 L57,6 L63,20 L69,10 L70,24 L72,42 Q60,37 52,42Z" fill="${hc}"/>`,
     curly:`<path d="M29,52 Q28,26 60,25 Q92,26 91,52 Q60,38 29,52Z" fill="${hc}"/>` + curly
   }[hs[3]] || '';
+  const hairTop = {mohawk:1, buzz:1}[hs[3]] ? 32 : 30;
+  const shine = A.hairShine === 'tsuya' || A.hairShine === 'kira' ? `<path d="M37,${hairTop+8} Q60,${hairTop-4} 83,${hairTop+8}" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" opacity=".55"/><path d="M42,${hairTop+5} Q48,${hairTop+1} 54,${hairTop}" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".8"/>` + (A.hairShine === 'kira' ? spark(40, hairTop+2, 3.4, '#fff') + spark(80, hairTop+1, 2.6, '#fff8c4') + spark(70, hairTop-6, 2, '#fff') + spark(30, 52, 2.2, '#fff8c4') : '') : '';
   const head = {
     round:`<ellipse cx="60" cy="58" rx="30" ry="30" fill="${sk}"/>`,
     oval:`<ellipse cx="60" cy="59" rx="27" ry="32" fill="${sk}"/>`,
@@ -693,24 +722,32 @@ function avatarSVG(a, expr='normal', vb='0 0 120 120', live=false){
     case 'suit': outfit = `<path d="M50,91 L60,116 L70,91Z" fill="#fff"/><path d="M58,94 L62,94 L64.5,108 L60,113 L55.5,108Z" fill="#ef476f"/><path d="M50,91 L57,108 M70,91 L63,108" stroke="${Cd}" stroke-width="2.4"/>`; break;
     case 'kimono': outfit = `<path d="M48,90 L55,90 L74,123 L65,123Z" fill="#fff"/><path d="M72,90 L65,90 L57,104 L61,108Z" fill="#fff"/><rect x="20" y="110" width="80" height="8" fill="#ffd23f"/>`; break;
     case 'hero': cape = `<path d="M34,94 Q16,108 8,124 L112,124 Q104,108 86,94Z" fill="#ef476f"/>`; outfit = star(60, 108, 7, '#ffd23f') + `<path d="M50,92 Q60,99 70,92" fill="none" stroke="${Cd}" stroke-width="2.4"/>`; break;
+    case 'frill': outfit = `<circle cx="25" cy="108" r="9" fill="${shade(C,1.08)}"/><circle cx="95" cy="108" r="9" fill="${shade(C,1.08)}"/>` + [44,49,54,59,64,69,74].map((x,i) => `<circle cx="${x+1}" cy="${92 + Math.abs(i-3)*-0.6 + 1}" r="3.4" fill="#fff"/>`).join('') + `<path d="M60,103 L50,97 L50,109Z M60,103 L70,97 L70,109Z" fill="#ff7eb6"/><circle cx="60" cy="103" r="2.6" fill="#ff5d9e"/>` + [30,42,54,66,78,90].map(x => `<circle cx="${x}" cy="121" r="4" fill="#fff" opacity=".85"/>`).join(''); break;
+    case 'magical': outfit = `<circle cx="24" cy="106" r="10" fill="#fff"/><circle cx="96" cy="106" r="10" fill="#fff"/><circle cx="24" cy="106" r="10" fill="none" stroke="${Cd}" stroke-width="1.4"/><circle cx="96" cy="106" r="10" fill="none" stroke="${Cd}" stroke-width="1.4"/><path d="M60,104 L42,94 Q38,104 42,114Z M60,104 L78,94 Q82,104 78,114Z" fill="#ff4f8b"/><path d="M58,106 L52,122 M62,106 L68,122" stroke="#ff4f8b" stroke-width="3.2" stroke-linecap="round"/>` + heart(60, 104, 1, '#ffd23f') + spark(60, 101.6, 1.4, '#fff'); break;
     default: outfit = `<path d="M52,91 L60,100 L68,91" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
   }
   const body = cape + `<rect x="53" y="82" width="14" height="12" fill="${sk}"/>` + torso + outfit;
   // eyes
   const eye = (t, x, y, side) => {
     const st = `fill="none" stroke="${dk}" stroke-width="2.8" stroke-linecap="round"`;
+    const lash = side ? `<path d="M${x-5.8},${y-4} Q${x},${y-9.5} ${x+5.8},${y-4}" fill="none" stroke="${dk}" stroke-width="1.9" stroke-linecap="round"/><path d="M${x + side*5.6},${y-4.2} L${x + side*8.6},${y-6.8}" stroke="${dk}" stroke-width="1.7" stroke-linecap="round"/>` : '';
+    if (t === 'kira') return `<ellipse cx="${x}" cy="${y}" rx="5.7" ry="7.1" fill="${dk}"/><ellipse cx="${x}" cy="${y+.8}" rx="4.6" ry="5.9" fill="${EC}"/><ellipse cx="${x}" cy="${y+3.2}" rx="3.4" ry="2.4" fill="#fff" opacity=".35"/><ellipse cx="${x}" cy="${y+.6}" rx="2.1" ry="2.7" fill="${dk}" opacity=".7"/><circle cx="${x+1.9}" cy="${y-2.6}" r="2.2" fill="#fff"/><circle cx="${x-2}" cy="${y+2.6}" r="1.1" fill="#fff"/>` + lash;
+    if (t === 'heart') return `<path d="M${x},${y+4.6} C${x-7.5},${y-1} ${x-4},${y-7.5} ${x},${y-3} C${x+4},${y-7.5} ${x+7.5},${y-1} ${x},${y+4.6}Z" fill="${EC === dk ? '#ff5d9e' : EC}" stroke="${dk}" stroke-width="1"/><circle cx="${x+2}" cy="${y-2.4}" r="1.3" fill="#fff"/>` + lash;
+    if (t === 'star') return `<ellipse cx="${x}" cy="${y}" rx="5.4" ry="6.6" fill="${dk}"/>` + star(x, y+.4, 4.6, EC === dk ? '#ffd23f' : EC) + `<circle cx="${x+2}" cy="${y-2.8}" r="1.2" fill="#fff"/>` + lash;
+    if (t === 'lash') return `<circle cx="${x}" cy="${y}" r="4.6" fill="${EC}"/><circle cx="${x}" cy="${y}" r="2.4" fill="${dk}" opacity=".6"/><circle cx="${x+1.6}" cy="${y-1.7}" r="1.6" fill="#fff"/>` + lash;
     if (t === 'dot') return `<circle cx="${x}" cy="${y}" r="3.3" fill="${dk}"/>`;
-    if (t === 'sparkle') return `<ellipse cx="${x}" cy="${y}" rx="5" ry="6" fill="${dk}"/><circle cx="${x+1.8}" cy="${y-2.2}" r="2" fill="#fff"/><circle cx="${x-1.6}" cy="${y+2}" r="1" fill="#fff"/>`;
+    if (t === 'sparkle') return `<ellipse cx="${x}" cy="${y}" rx="5" ry="6" fill="${EC}"/><circle cx="${x+1.8}" cy="${y-2.2}" r="2" fill="#fff"/><circle cx="${x-1.6}" cy="${y+2}" r="1" fill="#fff"/>`;
     if (t === 'cool') return `<path d="M${x-5},${y+1} Q${x},${y-3.5} ${x+5},${y+1}" ${st}/><circle cx="${x}" cy="${y+1}" r="2.6" fill="${dk}"/><path d="M${x-6},${y-8 + (side>0?2:0)} L${x+6},${y-8 + (side>0?0:2)}" ${st} stroke-width="2.6"/>`;
     if (t === 'smile' || t === 'happy') return `<path d="M${x-4.5},${y+1.5} Q${x},${y-5} ${x+4.5},${y+1.5}" ${st}/>`;
     if (t === 'sleepy') return `<path d="M${x-4.5},${y} Q${x},${y+3.5} ${x+4.5},${y}" ${st}/>`;
     if (t === 'think') return `<circle cx="${x-1.5}" cy="${y-1.5}" r="3.3" fill="${dk}"/><path d="M${x-5},${y-10} Q${x},${y-13} ${x+5},${y-10}" ${st} stroke-width="2.2"/>`;
-    return `<circle cx="${x}" cy="${y}" r="4.6" fill="${dk}"/><circle cx="${x+1.6}" cy="${y-1.7}" r="1.6" fill="#fff"/>`;
+    return `<circle cx="${x}" cy="${y}" r="4.6" fill="${EC}"/><circle cx="${x+1.6}" cy="${y-1.7}" r="1.6" fill="#fff"/>`;
   };
   let eyes;
   if (expr === 'happy' || expr === 'cheer') eyes = eye('happy',48,60) + eye('happy',72,60);
   else if (expr === 'think') eyes = eye('think',48,60) + eye('think',72,60);
   else if (A.eyes === 'wink') eyes = eye('round',48,60) + eye('smile',72,60);
+  else if (['kira','heart','star','lash'].includes(A.eyes)) eyes = eye(A.eyes,48,60,-1) + eye(A.eyes,72,60,1);
   else eyes = eye(A.eyes,48,60,-1) + eye(A.eyes,72,60,1);
   if (expr === 'normal' && A.eyes !== 'smile' && A.eyes !== 'sleepy') eyes = `<g class="av-eyes">${eyes}</g>`;
   const mst = `fill="none" stroke="${dk}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"`;
@@ -724,7 +761,10 @@ function avatarSVG(a, expr='normal', vb='0 0 120 120', live=false){
     fang:`<path d="M52,74 Q60,82 68,74" ${mst}/><path d="M63,76.5 L64.5,81 L66.5,75.5Z" fill="#fff" stroke="${dk}" stroke-width="1"/>`
   };
   const mouth = (expr === 'happy' || expr === 'cheer') ? openM : expr === 'think' ? `<path d="M53,77 Q56.5,74 60,77 Q63.5,80 67,77" ${mst}/>` : (mouths[A.mouth] || mouths.smile);
-  const cheeks = A.cheek ? `<ellipse cx="40" cy="70" rx="5.5" ry="3.5" fill="#ff8fa3" opacity=".55"/><ellipse cx="80" cy="70" rx="5.5" ry="3.5" fill="#ff8fa3" opacity=".55"/>` : '';
+  const ck = A.cheek === true ? 'normal' : A.cheek === false ? 'none' : A.cheek;
+  const cheeks = ck === 'heart' ? heart(40,70,.75,'#ff8fb1') + heart(80,70,.75,'#ff8fb1')
+    : ck === 'tere' ? `<g opacity=".6"><ellipse cx="40" cy="70" rx="5.5" ry="3.5" fill="#ff8fa3"/><ellipse cx="80" cy="70" rx="5.5" ry="3.5" fill="#ff8fa3"/></g><path d="M36,68.5 L37.5,71.5 M39.5,68.5 L41,71.5 M43,68.5 L44.5,71.5 M76,68.5 L77.5,71.5 M79.5,68.5 L81,71.5 M83,68.5 L84.5,71.5" stroke="#e8577a" stroke-width="1.1" stroke-linecap="round"/>`
+    : ck === 'none' ? '' : `<ellipse cx="40" cy="70" rx="5.5" ry="3.5" fill="#ff8fa3" opacity=".55"/><ellipse cx="80" cy="70" rx="5.5" ry="3.5" fill="#ff8fa3" opacity=".55"/>`;
   const flower = (x, y, c) => [0,1,2,3,4].map(i => { const an = i*Math.PI*2/5; return `<circle cx="${(x+Math.cos(an)*3.6).toFixed(1)}" cy="${(y+Math.sin(an)*3.6).toFixed(1)}" r="3" fill="${c}"/>`; }).join('') + `<circle cx="${x}" cy="${y}" r="2.4" fill="#ffd23f"/>`;
   const acc = {
     none:'',
@@ -734,6 +774,11 @@ function avatarSVG(a, expr='normal', vb='0 0 120 120', live=false){
     cap:`<path d="M27,47 Q28,15 60,15 Q92,15 93,47Z" fill="#ef476f"/><path d="M78,45 Q100,42 108,48 Q98,52 78,50Z" fill="#c9304f"/><circle cx="60" cy="15" r="3.5" fill="#c9304f"/>`,
     headphones:`<path d="M27,60 Q27,15 60,15 Q93,15 93,60" fill="none" stroke="#4a4f63" stroke-width="5" stroke-linecap="round"/><rect x="20" y="52" width="12" height="20" rx="5" fill="#ff7a2f"/><rect x="88" y="52" width="12" height="20" rx="5" fill="#ff7a2f"/>`,
     star: star(84, 30, 9, '#ffd23f'),
+    heartclip: heart(82, 34, 1.4, '#ff5d8f') + `<circle cx="84" cy="30" r="1.2" fill="#fff"/>`,
+    flowerclip: flower(82, 34, '#ffb3d1'),
+    bigribbon:`<path d="M60,22 L34,8 Q28,22 34,36Z M60,22 L86,8 Q92,22 86,36Z" fill="#ff7eb6" stroke="#e8577a" stroke-width="1.4" stroke-linejoin="round"/><path d="M40,14 Q37,22 40,30 M80,14 Q83,22 80,30" stroke="#fff" stroke-width="1.6" fill="none" opacity=".7"/><circle cx="60" cy="22" r="5.5" fill="#ff5d9e" stroke="#e8577a" stroke-width="1.4"/>`,
+    tiara:`<path d="M38,35 Q60,27 82,35 L79,23 L71,29 L66,16 L60,26 L54,16 L49,29 L41,23Z" fill="#ffd23f" stroke="#e0a100" stroke-width="1.3" stroke-linejoin="round"/>` + heart(60, 28, .7, '#ff5d9e') + `<circle cx="49" cy="28" r="1.6" fill="#9ad0ff"/><circle cx="71" cy="28" r="1.6" fill="#9ad0ff"/>` + spark(66, 14, 2.2, '#fff'),
+    bunny:`<g transform="rotate(-12 46 24)"><ellipse cx="46" cy="10" rx="7.5" ry="19" fill="#fff" stroke="#f2c4d6" stroke-width="1.4"/><ellipse cx="46" cy="11" rx="3.6" ry="13" fill="#ffc2dc"/></g><g transform="rotate(22 74 24)"><ellipse cx="74" cy="10" rx="7.5" ry="19" fill="#fff" stroke="#f2c4d6" stroke-width="1.4"/><ellipse cx="74" cy="11" rx="3.6" ry="13" fill="#ffc2dc"/></g>`,
     headband:`<path d="M28,44 Q60,34 92,44 L92,51 Q60,41 28,51Z" fill="#ef476f"/><path d="M90,46 L104,38 L101,50Z M90,48 L102,56 L94,58Z" fill="#ef476f"/><circle cx="60" cy="42" r="4" fill="#fff"/><circle cx="60" cy="42" r="2.2" fill="#ef476f"/>`,
     flower: flower(36,36,'#ff8fb1') + flower(48,27,'#fff') + flower(60,24,'#ffb36b') + flower(72,27,'#fff') + flower(84,36,'#ff8fb1'),
     catears:`<path d="M31,42 L33,10 L52,27Z M89,42 L87,10 L68,27Z" fill="${hc}"/><path d="M35,34 L36,17 L46,27Z M85,34 L84,17 L74,27Z" fill="#ffb3c7"/>`,
@@ -746,9 +791,16 @@ function avatarSVG(a, expr='normal', vb='0 0 120 120', live=false){
   // outside the circle
   let outside = '';
   if (A.effect === 'rainbow'){ defs += `<linearGradient id="${id}r" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff6b6b"/><stop offset=".25" stop-color="#ffd23f"/><stop offset=".5" stop-color="#3cc47c"/><stop offset=".75" stop-color="#3a9bff"/><stop offset="1" stop-color="#9b7bff"/></linearGradient>`; outside += `<circle cx="60" cy="60" r="57.5" fill="none" stroke="url(#${id}r)" stroke-width="5"/>`; }
+  if (A.effect === 'bubbles') outside += [[12,30,6],[106,24,5],[110,70,7],[8,80,5],[96,108,4],[20,110,3.5],[60,5,3.5]].map(([x,y,r]) => `<g class="av-tw"><circle cx="${x}" cy="${y}" r="${r}" fill="rgba(180,230,255,.35)" stroke="#9ad0ff" stroke-width="1.2"/><circle cx="${x-r*.35}" cy="${y-r*.35}" r="${r*.25}" fill="#fff"/></g>`).join('');
+  if (A.effect === 'petals') outside += [[14,22,20],[104,18,-30],[110,62,60],[8,72,-10],[100,104,40],[18,108,80],[60,6,10]].map(([x,y,a],i) => `<ellipse class="av-tw" cx="${x}" cy="${y}" rx="5" ry="3" fill="${i%2 ? '#ffc2dc' : '#ffb3d1'}" transform="rotate(${a} ${x} ${y})"/>`).join('');
+  if (A.effect === 'hearts') outside += [[12,24,1.2],[106,20,1],[112,66,.9],[8,78,1],[104,104,.8],[60,4,.8]].map(([x,y,s],i) => `<g class="av-tw">${heart(x,y,s,i%2 ? '#ff8fb1' : '#ff5d8f')}</g>`).join('');
   if (A.effect === 'sparkle') outside += spark(12,24,6,'#ffd23f') + spark(108,30,5,'#fff') + spark(110,78,4,'#ffd23f') + spark(9,86,5,'#fff') + spark(60,4,4,'#ffd23f');
   if (expr === 'cheer') outside += star(16,28,8,'#ffd23f') + star(104,22,7,'#ffd23f') + star(106,98,6,'#ffd23f') + star(14,96,6,'#ffd23f');
   const pets = {
+    bunny:`<g transform="rotate(-10 96 92)"><ellipse cx="96" cy="86" rx="3.8" ry="10" fill="#fff" stroke="#f2c4d6" stroke-width="1.2"/><ellipse cx="96" cy="87" rx="1.8" ry="7" fill="#ffc2dc"/></g><g transform="rotate(12 106 92)"><ellipse cx="106" cy="86" rx="3.8" ry="10" fill="#fff" stroke="#f2c4d6" stroke-width="1.2"/><ellipse cx="106" cy="87" rx="1.8" ry="7" fill="#ffc2dc"/></g><ellipse cx="101" cy="105" rx="12" ry="10.5" fill="#fff" stroke="#f2c4d6" stroke-width="1.6"/><circle cx="97" cy="103" r="1.7" fill="${dk}"/><circle cx="105" cy="103" r="1.7" fill="${dk}"/><path d="M100,106.5 L102,106.5 L101,108Z" fill="#ff7a9a"/><ellipse cx="94" cy="107" rx="2.4" ry="1.5" fill="#ffc2dc"/><ellipse cx="108" cy="107" rx="2.4" ry="1.5" fill="#ffc2dc"/>`,
+    hamster:`<circle cx="92" cy="95" r="3.6" fill="#e8a868"/><circle cx="110" cy="95" r="3.6" fill="#e8a868"/><circle cx="92" cy="95" r="1.8" fill="#ffc2dc"/><circle cx="110" cy="95" r="1.8" fill="#ffc2dc"/><ellipse cx="101" cy="105" rx="13" ry="11" fill="#f2c38b" stroke="#fff" stroke-width="1.8"/><ellipse cx="101" cy="109" rx="8.5" ry="6" fill="#fff8ee"/><circle cx="96.5" cy="102.5" r="1.8" fill="${dk}"/><circle cx="105.5" cy="102.5" r="1.8" fill="${dk}"/><circle cx="101" cy="106.5" r="1.1" fill="#ff7a9a"/><ellipse cx="91.5" cy="107" rx="2.6" ry="1.6" fill="#ffb3c7"/><ellipse cx="110.5" cy="107" rx="2.6" ry="1.6" fill="#ffb3c7"/>`,
+    bear:`<circle cx="91" cy="94" r="4.6" fill="#b07a4f"/><circle cx="111" cy="94" r="4.6" fill="#b07a4f"/><circle cx="91" cy="94" r="2.2" fill="#e8c09a"/><circle cx="111" cy="94" r="2.2" fill="#e8c09a"/><circle cx="101" cy="104" r="12" fill="#b07a4f" stroke="#fff" stroke-width="1.8"/><ellipse cx="101" cy="108" rx="5.6" ry="4.2" fill="#e8c09a"/><circle cx="96.5" cy="101.5" r="1.7" fill="${dk}"/><circle cx="105.5" cy="101.5" r="1.7" fill="${dk}"/><ellipse cx="101" cy="106.4" rx="1.8" ry="1.3" fill="${dk}"/>`,
+    unicorn:`<path d="M96,94 L101,76 L104,94Z" fill="#ffd23f" stroke="#e0a100" stroke-width="1"/><path d="M98,90 L103,88 M97.5,86 L102.5,84" stroke="#e0a100" stroke-width=".9"/><path d="M110,96 Q120,100 114,114" fill="none" stroke="#ffb3d1" stroke-width="4" stroke-linecap="round"/><path d="M108,94 Q118,94 116,106" fill="none" stroke="#c9b6ff" stroke-width="3.4" stroke-linecap="round"/><ellipse cx="101" cy="105" rx="12.5" ry="11" fill="#fff" stroke="#e8e1f5" stroke-width="1.8"/><path d="M94,103 Q97,105.5 100,103" fill="none" stroke="${dk}" stroke-width="1.4" stroke-linecap="round"/><path d="M94,103 L92.5,101.5 M95.5,104 L94.5,102" stroke="${dk}" stroke-width="1"/><ellipse cx="96" cy="108" rx="2.4" ry="1.5" fill="#ffc2dc"/><ellipse cx="104" cy="109" rx="2" ry="1.3" fill="#c9b6ff" opacity=".7"/>`,
     chick:`<circle cx="101" cy="104" r="12" fill="#ffd23f" stroke="#fff" stroke-width="2"/><path d="M98,92 Q100,86 103,92" fill="none" stroke="#f2b705" stroke-width="2"/><circle cx="97" cy="101" r="1.8" fill="${dk}"/><path d="M91,104 L86,106.5 L91,109Z" fill="#ff9a3c"/><path d="M104,105 Q113,101 110,111Z" fill="#f2b705"/>`,
     cat:`<path d="M90,97 L90,83 L99,92Z M112,97 L112,83 L103,92Z" fill="#f4a259" stroke="#fff" stroke-width="1.5"/><circle cx="101" cy="103" r="12" fill="#f4a259" stroke="#fff" stroke-width="2"/><circle cx="97" cy="101" r="1.7" fill="${dk}"/><circle cx="105" cy="101" r="1.7" fill="${dk}"/><path d="M99.5,105 L102.5,105 L101,106.8Z" fill="#ff7a9a"/><path d="M92,106 L85,105 M92,108 L86,110 M110,106 L117,105 M110,108 L116,110" stroke="${dk}" stroke-width=".8"/>`,
     dog:`<circle cx="101" cy="103" r="12" fill="#d9a066" stroke="#fff" stroke-width="2"/><ellipse cx="90" cy="101" rx="4.5" ry="9" fill="#8a5a2b" transform="rotate(18 90 101)"/><ellipse cx="112" cy="101" rx="4.5" ry="9" fill="#8a5a2b" transform="rotate(-18 112 101)"/><circle cx="97" cy="101" r="1.7" fill="${dk}"/><circle cx="105" cy="101" r="1.7" fill="${dk}"/><ellipse cx="101" cy="106" rx="2.6" ry="2" fill="${dk}"/><path d="M99.5,108.5 Q101,113 102.5,108.5Z" fill="#ff7a9a"/>`,
@@ -756,7 +808,15 @@ function avatarSVG(a, expr='normal', vb='0 0 120 120', live=false){
     dragon:`<path d="M109,100 L120,88 L117,107Z" fill="#2fa463"/><path d="M93,95 L89,85 L97,92Z M109,95 L113,85 L105,92Z" fill="#ffd23f"/><ellipse cx="101" cy="104" rx="12.5" ry="11" fill="#3cc47c" stroke="#fff" stroke-width="2"/><circle cx="96.5" cy="101" r="2.2" fill="${dk}"/><circle cx="105.5" cy="101" r="2.2" fill="${dk}"/><circle cx="97.2" cy="100.2" r=".8" fill="#fff"/><circle cx="106.2" cy="100.2" r=".8" fill="#fff"/><path d="M96,108 Q101,111 106,108" fill="none" stroke="${dk}" stroke-width="1.4" stroke-linecap="round"/>`
   }[A.pet];
   if (pets) outside += `<g class="av-pet">${pets}</g>`;
-  return `<svg viewBox="${vb}" class="av${live ? ' av-live' : ''}" xmlns="http://www.w3.org/2000/svg"><defs>${defs}</defs><g clip-path="url(#${id}c)">${bg}${behind}${back}${body}${ears}${head}${front}${cheeks}${eyes}${mouth}${acc}${sweat}</g>${outside}</svg>`;
+  const items = {
+    balloon:`<path d="M20,93 Q16,104 22,118" fill="none" stroke="#9a9282" stroke-width="1.2"/><ellipse cx="20" cy="81" rx="10" ry="12" fill="#ff6b9a" stroke="#fff" stroke-width="1.6"/><ellipse cx="16.5" cy="76" rx="2.5" ry="3.6" fill="#fff" opacity=".7"/><path d="M18,93 L22,93 L20,96Z" fill="#ff6b9a"/>`,
+    icecream:`<path d="M12,99 L28,99 L20,119Z" fill="#e8b46a" stroke="#fff" stroke-width="1.4"/><path d="M14,103 L24,103 M16,108 L22,108" stroke="#c98b3a" stroke-width="1"/><circle cx="20" cy="94" r="8" fill="#ffb3d1" stroke="#fff" stroke-width="1.4"/><circle cx="20" cy="85" r="6.4" fill="#bdf0dc" stroke="#fff" stroke-width="1.4"/><circle cx="21" cy="77.5" r="2.6" fill="#ef476f"/>`,
+    bouquet: flower(13, 93, '#ff8fb1') + flower(27, 93, '#c9b6ff') + flower(20, 86, '#fff1a8') + flower(20, 97, '#ffb3d1') + `<path d="M9,99 L31,99 L20,119Z" fill="#ffc2dc" stroke="#fff" stroke-width="1.4"/><path d="M15,104 Q20,108 25,104" fill="none" stroke="#ff5d9e" stroke-width="2" stroke-linecap="round"/>`,
+    starwand:`<path d="M12,119 L26,93" stroke="#ff8fb1" stroke-width="3.4" stroke-linecap="round"/><path d="M12,119 L26,93" stroke="#fff" stroke-width="1" stroke-linecap="round" opacity=".7"/>` + star(28, 87, 10, '#ffd23f') + spark(28, 86, 2.4, '#fff') + `<path d="M24,96 Q16,98 18,104 M24,96 Q28,103 24,106" fill="none" stroke="#ff8fb1" stroke-width="1.6"/>` + spark(40, 80, 2.4, '#ffd23f') + spark(14, 80, 1.8, '#fff'),
+    heartwand:`<path d="M12,119 L26,94" stroke="#c9b6ff" stroke-width="3.4" stroke-linecap="round"/>` + `<path d="M17,88 Q8,84 12,78 Q18,80 21,86Z M39,88 Q48,84 44,78 Q38,80 35,86Z" fill="#fff" stroke="#c9b6ff" stroke-width="1.2"/>` + heart(28, 88, 1.55, '#ff5d9e') + `<circle cx="25" cy="83" r="1.6" fill="#fff"/>` + spark(42, 96, 2.2, '#ffd23f')
+  }[A.item];
+  if (items) outside += `<g class="av-pet">${items}</g>`;
+  return `<svg viewBox="${vb}" class="av${live ? ' av-live' : ''}" xmlns="http://www.w3.org/2000/svg"><defs>${defs}</defs><g clip-path="url(#${id}c)">${bg}${behind}${back}${body}${ears}${head}${front}${shine}${cheeks}${eyes}${mouth}${acc}${sweat}</g>${outside}</svg>`;
 }
 function hop(node){ node.classList.remove('hop'); void node.offsetWidth; node.classList.add('hop'); }
 let lastTotal = 0;
@@ -797,7 +857,7 @@ function renderAvatar(s){
   const right = el('div',{class:'card'});
   const tabs = el('div',{class:'av-tabs'});
   const panel = el('div',{class:'av-panel'});
-  const TABS = [['face','🙂','かお'],['hair','💇','かみ'],['eyes','👀','め・くち'],['outfit','👕','ふく'],['acc','🎀','こもの'],['pet','🐣','ペット'],['bg','🌈','はいけい'],['name','✏️','なまえ']];
+  const TABS = [['face','🙂','かお'],['hair','💇','かみ'],['eyes','👀','め・くち'],['outfit','👕','ふく'],['acc','🎀','こもの'],['item','🪄','もちもの'],['pet','🐣','ペット'],['bg','🌈','はいけい'],['name','✏️','なまえ']];
   let tab = 'face';
   const set = patch => { Object.assign(AV, patch); saveAV(); expr = 'normal'; draw(); hop(big); beep('tap'); fill(); };
   const FACEVB = '22 18 76 76', BODYVB = '0 50 120 70';
@@ -822,12 +882,13 @@ function renderAvatar(s){
   function fill(){
     panel.innerHTML = '';
     tabs.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.t === tab));
-    if (tab === 'face'){ thumbs('かおの かたち', FACES, 'face'); swatches('はだの いろ', SKINS, 'skin'); thumbs('ほっぺ', [[true,'あり'],[false,'なし']], 'cheek', {vb:FACEVB}); }
-    if (tab === 'hair'){ thumbs('', HAIRS, 'hair'); swatches('かみの いろ', HAIR_COLORS, 'hairColor'); }
-    if (tab === 'eyes'){ thumbs('め', EYES, 'eyes', {vb:FACEVB}); thumbs('くち', MOUTHS, 'mouth', {vb:FACEVB}); }
+    if (tab === 'face'){ thumbs('かおの かたち', FACES, 'face'); swatches('はだの いろ', SKINS, 'skin'); thumbs('ほっぺ', CHEEKS, 'cheek', {vb:FACEVB}); }
+    if (tab === 'hair'){ thumbs('', HAIRS, 'hair'); swatches('かみの いろ', HAIR_COLORS, 'hairColor'); thumbs('かみの ひかり', HAIR_SHINES, 'hairShine', {vb:'14 0 92 70'}); }
+    if (tab === 'eyes'){ thumbs('め', EYES, 'eyes', {vb:FACEVB}); swatches('ひとみの いろ', EYE_COLORS, 'eyeColor'); thumbs('くち', MOUTHS, 'mouth', {vb:FACEVB}); }
     if (tab === 'outfit'){ thumbs('', OUTFITS, 'outfit', {vb:BODYVB}); swatches('ふくの いろ', CLOTHES, 'clothes'); }
     if (tab === 'acc') thumbs('', ACCS, 'acc');
     if (tab === 'pet') thumbs('', PETS, 'pet');
+    if (tab === 'item') thumbs('', ITEMS, 'item');
     if (tab === 'bg'){ swatches('いろ', BGS, 'bg'); thumbs('もよう', BG_PATTERNS, 'bg'); thumbs('エフェクト', EFFECTS, 'effect'); }
     if (tab === 'name'){
       panel.appendChild(el('h4',{text:'なまえ（8もじまで）'}));
@@ -836,15 +897,15 @@ function renderAvatar(s){
       panel.appendChild(inp);
       panel.appendChild(el('p',{class:'muted',style:'font-size:14px',text:'ホームや はなまるの ときに よばれるよ'}));
     }
-    if (['outfit','acc','pet','bg'].includes(tab)) panel.appendChild(el('p',{class:'muted',style:'font-size:13px;margin:8px 0 0',text:'🪙の ついた ものは ポイントで かえるよ。タッチすると ためしに きせて みられるよ'}));
+    if (['outfit','acc','pet','bg','item'].includes(tab)) panel.appendChild(el('p',{class:'muted',style:'font-size:13px;margin:8px 0 0',text:'🪙の ついた ものは ポイントで かえるよ。タッチすると ためしに きせて みられるよ'}));
     requestAnimationFrame(layout);
   }
   TABS.forEach(([t,i,l]) => { const b = el('button',{'data-t':t,html:`<span>${i}</span>${l}`}); b.onclick = () => { tab = t; fill(); }; tabs.appendChild(b); });
   rnd.onclick = () => {
     const pick = (a, key) => { const ok = key ? a.filter(x => owns(key, x[0])) : a; return ok[Math.floor(Math.random()*ok.length)]; };
     const any = a => a[Math.floor(Math.random()*a.length)];
-    Object.assign(AV, {face:any(FACES)[0], skin:any(SKINS), cheek:Math.random()<.6, hair:any(HAIRS)[0], hairColor:any(HAIR_COLORS), eyes:any(EYES)[0], mouth:any(MOUTHS)[0],
-      outfit:pick(OUTFITS,'outfit')[0], clothes:any(CLOTHES), bg:any(BGS), acc:pick(ACCS,'acc')[0], pet:pick(PETS,'pet')[0], effect:pick(EFFECTS,'effect')[0]});
+    Object.assign(AV, {face:any(FACES)[0], skin:any(SKINS), hair:any(HAIRS)[0], hairColor:any(HAIR_COLORS), eyes:any(EYES)[0], mouth:any(MOUTHS)[0],
+      outfit:pick(OUTFITS,'outfit')[0], clothes:any(CLOTHES), bg:any(BGS), acc:pick(ACCS,'acc')[0], pet:pick(PETS,'pet')[0], effect:pick(EFFECTS,'effect')[0], item:pick(ITEMS,'item')[0], eyeColor:any(EYE_COLORS), hairShine:any(HAIR_SHINES)[0], cheek:any(CHEEKS)[0]});
     saveAV(); expr = 'happy'; draw(); hop(big); beep('ok'); fill();
   };
   ok.onclick = () => { saveAV(); progressChanged(); beep('win'); back(); };
@@ -1058,7 +1119,8 @@ function sanitizeAV(a){
   a = a && typeof a === 'object' ? a : {};
   const ids = l => l.map(x => x[0]);
   return {
-    face: pick(a.face, ids(FACES), AV_DEFAULT.face), skin: pick(a.skin, SKINS, AV_DEFAULT.skin), cheek: a.cheek !== false,
+    face: pick(a.face, ids(FACES), AV_DEFAULT.face), skin: pick(a.skin, SKINS, AV_DEFAULT.skin), cheek: a.cheek === false ? 'none' : a.cheek === true ? 'normal' : pick(a.cheek, ids(CHEEKS), 'normal'),
+    hairShine: pick(a.hairShine, ids(HAIR_SHINES), 'none'), eyeColor: pick(a.eyeColor, EYE_COLORS, AV_DEFAULT.eyeColor), item: pick(a.item, ids(ITEMS), 'none'),
     hair: pick(a.hair, ids(HAIRS), AV_DEFAULT.hair), hairColor: pick(a.hairColor, HAIR_COLORS, AV_DEFAULT.hairColor),
     eyes: pick(a.eyes, ids(EYES), AV_DEFAULT.eyes), mouth: pick(a.mouth, ids(MOUTHS), AV_DEFAULT.mouth),
     outfit: pick(a.outfit, ids(OUTFITS), 'tshirt'), clothes: pick(a.clothes, CLOTHES, AV_DEFAULT.clothes),
@@ -1094,7 +1156,7 @@ function sanitizeSettings(s){
   return {
     sound: s.sound !== false, nums: s.nums !== false,
     penMode: pick(s.penMode, ['auto','pen','all'], 'auto'), strict: pick(s.strict, ['easy','normal','hard'], 'normal'),
-    penColor: pick(s.penColor, PEN_COLORS.map(x=>x[0]), '#1f2235'), penSize: pick(s.penSize, PEN_SIZES.map(x=>x[0]), 'normal')
+    penColor: pick(s.penColor, PEN_COLORS.map(x=>x[0]), '#1f2235'), penSize: pick(s.penSize, PEN_SIZES.map(x=>x[0]), 'normal'), theme: pick(s.theme, ['normal','yume','sora'], 'normal')
   };
 }
 const num = v => { v = Number(v); return isFinite(v) && v > 0 ? Math.min(Math.floor(v), 1e6) : 0; };
@@ -1121,7 +1183,7 @@ function applySnapshot(s){
   store.set('kkr.prog', prog); store.set('kkr.settings', settings);
   store.set('kkr.ts', Math.max(localTs, remoteTs));
   lastTotal = totalStars();
-  updSound();
+  updSound(); if (typeof applyTheme === 'function') applyTheme();
 }
 async function initCloud(){
   try{
@@ -1260,8 +1322,8 @@ $('#soundBtn').onclick = () => { settings.sound = !settings.sound; saveSet(); up
 function updSound(){ $('#soundBtn').textContent = settings.sound ? '🔊' : '🔇'; }
 $('#setBtn').onclick = openSettings;
 const setTitle = t => $('#title').textContent = t;
-const APP_VERSION = '1.8.0', APP_BUILD = '2026-11-22 16:36';
-const CHANGELOG = [["1.8.0", "2026-11-22", "かきとりテストで ことばの いみが さいしょから みられる（1026じ ぜんぶ）。ボタンを もんだいの すぐ したに ならべた。"], ["1.7.0", "2026-11-22", "キャラが パワーアップ（ふく・ペット・はいけい・エフェクト）。ポイントと ショップ、まいにちの ログインボーナス、きょうの ミッション、バッジ、きろく がめん。かんじごとの きろくも みられる。"], ["1.6.0", "2026-11-22", "あたらしい はんを じどうで たしかめて、ボタン ひとつで こうしん できる。ほぞんの ひょうじを わかりやすく。"], ["1.5.0", "2026-11-22", "バージョンを がめんの うえに ひょうじ。タップで こうしんりれき。"], ["1.4.0", "2026-11-22", "iPadの たて・よこ どちらでも スクロールなしで 1がめんに おさまる レイアウト。"], ["1.3.0", "2026-11-22", "きろくの バックアップ（ファイル・ひきつぎコード）。"], ["1.2.0", "2026-11-22", "じぶんの キャラ（アバター）を つくれる。★で こものが ふえる。"], ["1.1.0", "2026-11-22", "ペンの いろと ふとさを えらべる。"], ["1.0.0", "2026-11-22", "さいしょの はん。10きゅう〜5きゅうの かきじゅん・よみ・かきとりテスト。"]];
+const APP_VERSION = '1.9.0', APP_BUILD = '2026-11-22 16:46';
+const CHANGELOG = [["1.9.0", "2026-11-22", "キャラが もっと かわいく！ うるうる・ハート・ほしの め、ひとみの いろ、かみの つやと キラキラ、ほっぺ、ティアラや うさみみ、ドレス、もちもの（ステッキなど）、かわいい ペット・はいけい・エフェクト。がめんの ふんいき（ゆめかわ・そらいろ）も えらべる。"], ["1.8.0", "2026-11-22", "かきとりテストで ことばの いみが さいしょから みられる（1026じ ぜんぶ）。ボタンを もんだいの すぐ したに ならべた。"], ["1.7.0", "2026-11-22", "キャラが パワーアップ（ふく・ペット・はいけい・エフェクト）。ポイントと ショップ、まいにちの ログインボーナス、きょうの ミッション、バッジ、きろく がめん。かんじごとの きろくも みられる。"], ["1.6.0", "2026-11-22", "あたらしい はんを じどうで たしかめて、ボタン ひとつで こうしん できる。ほぞんの ひょうじを わかりやすく。"], ["1.5.0", "2026-11-22", "バージョンを がめんの うえに ひょうじ。タップで こうしんりれき。"], ["1.4.0", "2026-11-22", "iPadの たて・よこ どちらでも スクロールなしで 1がめんに おさまる レイアウト。"], ["1.3.0", "2026-11-22", "きろくの バックアップ（ファイル・ひきつぎコード）。"], ["1.2.0", "2026-11-22", "じぶんの キャラ（アバター）を つくれる。★で こものが ふえる。"], ["1.1.0", "2026-11-22", "ペンの いろと ふとさを えらべる。"], ["1.0.0", "2026-11-22", "さいしょの はん。10きゅう〜5きゅうの かきじゅん・よみ・かきとりテスト。"]];
 $('#verBtn').onclick = () => {
   const box = openOv();
   box.appendChild(el('div',{class:'msg',text:`バージョン ${APP_VERSION}`}));
@@ -1847,12 +1909,13 @@ function openSettings(){
   const seg = (label, key, opts) => {
     const row = el('div',{class:'set-row'}); row.appendChild(el('div',{html:label}));
     const sg = el('div',{class:'seg'});
-    opts.forEach(([v,t]) => { const b = el('button',{class: settings[key] === v ? 'on' : '', text:t}); b.onclick = () => { settings[key] = v; saveSet(); sg.querySelectorAll('button').forEach(x => x.classList.remove('on')); b.classList.add('on'); }; sg.appendChild(b); });
+    opts.forEach(([v,t]) => { const b = el('button',{class: settings[key] === v ? 'on' : '', text:t}); b.onclick = () => { settings[key] = v; saveSet(); applyTheme(); sg.querySelectorAll('button').forEach(x => x.classList.remove('on')); b.classList.add('on'); }; sg.appendChild(b); });
     row.appendChild(sg); box.appendChild(row);
   };
   seg('はんていの きびしさ', 'strict', [['easy','やさしい'],['normal','ふつう'],['hard','きびしい']]);
   seg('かく もの<br><small class="muted">「じどう」は Apple Pencil を<br>つかうと ゆびを むしします</small>', 'penMode', [['auto','じどう'],['pen','ペンだけ'],['all','ゆびも OK']]);
   seg('おと・よみあげ', 'sound', [[true,'オン'],[false,'オフ']]);
+  seg('がめんの ふんいき', 'theme', [['normal','ふつう'],['yume','ゆめかわ'],['sora','そらいろ']]);
   box.appendChild(el('div',{class:'cloud-badge muted',style:'font-size:14px;margin-top:12px;text-align:left',text:cloudLabel()}));
   const bk = el('button',{class:'big-btn blue',style:'margin-top:10px;width:100%;font-size:18px;min-height:56px',html:'💾 きろくの ほぞん・ひきつぎ'}); bk.onclick = openBackup; box.appendChild(bk);
   const reset = el('button',{class:'big-btn gray',style:'margin-top:14px;width:100%;font-size:17px;min-height:52px',html:'🗑️ れんしゅうの きろくを けす'});
@@ -1942,6 +2005,8 @@ setInterval(() => { if (document.visibilityState === 'visible') checkUpdate(fals
 document.addEventListener('gesturestart', e => e.preventDefault());
 document.addEventListener('dblclick', e => e.preventDefault());
 if ('speechSynthesis' in window) { try{ speechSynthesis.getVoices(); speechSynthesis.onvoiceschanged = () => {}; }catch(e){} }
+function applyTheme(){ document.body.dataset.theme = settings.theme || 'normal'; }
+applyTheme();
 updSound();
 lastTotal = totalStars();
 home();
