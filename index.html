@@ -212,7 +212,9 @@ h2{font-size:20px;margin:6px 0 10px}
 .av-opt{border-radius:16px;background:#f7f4ee;padding:6px 4px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:13px}
 .av-opt svg{width:66px;height:66px}
 .av-opt.on{background:#ffe2cc;box-shadow:inset 0 0 0 3px var(--accent);font-weight:bold}
-.av-opt.locked svg{filter:grayscale(1) opacity(.45)}
+.av-opt.locked svg{opacity:.92}
+.av-opt{position:relative}
+.av-opt.locked::after{content:'🔒';position:absolute;top:4px;right:6px;font-size:13px}
 .av-input{width:100%;font:inherit;font-size:24px;padding:12px 14px;border-radius:14px;border:2px solid var(--line);-webkit-user-select:text;user-select:text}
 .ov-top{display:flex;align-items:center;justify-content:center;gap:14px}
 .ov-av{width:120px;height:120px;flex:none}
@@ -335,13 +337,103 @@ main.scroll{overflow-y:auto;-webkit-overflow-scrolling:touch}
 .updbox{display:grid;gap:8px;margin:0 0 14px;padding:12px;border-radius:16px;background:#f7f4ee}
 .updst{font-size:15px;min-height:20px}
 .updbox .big-btn{min-height:52px;font-size:18px}
+
+/* ---- ごほうび・きろく ---- */
+.av-live .av-eyes{animation:blink 4.6s infinite;transform-origin:center;transform-box:fill-box}
+@keyframes blink{0%,93%,100%{transform:scaleY(1)}95.5%{transform:scaleY(.1)}}
+.av-live .av-tw{animation:tw 1.8s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+@keyframes tw{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.55;transform:scale(.8)}}
+.av-live .av-pet{animation:petbob 2.2s ease-in-out infinite}
+@keyframes petbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2.5px)}}
+.av-bob{animation:bob 3s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-4px) rotate(-1.5deg)}}
+.me{display:flex;align-items:center;gap:14px;background:#fff;border-radius:26px;box-shadow:0 5px 0 var(--line);padding:10px 14px;margin-bottom:8px}
+.me-av{width:104px;height:104px;flex:none;padding:0}
+.me-t{flex:1;min-width:0}
+.me-stats{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.chip-s{background:#fff6df;border-radius:12px;padding:4px 10px;font-size:15px;color:#7a5a00}
+.chip-s b{font-size:19px}
+.me-btns{display:grid;gap:6px;flex:none;width:170px}
+.me-btns button{min-height:38px;border-radius:14px;background:#fff1e4;color:var(--accent);font-weight:bold;font-size:15px;text-align:left;padding:4px 12px}
+.me-btns .mb1{background:var(--accent);color:#fff}
+.me-btns .mb2{background:#e3f1ff;color:#1a75cc}
+@media (max-width:699px){.me{flex-wrap:wrap}.me-btns{width:100%;grid-template-columns:repeat(3,1fr)}.me-btns button{text-align:center;font-size:13px;padding:4px}}
+#reward{position:fixed;left:50%;top:calc(70px + env(safe-area-inset-top,0px));transform:translate(-50%,-150%);z-index:80;display:flex;align-items:center;gap:10px;background:#fff;border-radius:20px;box-shadow:0 8px 24px rgba(0,0,0,.18);padding:10px 18px;max-width:92vw;transition:transform .35s cubic-bezier(.2,1.4,.4,1);pointer-events:none}
+#reward.show{transform:translate(-50%,0)}
+#reward .ri{font-size:32px}
+#reward .rt{font-size:17px;font-weight:bold}
+#reward .rp{font-size:20px;color:#b98a00;white-space:nowrap}
+.gain{font-size:20px;color:#b98a00;font-weight:bold;margin-left:6px}
+.coin{color:#b98a00}
+.login-st{display:flex;flex-direction:column;align-items:center;line-height:1}
+.login-st .fire{font-size:44px}
+.login-st b{font-size:46px;color:var(--accent)}
+.login-st small{font-size:14px;color:var(--sub)}
+.login-lines{font-size:18px;line-height:1.7;margin-bottom:8px}
+.login-week{display:flex;justify-content:center;gap:6px;margin:6px 0 10px}
+.login-week span{width:44px;height:52px;border-radius:12px;background:#f4efe6;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:18px}
+.login-week span i{font-style:normal;font-size:11px;color:var(--sub)}
+.login-week span.on{background:#ffe2cc}
+.login-week span.td{box-shadow:inset 0 0 0 2px var(--accent)}
+.mlist{text-align:left;background:#f7f4ee;border-radius:16px;padding:10px 12px;display:grid;gap:8px}
+.mh{font-weight:bold;font-size:16px}
+.mh small{font-weight:normal;color:var(--sub);font-size:13px;margin-left:6px}
+.mi .mt{font-size:16px}
+.mi .mb{height:10px;border-radius:5px;background:#e8e1d3;overflow:hidden;margin:4px 0 2px}
+.mi .mb i{display:block;height:100%;background:var(--accent);border-radius:5px}
+.mi .mr{font-size:13px;color:var(--sub);text-align:right}
+.mi.done .mb i{background:var(--ok)}
+.mi.done .mt{color:var(--ok);font-weight:bold}
+.buy-av{width:200px;height:200px;margin:0 auto}
+.av-coin{position:absolute;top:12px;right:14px;background:#fff6df;color:#7a5a00;border-radius:12px;padding:4px 10px;font-size:15px}
+.ave-prev{position:relative;top:auto}
+.av-tabs{grid-template-columns:repeat(8,1fr)}
+@media (max-width:699px){.av-tabs{grid-template-columns:repeat(4,1fr)}}
+.av-opt.locked{background:#f1ece2}
+.av-opt.locked span{color:#b98a00;font-weight:bold}
+.frec .kr{font-size:12px;color:var(--sub);line-height:1.4;margin-top:2px}
+.frec .kr .ok{color:var(--ok)}
+.frec .kr .ng{color:var(--ng);margin-left:3px}
+.rec{display:grid;grid-template-columns:minmax(300px,40%) 1fr;gap:12px;align-items:start}
+@media (max-width:699px){.rec{grid-template-columns:1fr}}
+@media (orientation:portrait) and (min-width:700px){.rec{grid-template-columns:42% 1fr}.rs-grid{grid-template-columns:1fr 1fr}.rec-sum{flex-direction:column}.calg .cd{aspect-ratio:1/1}.bdg{grid-template-columns:repeat(auto-fill,minmax(70px,1fr))}}
+.rec .card{padding:12px 14px;margin-bottom:12px}
+.rec h3{margin:0 0 8px;font-size:16px}
+.rec h3 small{color:var(--sub);font-weight:normal}
+.rec-sum{display:flex;gap:12px;align-items:center}
+.rs-av{width:96px;height:96px;flex:none}
+.rs-grid{flex:1;display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+.rs-grid div{background:#f7f4ee;border-radius:12px;padding:6px 8px;line-height:1.2}
+.rs-grid b{font-size:19px;display:block}
+.rs-grid small{font-size:11px;color:var(--sub)}
+.calg{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.calg .cw{font-size:11px;color:var(--sub);text-align:center}
+.calg .cd{aspect-ratio:1.3/1;border-radius:8px;background:#f1ece2;display:flex;align-items:flex-start;justify-content:flex-start;padding:2px 4px}
+.calg .cd i{font-style:normal;font-size:10px;color:#9a9282}
+.calg .cd.l1{background:#ffe2cc}.calg .cd.l2{background:#ffb37a}.calg .cd.l3{background:#ff7a2f}
+.calg .cd.l2 i,.calg .cd.l3 i{color:#fff}
+.calg .cd.td{box-shadow:inset 0 0 0 2px var(--accent2)}
+.calg .cd.fu{opacity:.35}
+.lvrow{display:grid;grid-template-columns:70px 1fr 74px;align-items:center;gap:8px;width:100%;padding:5px 0;text-align:left}
+.lvrow .ln{font-weight:bold;font-size:16px}
+.lvrow .lb{height:16px;border-radius:8px;background:#f1ece2;overflow:hidden;display:flex}
+.lvrow .lb i{display:block;height:100%}
+.lvrow .lb .b2{opacity:.55}.lvrow .lb .b1{opacity:.25}
+.lvrow .lc{font-size:15px;text-align:right}
+.lvrow .lc small{color:var(--sub);font-size:11px}
+.bdg{display:grid;grid-template-columns:repeat(auto-fill,minmax(76px,1fr));gap:6px}
+.bdi{border-radius:12px;background:#f1ece2;padding:6px 2px;display:flex;flex-direction:column;align-items:center;gap:2px;opacity:.55}
+.bdi span{font-size:24px}
+.bdi small{font-size:10px;line-height:1.2;text-align:center;color:var(--sub)}
+.bdi.on{background:#fff6df;opacity:1;box-shadow:inset 0 0 0 2px #ffd23f}
+.bdi.on small{color:#7a5a00;font-weight:bold}
 </style>
 </head>
 <body>
 <div id="app">
   <header>
     <button class="hbtn" id="backBtn" aria-label="もどる">◀<span class="bt"> もどる</span></button>
-    <div class="htitle"><h1 id="title">かんじ れんしゅう</h1><button class="ver" id="verBtn" aria-label="バージョン">v1.6.0・2026-11-22 16:09</button></div>
+    <div class="htitle"><h1 id="title">かんじ れんしゅう</h1><button class="ver" id="verBtn" aria-label="バージョン">v1.7.0・2026-11-22 16:20</button></div>
     <button class="hbtn" id="soundBtn" aria-label="おと">🔊</button>
     <button class="hbtn" id="setBtn" aria-label="せってい">⚙️</button>
   </header>
@@ -352,6 +444,7 @@ main.scroll{overflow-y:auto;-webkit-overflow-scrolling:touch}
     <section class="screen" id="s-practice"></section>
     <section class="screen" id="s-test"></section>
     <section class="screen" id="s-avatar"></section>
+    <section class="screen" id="s-record"></section>
   </main>
 </div>
 <div class="ov" id="ov"><div class="box" id="ovBox"></div></div>
@@ -508,37 +601,63 @@ function judge(u, r, tol){
 }
 
 /* ===== アバター ===== */
-const AV_DEFAULT = {face:'round', skin:'#f7cfae', cheek:true, hair:'short', hairColor:'#2b211c', eyes:'round', mouth:'smile', clothes:'#3a9bff', bg:'#ffe8a3', acc:'none', name:''};
+const AV_DEFAULT = {face:'round', skin:'#f7cfae', cheek:true, hair:'short', hairColor:'#2b211c', eyes:'round', mouth:'smile', outfit:'tshirt', clothes:'#3a9bff', bg:'#ffe8a3', acc:'none', pet:'none', effect:'none', name:''};
 let AV = store.get('kkr.avatar', null);
 let hasAV = !!AV;
 AV = Object.assign({}, AV_DEFAULT, AV || {});
 const saveAV = () => { store.set('kkr.avatar', AV); hasAV = true; touch(); };
 const FACES = [['round','まる'],['oval','たまご'],['square','しかく'],['wide','よこなが']];
 const SKINS = ['#fde3cf','#f7cfae','#eab38c','#c98b62','#8d5a3b'];
-const HAIRS = [['short','みじかい','none','short'],['spiky','つんつん','none','spiky'],['buzz','ぼうず','none','buzz'],['side','わけめ','none','side'],['curly','くるくる','none','curly'],['bangs','ぱっつん','none','bangs'],
+const HAIRS = [['short','みじかい','none','short'],['spiky','つんつん','none','spiky'],['mohawk','モヒカン','none','mohawk'],['buzz','ぼうず','none','buzz'],['side','わけめ','none','side'],['curly','くるくる','none','curly'],['afro','アフロ','afro','curly'],['bangs','ぱっつん','none','bangs'],
   ['bob','ボブ','bob','bangs'],['long','ロング','long','side'],['twin','ツインテール','twin','bangs'],['pony','ポニーテール','pony','short'],['bun','おだんご','bun','bangs']];
-const HAIR_COLORS = ['#2b211c','#5a3a26','#8a5a2b','#d9a441','#e8774f','#7a7f8c','#5b6cff','#ff7eb6'];
-const EYES = [['round','くりくり'],['dot','てん'],['sparkle','キラキラ'],['smile','にっこり'],['sleepy','ねむそう'],['wink','ウインク']];
-const MOUTHS = [['smile','にこっ'],['open','わーい'],['grin','にかっ'],['cat','ねこ'],['small','おちょぼ'],['flat','まじめ']];
-const CLOTHES = ['#3a9bff','#ff6b6b','#3cc47c','#f2b705','#9b7bff','#ff9f43','#2b2d42','#ffffff'];
+const HAIR_COLORS = ['#2b211c','#5a3a26','#8a5a2b','#d9a441','#e8774f','#7a7f8c','#5b6cff','#ff7eb6','#3cc47c','#ffffff'];
+const EYES = [['round','くりくり'],['dot','てん'],['sparkle','キラキラ'],['cool','キリッ'],['smile','にっこり'],['sleepy','ねむそう'],['wink','ウインク']];
+const MOUTHS = [['smile','にこっ'],['open','わーい'],['grin','にかっ'],['cat','ねこ'],['small','おちょぼ'],['flat','まじめ'],['fang','キバ']];
+const CLOTHES = ['#3a9bff','#ff6b6b','#3cc47c','#f2b705','#9b7bff','#ff9f43','#ff7eb6','#2b2d42','#ffffff'];
 const BGS = ['#ffe8a3','#cdeefd','#ffd6e0','#d8f5d0','#e7dcff','#ffe0c2','#ffffff'];
+const BG_PATTERNS = [['p_stars','ほしぞら',60],['p_hearts','ハート',60],['p_sunset','ゆうやけ',80],['p_rainbow','にじ',100],['p_space','うちゅう',150]];
+const OUTFITS = [['tshirt','Tシャツ',0],['hoodie','パーカー',0],['jersey','ユニフォーム',60],['sailor','セーラー',60],['suit','スーツ',80],['kimono','きもの',100],['hero','ヒーロー',120]];
 const ACCS = [['none','なし',0],['glasses','めがね',0],['ribbon','リボン',0],['cap','ぼうし',0],['headphones','ヘッドホン',0],['star','ほしピン',0],
-  ['crown','おうかん',30],['catears','ねこみみ',80],['sunglasses','サングラス',150]];
+  ['headband','はちまき',40],['flower','はなかんむり',60],['sunglasses','サングラス',80],['catears','ねこみみ',100],['wizard','まほうの ぼうし',120],['horns','ドラゴンの つの',120],['halo','てんしの わ',150],['crown','おうかん',200]];
+const PETS = [['none','なし',0],['chick','ひよこ',50],['cat','ねこ',80],['dog','いぬ',80],['robot','ロボ',150],['dragon','ドラゴン',200]];
+const EFFECTS = [['none','なし',0],['sparkle','キラキラ',80],['rainbow','にじの わく',100],['aura','オーラ',120],['fire','ほのお',150]];
+const SHOP = {outfit:OUTFITS, acc:ACCS, pet:PETS, effect:EFFECTS, bg:BG_PATTERNS};
+const priceOf = (key, val) => { const l = SHOP[key]; if (!l) return 0; const f = l.find(x => x[0] === val); return f ? f[2] : 0; };
+const owns = (key, val) => priceOf(key, val) === 0 || (META.owned || []).includes(key + ':' + val);
 const totalStars = () => DATA.reduce((a,d) => a + stars(d.k), 0);
+function shade(hex, f){ const n = parseInt(hex.slice(1),16); const c = [n>>16, (n>>8)&255, n&255].map(v => Math.max(0, Math.min(255, Math.round(v * f)))); return '#' + c.map(v => v.toString(16).padStart(2,'0')).join(''); }
 let avSeq = 0;
-function avatarSVG(a, expr='normal', vb='0 0 120 120'){
+function avatarSVG(a, expr='normal', vb='0 0 120 120', live=false){
   const A = Object.assign({}, AV_DEFAULT, a || {});
-  const id = 'avc' + (++avSeq);
-  const hc = A.hairColor, sk = A.skin, dk = '#2b2d42';
+  const id = 'av' + (++avSeq);
+  const hc = A.hairColor, sk = A.skin, dk = '#2b2d42', C = A.clothes, Cd = shade(C === '#ffffff' ? '#e6e6e6' : C, 0.82);
   const hs = HAIRS.find(h => h[0] === A.hair) || HAIRS[0];
+  const star = (cx, cy, r, f, cls='') => { let p=''; for (let i=0;i<10;i++){ const rr = i%2 ? r*0.45 : r; const an = -Math.PI/2 + i*Math.PI/5; p += (i?'L':'M') + (cx+Math.cos(an)*rr).toFixed(1) + ',' + (cy+Math.sin(an)*rr).toFixed(1); } return `<path class="${cls}" d="${p}Z" fill="${f}" stroke="#e0a100" stroke-width=".8"/>`; };
+  const spark = (x, y, r, f) => `<path class="av-tw" d="M${x},${y-r} Q${x+r*.18},${y-r*.18} ${x+r},${y} Q${x+r*.18},${y+r*.18} ${x},${y+r} Q${x-r*.18},${y+r*.18} ${x-r},${y} Q${x-r*.18},${y-r*.18} ${x},${y-r}Z" fill="${f}"/>`;
+  const heart = (x, y, s, f) => `<path d="M${x},${y+3*s} C${x-6*s},${y-3*s} ${x-3*s},${y-8*s} ${x},${y-4*s} C${x+3*s},${y-8*s} ${x+6*s},${y-3*s} ${x},${y+3*s}Z" fill="${f}"/>`;
+  let defs = `<clipPath id="${id}c"><circle cx="60" cy="60" r="60"/></clipPath>`;
+  // background
+  let bg = '';
+  const STARPTS = [[16,20],[34,10],[90,14],[104,40],[12,58],[22,90],[100,70],[50,8],[110,96],[8,36]];
+  if (A.bg === 'p_stars') bg = `<rect width="120" height="120" fill="#2b3a67"/>` + STARPTS.map(([x,y],i) => spark(x,y,i%3?2.4:3.6,i%2?'#fff':'#ffd23f')).join('');
+  else if (A.bg === 'p_hearts') bg = `<rect width="120" height="120" fill="#ffd6e0"/>` + [[16,22],[100,18],[14,70],[106,66],[30,104],[92,104],[60,6]].map(([x,y],i) => heart(x,y,i%2?.9:1.2,i%2?'#ff8fb1':'#ff5d8f')).join('');
+  else if (A.bg === 'p_sunset'){ defs += `<linearGradient id="${id}s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffcf6b"/><stop offset=".55" stop-color="#ff7a9a"/><stop offset="1" stop-color="#8a63d2"/></linearGradient>`; bg = `<rect width="120" height="120" fill="url(#${id}s)"/><circle cx="96" cy="30" r="10" fill="#fff3b0" opacity=".9"/>`; }
+  else if (A.bg === 'p_rainbow') bg = `<rect width="120" height="120" fill="#cdeefd"/>` + ['#ff6b6b','#ff9f43','#ffd23f','#3cc47c','#3a9bff','#9b7bff'].map((c,i) => `<circle cx="60" cy="128" r="${104 - i*8}" fill="none" stroke="${c}" stroke-width="8"/>`).join('') + `<circle cx="60" cy="128" r="56" fill="#cdeefd"/>`;
+  else if (A.bg === 'p_space') bg = `<rect width="120" height="120" fill="#141a33"/>` + STARPTS.map(([x,y],i) => spark(x,y,i%3?1.8:2.8,'#fff')).join('') + `<circle cx="98" cy="28" r="9" fill="#ffb36b"/><ellipse cx="98" cy="28" rx="15" ry="4" fill="none" stroke="#ffe0b0" stroke-width="2" transform="rotate(-18 98 28)"/>`;
+  else bg = `<rect width="120" height="120" fill="${/^#[0-9a-f]{6}$/i.test(A.bg) ? A.bg : '#ffe8a3'}"/>`;
+  // effects behind
+  let behind = '';
+  if (A.effect === 'aura'){ defs += `<radialGradient id="${id}a"><stop offset="0" stop-color="#9ef0ff" stop-opacity=".95"/><stop offset=".6" stop-color="#5bc8ff" stop-opacity=".55"/><stop offset="1" stop-color="#5bc8ff" stop-opacity="0"/></radialGradient>`; behind = `<circle class="av-tw" cx="60" cy="62" r="52" fill="url(#${id}a)"/>`; }
+  if (A.effect === 'fire') behind = [-30,-15,0,15,30].map((dx,i) => { const x = 60+dx, tip = 8 + Math.abs(dx)*0.7; return `<path class="av-tw" d="M${x-11},70 Q${x-14},${tip+26} ${x},${tip} Q${x+14},${tip+26} ${x+11},70Z" fill="#ff7a2f" opacity=".9"/><path d="M${x-6},70 Q${x-7},${tip+30} ${x},${tip+14} Q${x+7},${tip+30} ${x+6},70Z" fill="#ffd23f"/>`; }).join('');
   const back = {
     none:'',
     bob:`<path d="M25,58 Q25,20 60,20 Q95,20 95,58 L95,88 Q95,94 89,94 L31,94 Q25,94 25,88Z" fill="${hc}"/>`,
     long:`<path d="M25,58 Q25,20 60,20 Q95,20 95,58 L98,114 L22,114Z" fill="${hc}"/>`,
     twin:`<ellipse cx="21" cy="68" rx="10" ry="19" fill="${hc}"/><ellipse cx="99" cy="68" rx="10" ry="19" fill="${hc}"/><circle cx="26" cy="50" r="4" fill="#ff5d8f"/><circle cx="94" cy="50" r="4" fill="#ff5d8f"/>`,
     pony:`<path d="M82,32 Q110,38 101,82 Q95,64 84,54Z" fill="${hc}"/>`,
-    bun:`<circle cx="60" cy="19" r="13" fill="${hc}"/>`
-  }[hs[2]];
+    bun:`<circle cx="60" cy="19" r="13" fill="${hc}"/>`,
+    afro:`<circle cx="60" cy="42" r="36" fill="${hc}"/><circle cx="28" cy="54" r="14" fill="${hc}"/><circle cx="92" cy="54" r="14" fill="${hc}"/>`
+  }[hs[2]] || '';
   const curly = [[32,46],[36,34],[46,26],[60,23],[74,26],[84,34],[88,46]].map(([x,y]) => `<circle cx="${x}" cy="${y}" r="10" fill="${hc}"/>`).join('');
   const front = {
     short:`<path d="M28,56 Q26,22 60,22 Q94,22 92,56 Q89,44 81,39 Q71,46 59,39 Q47,46 37,40 Q31,46 28,56Z" fill="${hc}"/>`,
@@ -546,8 +665,9 @@ function avatarSVG(a, expr='normal', vb='0 0 120 120'){
     side:`<path d="M28,60 Q26,21 62,21 Q95,22 92,58 Q88,40 72,36 Q52,48 28,60Z" fill="${hc}"/>`,
     spiky:`<path d="M29,56 L22,36 L36,38 L36,20 L50,30 L60,12 L70,30 L84,20 L84,38 L98,36 L91,56 Q84,42 60,40 Q36,42 29,56Z" fill="${hc}"/>`,
     buzz:`<path d="M31,50 Q31,27 60,27 Q89,27 89,50 Q75,40 60,40 Q45,40 31,50Z" fill="${hc}"/>`,
+    mohawk:`<path d="M31,50 Q31,28 60,28 Q89,28 89,50 Q75,41 60,41 Q45,41 31,50Z" fill="${hc}" opacity=".55"/><path d="M52,42 L49,18 L55,22 L57,6 L63,20 L69,10 L70,24 L72,42 Q60,37 52,42Z" fill="${hc}"/>`,
     curly:`<path d="M29,52 Q28,26 60,25 Q92,26 91,52 Q60,38 29,52Z" fill="${hc}"/>` + curly
-  }[hs[3]];
+  }[hs[3]] || '';
   const head = {
     round:`<ellipse cx="60" cy="58" rx="30" ry="30" fill="${sk}"/>`,
     oval:`<ellipse cx="60" cy="59" rx="27" ry="32" fill="${sk}"/>`,
@@ -556,11 +676,25 @@ function avatarSVG(a, expr='normal', vb='0 0 120 120'){
   }[A.face] || '';
   const ex = {round:30, oval:33, square:31, wide:27}[A.face] || 30;
   const ears = `<circle cx="${ex}" cy="63" r="6" fill="${sk}"/><circle cx="${120-ex}" cy="63" r="6" fill="${sk}"/>`;
-  const body = `<rect x="53" y="82" width="14" height="12" fill="${sk}"/><path d="M18,122 Q20,92 60,90 Q100,92 102,122Z" fill="${A.clothes}" stroke="${A.clothes === '#ffffff' ? '#ddd' : 'none'}"/><path d="M52,91 L60,100 L68,91" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
-  const eye = (t, x, y) => {
+  // outfit
+  const torso = `<path d="M18,122 Q20,92 60,90 Q100,92 102,122Z" fill="${C}" stroke="${C === '#ffffff' ? '#ddd' : 'none'}"/>`;
+  let cape = '', outfit = '';
+  switch (A.outfit){
+    case 'hoodie': outfit = `<path d="M36,95 Q38,80 60,80 Q82,80 84,95 Q72,88 60,88 Q48,88 36,95Z" fill="${Cd}"/><path d="M55,96 L54,108 M65,96 L66,108" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><circle cx="54" cy="109" r="1.6" fill="#fff"/><circle cx="66" cy="109" r="1.6" fill="#fff"/><path d="M44,112 Q60,108 76,112 L77,122 L43,122Z" fill="${Cd}"/>`; break;
+    case 'jersey': outfit = `<path d="M24,108 L40,94 M96,108 L80,94" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/><path d="M51,91 Q60,98 69,91" fill="none" stroke="#fff" stroke-width="3"/><text x="60" y="117" font-size="15" font-weight="bold" fill="#fff" text-anchor="middle" font-family="Arial,sans-serif">1</text>`; break;
+    case 'sailor': outfit = `<path d="M42,90 L60,104 L78,90 L96,99 L60,123 L24,99Z" fill="#fff"/><path d="M42,90 L60,104 L78,90" fill="none" stroke="#3a9bff" stroke-width="1.6"/><path d="M53,101 L67,101 L60,113Z" fill="#ef476f"/>`; break;
+    case 'suit': outfit = `<path d="M50,91 L60,116 L70,91Z" fill="#fff"/><path d="M58,94 L62,94 L64.5,108 L60,113 L55.5,108Z" fill="#ef476f"/><path d="M50,91 L57,108 M70,91 L63,108" stroke="${Cd}" stroke-width="2.4"/>`; break;
+    case 'kimono': outfit = `<path d="M48,90 L55,90 L74,123 L65,123Z" fill="#fff"/><path d="M72,90 L65,90 L57,104 L61,108Z" fill="#fff"/><rect x="20" y="110" width="80" height="8" fill="#ffd23f"/>`; break;
+    case 'hero': cape = `<path d="M34,94 Q16,108 8,124 L112,124 Q104,108 86,94Z" fill="#ef476f"/>`; outfit = star(60, 108, 7, '#ffd23f') + `<path d="M50,92 Q60,99 70,92" fill="none" stroke="${Cd}" stroke-width="2.4"/>`; break;
+    default: outfit = `<path d="M52,91 L60,100 L68,91" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
+  }
+  const body = cape + `<rect x="53" y="82" width="14" height="12" fill="${sk}"/>` + torso + outfit;
+  // eyes
+  const eye = (t, x, y, side) => {
     const st = `fill="none" stroke="${dk}" stroke-width="2.8" stroke-linecap="round"`;
     if (t === 'dot') return `<circle cx="${x}" cy="${y}" r="3.3" fill="${dk}"/>`;
     if (t === 'sparkle') return `<ellipse cx="${x}" cy="${y}" rx="5" ry="6" fill="${dk}"/><circle cx="${x+1.8}" cy="${y-2.2}" r="2" fill="#fff"/><circle cx="${x-1.6}" cy="${y+2}" r="1" fill="#fff"/>`;
+    if (t === 'cool') return `<path d="M${x-5},${y+1} Q${x},${y-3.5} ${x+5},${y+1}" ${st}/><circle cx="${x}" cy="${y+1}" r="2.6" fill="${dk}"/><path d="M${x-6},${y-8 + (side>0?2:0)} L${x+6},${y-8 + (side>0?0:2)}" ${st} stroke-width="2.6"/>`;
     if (t === 'smile' || t === 'happy') return `<path d="M${x-4.5},${y+1.5} Q${x},${y-5} ${x+4.5},${y+1.5}" ${st}/>`;
     if (t === 'sleepy') return `<path d="M${x-4.5},${y} Q${x},${y+3.5} ${x+4.5},${y}" ${st}/>`;
     if (t === 'think') return `<circle cx="${x-1.5}" cy="${y-1.5}" r="3.3" fill="${dk}"/><path d="M${x-5},${y-10} Q${x},${y-13} ${x+5},${y-10}" ${st} stroke-width="2.2"/>`;
@@ -570,7 +704,8 @@ function avatarSVG(a, expr='normal', vb='0 0 120 120'){
   if (expr === 'happy' || expr === 'cheer') eyes = eye('happy',48,60) + eye('happy',72,60);
   else if (expr === 'think') eyes = eye('think',48,60) + eye('think',72,60);
   else if (A.eyes === 'wink') eyes = eye('round',48,60) + eye('smile',72,60);
-  else eyes = eye(A.eyes,48,60) + eye(A.eyes,72,60);
+  else eyes = eye(A.eyes,48,60,-1) + eye(A.eyes,72,60,1);
+  if (expr === 'normal' && A.eyes !== 'smile' && A.eyes !== 'sleepy') eyes = `<g class="av-eyes">${eyes}</g>`;
   const mst = `fill="none" stroke="${dk}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"`;
   const openM = `<path d="M51,72 Q60,88 69,72Z" fill="#a33a3a"/><path d="M55,80 Q60,84.5 65,80 Q60,76.5 55,80Z" fill="#ff8a8a"/>`;
   const mouths = {
@@ -578,11 +713,12 @@ function avatarSVG(a, expr='normal', vb='0 0 120 120'){
     grin:`<path d="M50,72 Q60,86 70,72Z" fill="#fff" stroke="${dk}" stroke-width="2.2" stroke-linejoin="round"/>`,
     cat:`<path d="M51,74 Q55.5,79 60,74 Q64.5,79 69,74" ${mst}/>`,
     small:`<ellipse cx="60" cy="76" rx="3.5" ry="3" fill="#a33a3a"/>`,
-    flat:`<path d="M54,76 L66,76" ${mst}/>`
+    flat:`<path d="M54,76 L66,76" ${mst}/>`,
+    fang:`<path d="M52,74 Q60,82 68,74" ${mst}/><path d="M63,76.5 L64.5,81 L66.5,75.5Z" fill="#fff" stroke="${dk}" stroke-width="1"/>`
   };
   const mouth = (expr === 'happy' || expr === 'cheer') ? openM : expr === 'think' ? `<path d="M53,77 Q56.5,74 60,77 Q63.5,80 67,77" ${mst}/>` : (mouths[A.mouth] || mouths.smile);
   const cheeks = A.cheek ? `<ellipse cx="40" cy="70" rx="5.5" ry="3.5" fill="#ff8fa3" opacity=".55"/><ellipse cx="80" cy="70" rx="5.5" ry="3.5" fill="#ff8fa3" opacity=".55"/>` : '';
-  const star = (cx, cy, r, f) => { let p=''; for (let i=0;i<10;i++){ const rr = i%2 ? r*0.45 : r; const a = -Math.PI/2 + i*Math.PI/5; p += (i?'L':'M') + (cx+Math.cos(a)*rr).toFixed(1) + ',' + (cy+Math.sin(a)*rr).toFixed(1); } return `<path d="${p}Z" fill="${f}" stroke="#e0a100" stroke-width="1"/>`; };
+  const flower = (x, y, c) => [0,1,2,3,4].map(i => { const an = i*Math.PI*2/5; return `<circle cx="${(x+Math.cos(an)*3.6).toFixed(1)}" cy="${(y+Math.sin(an)*3.6).toFixed(1)}" r="3" fill="${c}"/>`; }).join('') + `<circle cx="${x}" cy="${y}" r="2.4" fill="#ffd23f"/>`;
   const acc = {
     none:'',
     glasses:`<g fill="rgba(255,255,255,.18)" stroke="${dk}" stroke-width="2.2"><circle cx="48" cy="60" r="8"/><circle cx="72" cy="60" r="8"/></g><path d="M56,60 Q60,57 64,60 M40,59 L31,57 M80,59 L89,57" fill="none" stroke="${dk}" stroke-width="2.2" stroke-linecap="round"/>`,
@@ -591,52 +727,81 @@ function avatarSVG(a, expr='normal', vb='0 0 120 120'){
     cap:`<path d="M27,47 Q28,15 60,15 Q92,15 93,47Z" fill="#ef476f"/><path d="M78,45 Q100,42 108,48 Q98,52 78,50Z" fill="#c9304f"/><circle cx="60" cy="15" r="3.5" fill="#c9304f"/>`,
     headphones:`<path d="M27,60 Q27,15 60,15 Q93,15 93,60" fill="none" stroke="#4a4f63" stroke-width="5" stroke-linecap="round"/><rect x="20" y="52" width="12" height="20" rx="5" fill="#ff7a2f"/><rect x="88" y="52" width="12" height="20" rx="5" fill="#ff7a2f"/>`,
     star: star(84, 30, 9, '#ffd23f'),
-    crown:`<path d="M38,30 L42,10 L51,22 L60,6 L69,22 L78,10 L82,30Z" fill="#ffc93c" stroke="#e0a100" stroke-width="1.6" stroke-linejoin="round"/><circle cx="60" cy="22" r="3" fill="#ef476f"/><circle cx="48" cy="25" r="2.2" fill="#3a9bff"/><circle cx="72" cy="25" r="2.2" fill="#3cc47c"/>`,
-    catears:`<path d="M31,42 L33,10 L52,27Z M89,42 L87,10 L68,27Z" fill="${hc}"/><path d="M35,34 L36,17 L46,27Z M85,34 L84,17 L74,27Z" fill="#ffb3c7"/>`
+    headband:`<path d="M28,44 Q60,34 92,44 L92,51 Q60,41 28,51Z" fill="#ef476f"/><path d="M90,46 L104,38 L101,50Z M90,48 L102,56 L94,58Z" fill="#ef476f"/><circle cx="60" cy="42" r="4" fill="#fff"/><circle cx="60" cy="42" r="2.2" fill="#ef476f"/>`,
+    flower: flower(36,36,'#ff8fb1') + flower(48,27,'#fff') + flower(60,24,'#ffb36b') + flower(72,27,'#fff') + flower(84,36,'#ff8fb1'),
+    catears:`<path d="M31,42 L33,10 L52,27Z M89,42 L87,10 L68,27Z" fill="${hc}"/><path d="M35,34 L36,17 L46,27Z M85,34 L84,17 L74,27Z" fill="#ffb3c7"/>`,
+    wizard:`<path d="M36,38 L64,-2 L84,38Z" fill="#5b3cc4"/><ellipse cx="60" cy="39" rx="34" ry="7" fill="#4a2fa8"/>` + star(62, 22, 5, '#ffd23f') + star(72, 32, 3, '#ffd23f'),
+    horns:`<path d="M38,36 Q28,18 38,6 Q40,22 47,31Z M82,36 Q92,18 82,6 Q80,22 73,31Z" fill="#ffd23f" stroke="#e0a100" stroke-width="1.4"/>`,
+    halo:`<ellipse cx="60" cy="13" rx="20" ry="5.5" fill="none" stroke="#ffd23f" stroke-width="4"/><ellipse cx="60" cy="13" rx="20" ry="5.5" fill="none" stroke="#fff6c2" stroke-width="1.4"/>`,
+    crown:`<path d="M38,30 L42,10 L51,22 L60,6 L69,22 L78,10 L82,30Z" fill="#ffc93c" stroke="#e0a100" stroke-width="1.6" stroke-linejoin="round"/><circle cx="60" cy="22" r="3" fill="#ef476f"/><circle cx="48" cy="25" r="2.2" fill="#3a9bff"/><circle cx="72" cy="25" r="2.2" fill="#3cc47c"/>`
   }[A.acc] || '';
   const sweat = expr === 'think' ? `<path d="M92,40 Q97,48 92,52 Q87,48 92,40Z" fill="#7cc6ff"/>` : '';
-  const spark = expr === 'cheer' ? star(16,28,8,'#ffd23f') + star(104,22,7,'#ffd23f') + star(106,98,6,'#ffd23f') + star(14,96,6,'#ffd23f') : '';
-  return `<svg viewBox="${vb}" class="av" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="${id}"><circle cx="60" cy="60" r="60"/></clipPath></defs><g clip-path="url(#${id})"><rect width="120" height="120" fill="${A.bg}"/>${back}${body}${ears}${head}${front}${cheeks}${eyes}${mouth}${acc}${sweat}</g>${spark}</svg>`;
+  // outside the circle
+  let outside = '';
+  if (A.effect === 'rainbow'){ defs += `<linearGradient id="${id}r" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff6b6b"/><stop offset=".25" stop-color="#ffd23f"/><stop offset=".5" stop-color="#3cc47c"/><stop offset=".75" stop-color="#3a9bff"/><stop offset="1" stop-color="#9b7bff"/></linearGradient>`; outside += `<circle cx="60" cy="60" r="57.5" fill="none" stroke="url(#${id}r)" stroke-width="5"/>`; }
+  if (A.effect === 'sparkle') outside += spark(12,24,6,'#ffd23f') + spark(108,30,5,'#fff') + spark(110,78,4,'#ffd23f') + spark(9,86,5,'#fff') + spark(60,4,4,'#ffd23f');
+  if (expr === 'cheer') outside += star(16,28,8,'#ffd23f') + star(104,22,7,'#ffd23f') + star(106,98,6,'#ffd23f') + star(14,96,6,'#ffd23f');
+  const pets = {
+    chick:`<circle cx="101" cy="104" r="12" fill="#ffd23f" stroke="#fff" stroke-width="2"/><path d="M98,92 Q100,86 103,92" fill="none" stroke="#f2b705" stroke-width="2"/><circle cx="97" cy="101" r="1.8" fill="${dk}"/><path d="M91,104 L86,106.5 L91,109Z" fill="#ff9a3c"/><path d="M104,105 Q113,101 110,111Z" fill="#f2b705"/>`,
+    cat:`<path d="M90,97 L90,83 L99,92Z M112,97 L112,83 L103,92Z" fill="#f4a259" stroke="#fff" stroke-width="1.5"/><circle cx="101" cy="103" r="12" fill="#f4a259" stroke="#fff" stroke-width="2"/><circle cx="97" cy="101" r="1.7" fill="${dk}"/><circle cx="105" cy="101" r="1.7" fill="${dk}"/><path d="M99.5,105 L102.5,105 L101,106.8Z" fill="#ff7a9a"/><path d="M92,106 L85,105 M92,108 L86,110 M110,106 L117,105 M110,108 L116,110" stroke="${dk}" stroke-width=".8"/>`,
+    dog:`<circle cx="101" cy="103" r="12" fill="#d9a066" stroke="#fff" stroke-width="2"/><ellipse cx="90" cy="101" rx="4.5" ry="9" fill="#8a5a2b" transform="rotate(18 90 101)"/><ellipse cx="112" cy="101" rx="4.5" ry="9" fill="#8a5a2b" transform="rotate(-18 112 101)"/><circle cx="97" cy="101" r="1.7" fill="${dk}"/><circle cx="105" cy="101" r="1.7" fill="${dk}"/><ellipse cx="101" cy="106" rx="2.6" ry="2" fill="${dk}"/><path d="M99.5,108.5 Q101,113 102.5,108.5Z" fill="#ff7a9a"/>`,
+    robot:`<path d="M101,92 L101,85" stroke="#7a8296" stroke-width="2"/><circle cx="101" cy="84" r="2.4" fill="#ef476f"/><rect x="89" y="92" width="24" height="21" rx="6" fill="#aab4c8" stroke="#fff" stroke-width="2"/><rect x="93" y="98" width="6" height="5" rx="1.5" fill="#5bf0ff"/><rect x="103" y="98" width="6" height="5" rx="1.5" fill="#5bf0ff"/><path d="M96,108 L106,108" stroke="#4a4f63" stroke-width="1.8" stroke-linecap="round"/>`,
+    dragon:`<path d="M109,100 L120,88 L117,107Z" fill="#2fa463"/><path d="M93,95 L89,85 L97,92Z M109,95 L113,85 L105,92Z" fill="#ffd23f"/><ellipse cx="101" cy="104" rx="12.5" ry="11" fill="#3cc47c" stroke="#fff" stroke-width="2"/><circle cx="96.5" cy="101" r="2.2" fill="${dk}"/><circle cx="105.5" cy="101" r="2.2" fill="${dk}"/><circle cx="97.2" cy="100.2" r=".8" fill="#fff"/><circle cx="106.2" cy="100.2" r=".8" fill="#fff"/><path d="M96,108 Q101,111 106,108" fill="none" stroke="${dk}" stroke-width="1.4" stroke-linecap="round"/>`
+  }[A.pet];
+  if (pets) outside += `<g class="av-pet">${pets}</g>`;
+  return `<svg viewBox="${vb}" class="av${live ? ' av-live' : ''}" xmlns="http://www.w3.org/2000/svg"><defs>${defs}</defs><g clip-path="url(#${id}c)">${bg}${behind}${back}${body}${ears}${head}${front}${cheeks}${eyes}${mouth}${acc}${sweat}</g>${outside}</svg>`;
 }
 function hop(node){ node.classList.remove('hop'); void node.offsetWidth; node.classList.add('hop'); }
 let lastTotal = 0;
-function checkUnlock(){
-  const t = totalStars();
-  const got = ACCS.filter(a => a[2] > lastTotal && a[2] <= t);
-  lastTotal = t;
-  if (got.length) setTimeout(() => toast(`🎁 ★が ${t}こに なったよ！ こもの「${got.map(a => a[1]).join('」「')}」が つかえるように なったよ`), 1200);
+function checkUnlock(){ lastTotal = totalStars(); }
+function openBuy(key, val, label, price, after){
+  const box = openOv();
+  box.appendChild(el('div',{class:'msg',text:`「${label}」`}));
+  box.appendChild(el('div',{class:'buy-av',html:avatarSVG(Object.assign({}, AV, {[key]:val}), 'happy', '0 0 120 120', true)}));
+  const can = META.pts >= price;
+  box.appendChild(el('div',{style:'font-size:20px;margin:6px 0',html:`ねだん <b class="coin">🪙 ${price}</b>　／　もっている <b class="coin">🪙 ${META.pts}</b>`}));
+  const btns = el('div',{class:'btns'});
+  const buy = el('button',{class:'big-btn' + (can ? ' green' : ' gray'),html: can ? `🛍️ 🪙${price} で かう` : `あと 🪙${price - META.pts} あつめよう`});
+  buy.onclick = () => {
+    if (!can){ closeOv(); return; }
+    META.pts -= price; META.owned.push(key + ':' + val); saveMeta();
+    AV[key] = val; saveAV(); beep('win'); confetti(16); closeOv();
+    toast(`「${label}」を てに いれた！`); if (after) after();
+  };
+  const no = el('button',{class:'big-btn gray',text:'やめる'}); no.onclick = closeOv;
+  btns.appendChild(buy); btns.appendChild(no); box.appendChild(btns);
 }
 function renderAvatar(s){
-  setTitle('じぶんの キャラを つくろう');
+  setTitle('キャラ・ショップ');
   const wrap = el('div',{class:'ave'});
   const left = el('div',{class:'card ave-prev'});
   const big = el('button',{class:'av-big'});
   const nm = el('div',{class:'av-name'});
+  const coin = el('div',{class:'av-coin'});
   let expr = 'normal';
-  const draw = () => { big.innerHTML = avatarSVG(AV, expr); nm.textContent = AV.name || '（なまえ なし）'; };
+  const draw = () => { big.innerHTML = avatarSVG(AV, expr, '0 0 120 120', true); nm.textContent = AV.name || '（なまえ なし）'; coin.innerHTML = `🪙 <b>${META.pts}</b>`; };
   big.onclick = () => { const o = ['normal','happy','think','cheer']; expr = o[(o.indexOf(expr)+1) % o.length]; draw(); hop(big); beep('tap'); };
-  left.appendChild(big); left.appendChild(nm);
-  left.appendChild(el('div',{class:'muted',style:'font-size:14px;margin-top:4px',text:'キャラを タッチすると かおが かわるよ'}));
-  const lb = el('div',{class:'row',style:'margin-top:12px'});
+  left.appendChild(coin); left.appendChild(big); left.appendChild(nm);
+  left.appendChild(el('div',{class:'muted',style:'font-size:13px;margin-top:2px',text:'キャラを タッチすると かおが かわるよ'}));
+  const lb = el('div',{class:'row',style:'margin-top:10px'});
   const rnd = el('button',{class:'big-btn gray',html:'🎲 おまかせ'});
   const ok = el('button',{class:'big-btn green',html:'✅ できた'});
   lb.appendChild(rnd); lb.appendChild(ok); left.appendChild(lb);
   const right = el('div',{class:'card'});
   const tabs = el('div',{class:'av-tabs'});
   const panel = el('div',{class:'av-panel'});
-  const TABS = [['face','🙂','かお'],['hair','💇','かみ'],['eyes','👀','め'],['mouth','👄','くち'],['clothes','👕','ふく'],['acc','🎀','こもの'],['name','✏️','なまえ']];
+  const TABS = [['face','🙂','かお'],['hair','💇','かみ'],['eyes','👀','め・くち'],['outfit','👕','ふく'],['acc','🎀','こもの'],['pet','🐣','ペット'],['bg','🌈','はいけい'],['name','✏️','なまえ']];
   let tab = 'face';
-  const total = totalStars();
   const set = patch => { Object.assign(AV, patch); saveAV(); expr = 'normal'; draw(); hop(big); beep('tap'); fill(); };
+  const FACEVB = '22 18 76 76', BODYVB = '0 50 120 70';
   const thumbs = (title, list, key, opts={}) => {
-    panel.appendChild(el('h4',{text:title}));
+    if (title) panel.appendChild(el('h4',{text:title}));
     const g = el('div',{class:'av-opts'});
     list.forEach(item => {
-      const [v, label, need=0] = item;
-      const locked = need > total;
-      const b = el('button',{class:'av-opt' + (AV[key] === v ? ' on' : '') + (locked ? ' locked' : '')});
-      b.innerHTML = avatarSVG(Object.assign({}, AV, {[key]:v}), 'normal', opts.vb || '0 0 120 120') + `<span>${locked ? '🔒 ★' + need : esc(label)}</span>`;
-      b.onclick = () => locked ? toast(`★を あと ${need - total}こ あつめると つかえるよ`) : set({[key]:v});
+      const [v, label] = item; const price = priceOf(key, v); const mine = owns(key, v);
+      const b = el('button',{class:'av-opt' + (AV[key] === v ? ' on' : '') + (mine ? '' : ' locked')});
+      b.innerHTML = avatarSVG(Object.assign({}, AV, {[key]:v}), 'normal', opts.vb || '0 0 120 120') + `<span>${mine ? esc(label) : '🪙' + price}</span>`;
+      b.onclick = () => mine ? set({[key]:v}) : openBuy(key, v, label, price, () => { draw(); fill(); });
       g.appendChild(b);
     });
     panel.appendChild(g);
@@ -647,16 +812,16 @@ function renderAvatar(s){
     list.forEach(c => { const b = el('button',{class:'sw' + (AV[key] === c ? ' on' : ''),style:`background:${c}`}); b.onclick = () => set({[key]:c}); g.appendChild(b); });
     panel.appendChild(g);
   };
-  const FACEVB = '22 18 76 76';
   function fill(){
     panel.innerHTML = '';
     tabs.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.t === tab));
     if (tab === 'face'){ thumbs('かおの かたち', FACES, 'face'); swatches('はだの いろ', SKINS, 'skin'); thumbs('ほっぺ', [[true,'あり'],[false,'なし']], 'cheek', {vb:FACEVB}); }
-    if (tab === 'hair'){ thumbs('かみがた', HAIRS, 'hair'); swatches('かみの いろ', HAIR_COLORS, 'hairColor'); }
-    if (tab === 'eyes') thumbs('め', EYES, 'eyes', {vb:FACEVB});
-    if (tab === 'mouth') thumbs('くち', MOUTHS, 'mouth', {vb:FACEVB});
-    if (tab === 'clothes'){ swatches('ふくの いろ', CLOTHES, 'clothes'); swatches('うしろの いろ', BGS, 'bg'); }
-    if (tab === 'acc'){ thumbs('こもの', ACCS, 'acc'); panel.appendChild(el('p',{class:'muted',style:'font-size:14px',text:`いまの ★は ${total}こ。★を あつめると 🔒の こものが つかえるように なるよ`})); }
+    if (tab === 'hair'){ thumbs('', HAIRS, 'hair'); swatches('かみの いろ', HAIR_COLORS, 'hairColor'); }
+    if (tab === 'eyes'){ thumbs('め', EYES, 'eyes', {vb:FACEVB}); thumbs('くち', MOUTHS, 'mouth', {vb:FACEVB}); }
+    if (tab === 'outfit'){ thumbs('', OUTFITS, 'outfit', {vb:BODYVB}); swatches('ふくの いろ', CLOTHES, 'clothes'); }
+    if (tab === 'acc') thumbs('', ACCS, 'acc');
+    if (tab === 'pet') thumbs('', PETS, 'pet');
+    if (tab === 'bg'){ swatches('いろ', BGS, 'bg'); thumbs('もよう', BG_PATTERNS, 'bg'); thumbs('エフェクト', EFFECTS, 'effect'); }
     if (tab === 'name'){
       panel.appendChild(el('h4',{text:'なまえ（8もじまで）'}));
       const inp = el('input',{type:'text',maxlength:8,value:AV.name,placeholder:'ここに なまえを かいてね',class:'av-input',autocomplete:'off'});
@@ -664,37 +829,258 @@ function renderAvatar(s){
       panel.appendChild(inp);
       panel.appendChild(el('p',{class:'muted',style:'font-size:14px',text:'ホームや はなまるの ときに よばれるよ'}));
     }
+    if (['outfit','acc','pet','bg'].includes(tab)) panel.appendChild(el('p',{class:'muted',style:'font-size:13px;margin:8px 0 0',text:'🪙の ついた ものは ポイントで かえるよ。タッチすると ためしに きせて みられるよ'}));
+    requestAnimationFrame(layout);
   }
   TABS.forEach(([t,i,l]) => { const b = el('button',{'data-t':t,html:`<span>${i}</span>${l}`}); b.onclick = () => { tab = t; fill(); }; tabs.appendChild(b); });
   rnd.onclick = () => {
-    const pick = a => a[Math.floor(Math.random()*a.length)];
-    Object.assign(AV, {face:pick(FACES)[0], skin:pick(SKINS), cheek:Math.random()<.6, hair:pick(HAIRS)[0], hairColor:pick(HAIR_COLORS), eyes:pick(EYES)[0], mouth:pick(MOUTHS)[0],
-      clothes:pick(CLOTHES), bg:pick(BGS), acc:pick(ACCS.filter(a => a[2] <= total))[0]});
+    const pick = (a, key) => { const ok = key ? a.filter(x => owns(key, x[0])) : a; return ok[Math.floor(Math.random()*ok.length)]; };
+    const any = a => a[Math.floor(Math.random()*a.length)];
+    Object.assign(AV, {face:any(FACES)[0], skin:any(SKINS), cheek:Math.random()<.6, hair:any(HAIRS)[0], hairColor:any(HAIR_COLORS), eyes:any(EYES)[0], mouth:any(MOUTHS)[0],
+      outfit:pick(OUTFITS,'outfit')[0], clothes:any(CLOTHES), bg:any(BGS), acc:pick(ACCS,'acc')[0], pet:pick(PETS,'pet')[0], effect:pick(EFFECTS,'effect')[0]});
     saveAV(); expr = 'happy'; draw(); hop(big); beep('ok'); fill();
   };
-  ok.onclick = () => { saveAV(); beep('win'); back(); };
+  ok.onclick = () => { saveAV(); progressChanged(); beep('win'); back(); };
   right.appendChild(tabs); right.appendChild(panel);
   wrap.appendChild(left); wrap.appendChild(right);
   s.appendChild(wrap);
   draw(); fill();
-  const _fill = fill; fill = function(){ _fill(); requestAnimationFrame(layout); };
+}
+
+/* ===== ポイント・ログインボーナス・ミッション・バッジ ===== */
+const today = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const dayDiff = (a, b) => Math.round((new Date(b + 'T12:00:00') - new Date(a + 'T12:00:00')) / 864e5);
+const md = s => { const p = String(s).split('-'); return p.length === 3 ? `${+p[1]}/${+p[2]}` : ''; };
+const META_DEFAULT = {pts:0, earned:0, owned:[], badges:{}, days:{}, last:'', streak:0, best:0, hana:0, tests:0, perfect:0, welcomed:false, mis:{}};
+let META = Object.assign({}, META_DEFAULT, store.get('kkr.meta', {}));
+['owned'].forEach(k => { if (!Array.isArray(META[k])) META[k] = []; });
+['badges','days','mis'].forEach(k => { if (!META[k] || typeof META[k] !== 'object') META[k] = {}; });
+// 以前に★で使えた こもの は もっている ことに する
+if (!META.owned.length && ['crown','catears','sunglasses'].includes(AV.acc)) META.owned.push('acc:' + AV.acc);
+const saveMeta = () => { store.set('kkr.meta', META); touch(); };
+function dayRec(){ const t = today(); return META.days[t] = META.days[t] || {}; }
+function bump(key, n=1){ const r = dayRec(); r[key] = (r[key] || 0) + n; }
+const masterCount = () => DATA.filter(d => stars(d.k) === 3).length;
+const doneCount = () => DATA.filter(d => { const p = prog[d.k]; return p && (p.tr || p.fr); }).length;
+const practicedDays = () => Object.values(META.days).filter(r => (r.done || 0) + (r.tests || 0) > 0).length;
+/* ごほうびの おしらせ（じゅんばんに でる） */
+const rewardQ = []; let rewardBusy = false;
+function rewardToast(icon, title, pts){
+  rewardQ.push({icon, title, pts});
+  if (!rewardBusy) nextReward();
+}
+function nextReward(){
+  const r = rewardQ.shift(); if (!r){ rewardBusy = false; return; }
+  rewardBusy = true;
+  let t = document.getElementById('reward');
+  if (!t){ t = el('div',{id:'reward'}); document.body.appendChild(t); }
+  t.innerHTML = `<span class="ri">${r.icon}</span><span class="rt">${esc(r.title)}</span>${r.pts ? `<b class="rp">+${r.pts} 🪙</b>` : ''}`;
+  t.className = 'show'; beep('win');
+  setTimeout(() => { t.className = ''; setTimeout(nextReward, 350); }, 2600);
+}
+function addPts(n, icon, title){ if (!n) return; META.pts += n; META.earned += n; if (title) rewardToast(icon, title, n); updCoins(); }
+function updCoins(){ document.querySelectorAll('.coin-now').forEach(e => e.textContent = META.pts); }
+/* ミッション */
+const MISSION_POOL = [
+  {id:'kanji3', t:'かんじを 3こ れんしゅう しよう', goal:3, key:'done', pts:15},
+  {id:'free3', t:'おてほん なしで 3こ かこう', goal:3, key:'fr', pts:20},
+  {id:'hana2', t:'はなまるを 2こ もらおう', goal:2, key:'hana', pts:20},
+  {id:'test1', t:'かきとりテストを 1かい やろう', goal:1, key:'tests', pts:20},
+  {id:'good8', t:'テストで 8もん いじょう せいかい', goal:8, key:'bestTest', pts:30},
+  {id:'new2', t:'はじめての かんじを 2こ れんしゅう', goal:2, key:'newk', pts:20},
+  {id:'trace5', t:'なぞりがきを 5こ やろう', goal:5, key:'tr', pts:15}
+];
+function todaysMissions(t = today()){
+  let h = 0; for (const c of t) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  const pool = MISSION_POOL.slice(), out = [];
+  while (out.length < 3){ h = (h * 1103515245 + 12345) >>> 0; out.push(pool.splice(h % pool.length, 1)[0]); }
+  return out;
+}
+const missionProg = m => Math.min(m.goal, (dayRec()[m.key] || 0));
+function checkMissions(){
+  const t = today(); const st = META.mis[t] = META.mis[t] || {};
+  const ms = todaysMissions(t);
+  ms.forEach(m => { if (!st[m.id] && missionProg(m) >= m.goal){ st[m.id] = 1; addPts(m.pts, '🎯', 'ミッション クリア！ ' + m.t); } });
+  if (!st.all && ms.every(m => st[m.id])){ st.all = 1; addPts(30, '🏅', 'きょうの ミッション ぜんぶ クリア！'); }
+  Object.keys(META.mis).sort().slice(0, -7).forEach(k => delete META.mis[k]);
+}
+/* バッジ */
+const BADGES = [
+  {id:'first', icon:'🌱', t:'はじめの いっぽ', d:'はじめて かんじを れんしゅう した', pts:10, ok:() => doneCount() >= 1},
+  {id:'av', icon:'🎨', t:'キャラ デビュー', d:'じぶんの キャラを つくった', pts:10, ok:() => hasAV},
+  {id:'hana1', icon:'💮', t:'はじめての はなまる', d:'はなまるを 1こ もらった', pts:10, ok:() => META.hana >= 1},
+  {id:'hana10', icon:'🌸', t:'はなまる 10こ', d:'はなまるを 10こ もらった', pts:20, ok:() => META.hana >= 10},
+  {id:'hana50', icon:'🌺', t:'はなまる 50こ', d:'はなまるを 50こ もらった', pts:50, ok:() => META.hana >= 50},
+  {id:'hana100', icon:'💐', t:'はなまる 100こ', d:'はなまるを 100こ もらった', pts:100, ok:() => META.hana >= 100},
+  {id:'t1', icon:'📝', t:'はじめての テスト', d:'かきとりテストを さいごまで やった', pts:10, ok:() => META.tests >= 1},
+  {id:'t10', icon:'📚', t:'テスト 10かい', d:'かきとりテストを 10かい やった', pts:40, ok:() => META.tests >= 10},
+  {id:'tp', icon:'💯', t:'ぜんもん せいかい', d:'テストで ぜんもん せいかい した', pts:50, ok:() => META.perfect >= 1},
+  {id:'m10', icon:'⭐', t:'マスター 10じ', d:'★3の かんじが 10こ', pts:30, ok:() => masterCount() >= 10},
+  {id:'m50', icon:'🌟', t:'マスター 50じ', d:'★3の かんじが 50こ', pts:80, ok:() => masterCount() >= 50},
+  {id:'m100', icon:'✨', t:'マスター 100じ', d:'★3の かんじが 100こ', pts:150, ok:() => masterCount() >= 100},
+  {id:'m300', icon:'👑', t:'マスター 300じ', d:'★3の かんじが 300こ', pts:300, ok:() => masterCount() >= 300},
+  {id:'s3', icon:'🔥', t:'3にち れんぞく', d:'3にち つづけて ひらいた', pts:20, ok:() => META.best >= 3},
+  {id:'s7', icon:'☄️', t:'7にち れんぞく', d:'7にち つづけて ひらいた', pts:50, ok:() => META.best >= 7},
+  {id:'s30', icon:'🏆', t:'30にち れんぞく', d:'30にち つづけて ひらいた', pts:200, ok:() => META.best >= 30},
+  {id:'d10', icon:'📅', t:'10にち れんしゅう', d:'れんしゅうした ひが 10にち', pts:40, ok:() => practicedDays() >= 10},
+  {id:'d50', icon:'🗓️', t:'50にち れんしゅう', d:'れんしゅうした ひが 50にち', pts:150, ok:() => practicedDays() >= 50},
+  ...LEVELS.flatMap(L => [
+    {id:'L' + L.lv + 'a', icon:'✏️', t:`${L.lv}きゅう ぜんぶ れんしゅう`, d:`${L.lv}きゅうの かんじを ぜんぶ れんしゅう した`, pts:60, ok:() => L.list.every(k => { const p = prog[k]; return p && (p.tr || p.fr); })},
+    {id:'L' + L.lv + 'm', icon:'🎓', t:`${L.lv}きゅう はかせ`, d:`${L.lv}きゅうの かんじが ぜんぶ ★3`, pts:200, ok:() => L.list.every(k => stars(k) === 3)}
+  ])
+];
+function checkBadges(){
+  BADGES.forEach(b => { if (!META.badges[b.id] && b.ok()){ META.badges[b.id] = today(); addPts(b.pts, b.icon, 'バッジ ゲット！「' + b.t + '」'); } });
+}
+function progressChanged(){ checkMissions(); checkBadges(); saveMeta(); }
+/* ログインボーナス */
+function checkLogin(){
+  const t = today();
+  if (META.last === t) return;
+  META.streak = META.last && dayDiff(META.last, t) === 1 ? META.streak + 1 : 1;
+  META.best = Math.max(META.best || 0, META.streak); META.last = t;
+  let bonus = 10 + Math.min(META.streak - 1, 5) * 2; const lines = [`ログイン ボーナス　+${bonus} 🪙`];
+  if (META.streak % 7 === 0){ bonus += 30; lines.push(`🎉 ${META.streak}にち れんぞく ボーナス　+30 🪙`); }
+  let welcome = 0;
+  if (!META.welcomed){ welcome = 30 + totalStars() * 2; META.welcomed = true; lines.unshift(`🎁 これまでの がんばり ボーナス　+${welcome} 🪙`); }
+  META.pts += bonus + welcome; META.earned += bonus + welcome;
+  saveMeta();
+  setTimeout(() => {
+    const box = openOv();
+    box.appendChild(el('div',{class:'ov-top'}));
+    box.firstChild.appendChild(el('div',{class:'ov-av hop',html:avatarSVG(AV,'cheer','0 0 120 120',true)}));
+    box.firstChild.appendChild(el('div',{class:'login-st',html:`<div class="fire">🔥</div><b>${META.streak}</b><small>にち れんぞく</small>`}));
+    box.appendChild(el('div',{class:'msg',text:(AV.name ? AV.name + '、' : '') + 'きょうも きてくれて ありがとう！'}));
+    box.appendChild(el('div',{class:'login-lines',html:lines.map(esc).join('<br>')}));
+    box.appendChild(el('div',{class:'login-week',html:weekDots()}));
+    box.appendChild(missionList());
+    const b = el('button',{class:'big-btn',style:'width:100%;margin-top:12px',text:'きょうも がんばる！'});
+    b.onclick = () => { closeOv(); progressChanged(); if (cur && cur.name === 'home') render(); };
+    box.appendChild(b);
+    beep('win'); confetti(14);
+  }, 400);
+}
+function weekDots(){
+  const out = []; const d = new Date();
+  for (let i=6;i>=0;i--){ const x = new Date(d); x.setDate(d.getDate() - i); const k = today(x); const r = META.days[k];
+    const did = r && ((r.done||0) + (r.tests||0) > 0) || (k === META.last && i === 0);
+    out.push(`<span class="${did ? 'on' : ''}${i === 0 ? ' td' : ''}"><i>${['にち','げつ','か','すい','もく','きん','ど'][x.getDay()]}</i>${did ? '🔥' : '・'}</span>`); }
+  return out.join('');
+}
+function missionList(){
+  const t = today(); const st = META.mis[t] || {};
+  const box = el('div',{class:'mlist'});
+  box.appendChild(el('div',{class:'mh',html:'🎯 きょうの ミッション <small>ぜんぶ クリアで +30 🪙</small>'}));
+  todaysMissions(t).forEach(m => {
+    const p = missionProg(m), done = st[m.id];
+    box.appendChild(el('div',{class:'mi' + (done ? ' done' : ''),html:`<div class="mt">${done ? '✅' : '⬜'} ${esc(m.t)}</div><div class="mb"><i style="width:${p/m.goal*100}%"></i></div><div class="mr">${p}/${m.goal}　+${m.pts}🪙</div>`}));
+  });
+  return box;
+}
+function openMissions(){
+  const box = openOv();
+  box.appendChild(el('div',{class:'msg',html:`🔥 ${META.streak}にち れんぞく　／　🪙 <span class="coin-now">${META.pts}</span>`}));
+  box.appendChild(el('div',{class:'login-week',html:weekDots()}));
+  box.appendChild(missionList());
+  const b = el('button',{class:'big-btn gray',style:'width:100%;margin-top:12px',text:'とじる'}); b.onclick = closeOv; box.appendChild(b);
+}
+/* きろく がめん */
+function renderRecord(s){
+  setTitle('きろく');
+  const wrap = el('div',{class:'rec'});
+  const left = el('div',{class:'rec-l'});
+  const total = totalStars();
+  left.appendChild(el('div',{class:'card rec-sum',html:`<div class="rs-av">${avatarSVG(AV,'happy','0 0 120 120',true)}</div>
+    <div class="rs-grid">
+      <div><b>🪙 ${META.pts}</b><small>ポイント（ぜんぶで ${META.earned}）</small></div>
+      <div><b>🔥 ${META.streak}</b><small>れんぞく（さいこう ${META.best}）</small></div>
+      <div><b>★ ${total}</b><small>あつめた ★</small></div>
+      <div><b>👑 ${masterCount()}</b><small>マスター（★3）</small></div>
+      <div><b>💮 ${META.hana}</b><small>はなまる</small></div>
+      <div><b>📅 ${practicedDays()}</b><small>れんしゅう した ひ</small></div>
+    </div>`}));
+  // カレンダー（5しゅう）
+  const cal = el('div',{class:'card rec-cal'});
+  cal.appendChild(el('h3',{text:'📅 れんしゅう カレンダー'}));
+  const g = el('div',{class:'calg'});
+  ['にち','げつ','か','すい','もく','きん','ど'].forEach(w => g.appendChild(el('span',{class:'cw',text:w})));
+  const now = new Date(); const start = new Date(now); start.setDate(now.getDate() - now.getDay() - 28);
+  for (let i=0;i<35;i++){
+    const x = new Date(start); x.setDate(start.getDate() + i); const k = today(x); const r = META.days[k] || {};
+    const n = (r.done || 0) + (r.tests || 0); const lv = n === 0 ? 0 : n < 3 ? 1 : n < 8 ? 2 : 3;
+    g.appendChild(el('span',{class:`cd l${lv}${k === today() ? ' td' : ''}${x > now ? ' fu' : ''}`,html:`<i>${x.getDate()}</i>`}));
+  }
+  cal.appendChild(g);
+  cal.appendChild(el('div',{class:'muted',style:'font-size:12px;margin-top:4px',text:'いろが こいほど たくさん れんしゅう した ひ'}));
+  left.appendChild(cal);
+  const right = el('div',{class:'rec-r'});
+  const lvs = el('div',{class:'card rec-lv'});
+  lvs.appendChild(el('h3',{text:'📈 きゅうごとの すすみぐあい'}));
+  LEVELS.forEach(L => {
+    const c = [0,0,0,0]; L.list.forEach(k => c[stars(k)]++); const n = L.list.length;
+    const row = el('button',{class:'lvrow',html:`<span class="ln" style="color:${L.color}">${L.lv}きゅう</span>
+      <span class="lb"><i class="b3" style="width:${c[3]/n*100}%;background:${L.color}"></i><i class="b2" style="width:${c[2]/n*100}%;background:${L.color}"></i><i class="b1" style="width:${c[1]/n*100}%;background:${L.color}"></i></span>
+      <span class="lc">👑${c[3]}<small>/${n}</small></span>`});
+    row.onclick = () => go('list',{g:L.g});
+    lvs.appendChild(row);
+  });
+  lvs.appendChild(el('div',{class:'muted',style:'font-size:12px;margin-top:4px',text:'こい いろ＝★3（マスター）・うすい いろ＝★2・★1'}));
+  right.appendChild(lvs);
+  const bd = el('div',{class:'card rec-bd'});
+  const got = BADGES.filter(b => META.badges[b.id]).length;
+  bd.appendChild(el('h3',{html:`🏅 バッジ <small>${got} / ${BADGES.length}</small>`}));
+  const bg = el('div',{class:'bdg'});
+  BADGES.forEach(b => {
+    const has = META.badges[b.id];
+    const x = el('button',{class:'bdi' + (has ? ' on' : ''),html:`<span>${has ? b.icon : '❔'}</span><small>${esc(b.t)}</small>`});
+    x.onclick = () => toast(`${has ? b.icon : '❔'} ${b.t}：${b.d}（+${b.pts}🪙）${has ? '　' + md(has) + ' に ゲット' : ''}`);
+    bg.appendChild(x);
+  });
+  bd.appendChild(bg); right.appendChild(bd);
+  wrap.appendChild(left); wrap.appendChild(right);
+  s.appendChild(wrap);
 }
 
 /* ===== 保存・クラウド・バックアップ ===== */
 const cloud = {state:'off', ref:null, busy:false, pending:false, last:''};
 let cloudTimer = null;
 function touch(){ store.set('kkr.ts', Date.now()); scheduleCloud(); }
-function snapshot(){ return {app:'kanji-renshu', v:1, ts:store.get('kkr.ts', 0), prog, settings, avatar: hasAV ? AV : null}; }
+function snapshot(){ return {app:'kanji-renshu', v:2, ts:store.get('kkr.ts', 0), prog, settings, avatar: hasAV ? AV : null, meta: META}; }
 const pick = (v, list, def) => list.includes(v) ? v : def;
 function sanitizeAV(a){
   a = a && typeof a === 'object' ? a : {};
+  const ids = l => l.map(x => x[0]);
   return {
-    face: pick(a.face, FACES.map(x=>x[0]), AV_DEFAULT.face), skin: pick(a.skin, SKINS, AV_DEFAULT.skin), cheek: a.cheek !== false,
-    hair: pick(a.hair, HAIRS.map(x=>x[0]), AV_DEFAULT.hair), hairColor: pick(a.hairColor, HAIR_COLORS, AV_DEFAULT.hairColor),
-    eyes: pick(a.eyes, EYES.map(x=>x[0]), AV_DEFAULT.eyes), mouth: pick(a.mouth, MOUTHS.map(x=>x[0]), AV_DEFAULT.mouth),
-    clothes: pick(a.clothes, CLOTHES, AV_DEFAULT.clothes), bg: pick(a.bg, BGS, AV_DEFAULT.bg), acc: pick(a.acc, ACCS.map(x=>x[0]), 'none'),
+    face: pick(a.face, ids(FACES), AV_DEFAULT.face), skin: pick(a.skin, SKINS, AV_DEFAULT.skin), cheek: a.cheek !== false,
+    hair: pick(a.hair, ids(HAIRS), AV_DEFAULT.hair), hairColor: pick(a.hairColor, HAIR_COLORS, AV_DEFAULT.hairColor),
+    eyes: pick(a.eyes, ids(EYES), AV_DEFAULT.eyes), mouth: pick(a.mouth, ids(MOUTHS), AV_DEFAULT.mouth),
+    outfit: pick(a.outfit, ids(OUTFITS), 'tshirt'), clothes: pick(a.clothes, CLOTHES, AV_DEFAULT.clothes),
+    bg: pick(a.bg, BGS.concat(ids(BG_PATTERNS)), AV_DEFAULT.bg), acc: pick(a.acc, ids(ACCS), 'none'),
+    pet: pick(a.pet, ids(PETS), 'none'), effect: pick(a.effect, ids(EFFECTS), 'none'),
     name: String(a.name == null ? '' : a.name).slice(0, 8)
   };
+}
+const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+function sanitizeMeta(m){
+  m = m && typeof m === 'object' ? m : {};
+  const validOwn = new Set(Object.entries(SHOP).flatMap(([k, l]) => l.map(x => k + ':' + x[0])));
+  const badgeIds = new Set(BADGES.map(b => b.id));
+  const days = {}; if (m.days && typeof m.days === 'object') Object.entries(m.days).forEach(([d, r]) => { if (DATE_RE.test(d) && r && typeof r === 'object'){ const o = {}; Object.entries(r).forEach(([k, v]) => { if (/^[a-zA-Z]{1,12}$/.test(k)) o[k] = num(v); }); days[d] = o; } });
+  const badges = {}; if (m.badges && typeof m.badges === 'object') Object.entries(m.badges).forEach(([k, v]) => { if (badgeIds.has(k) && DATE_RE.test(String(v))) badges[k] = String(v); });
+  const mis = {}; if (m.mis && typeof m.mis === 'object') Object.entries(m.mis).forEach(([d, r]) => { if (DATE_RE.test(d) && r && typeof r === 'object'){ const o = {}; Object.keys(r).forEach(k => { if (/^[a-z0-9]{1,10}$/.test(k)) o[k] = 1; }); mis[d] = o; } });
+  return {pts:num(m.pts), earned:num(m.earned), owned:(Array.isArray(m.owned) ? m.owned : []).filter(x => validOwn.has(x)), badges, days, mis,
+    last: DATE_RE.test(String(m.last)) ? String(m.last) : '', streak:num(m.streak), best:num(m.best), hana:num(m.hana), tests:num(m.tests), perfect:num(m.perfect), welcomed: !!m.welcomed};
+}
+function mergeMeta(a, b, bNewer){
+  b = sanitizeMeta(b);
+  const base = bNewer ? Object.assign({}, a, b) : Object.assign({}, b, a);
+  base.owned = [...new Set([...(a.owned||[]), ...b.owned])];
+  base.badges = Object.assign({}, b.badges, a.badges);
+  base.days = Object.assign({}, b.days); Object.entries(a.days || {}).forEach(([d, r]) => { const o = Object.assign({}, base.days[d] || {}); Object.entries(r).forEach(([k, v]) => { o[k] = Math.max(o[k] || 0, v || 0); }); base.days[d] = o; });
+  base.mis = Object.assign({}, b.mis, a.mis);
+  ['earned','best','hana','tests','perfect'].forEach(k => base[k] = Math.max(a[k] || 0, b[k] || 0));
+  base.welcomed = !!(a.welcomed || b.welcomed);
+  return base;
 }
 function sanitizeSettings(s){
   s = s && typeof s === 'object' ? s : {};
@@ -713,6 +1099,7 @@ function mergeProg(a, b, bNewer){
     ['tr','fr','ts','tm'].forEach(f => { const v = Math.max(num(x[f]), num(y[f])); if (v) o[f] = v; });
     const wk = bNewer ? (y.wk !== undefined ? y.wk : x.wk) : (x.wk !== undefined ? x.wk : y.wk);
     if (wk) o.wk = 1;
+    const ld = [x.ld, y.ld].filter(v => DATE_RE.test(String(v))).sort().pop(); if (ld) o.ld = ld;
     if (Object.keys(o).length) out[k] = o;
   });
   return out;
@@ -723,6 +1110,7 @@ function applySnapshot(s){
   prog = mergeProg(prog, s.prog, newer);
   if (newer && s.settings) settings = Object.assign({}, settings, sanitizeSettings(s.settings));
   if (s.avatar && (newer || !hasAV)){ AV = Object.assign({}, AV_DEFAULT, sanitizeAV(s.avatar)); hasAV = true; store.set('kkr.avatar', AV); }
+  if (s.meta){ META = mergeMeta(META, s.meta, newer); store.set('kkr.meta', META); }
   store.set('kkr.prog', prog); store.set('kkr.settings', settings);
   store.set('kkr.ts', Math.max(localTs, remoteTs));
   lastTotal = totalStars();
@@ -739,9 +1127,9 @@ async function initCloud(){
     const snap = await Promise.race([cloud.ref.get(), new Promise((_, rej) => setTimeout(() => rej({code:'timeout'}), 10000))]);
     if (snap.exists){
       const remote = snap.data(); cloud.last = JSON.stringify(remote);
-      const before = JSON.stringify([prog, AV, settings]);
+      const before = JSON.stringify([prog, AV, settings, META]);
       try{ applySnapshot(remote); }catch(e){}
-      if (JSON.stringify([prog, AV, settings]) !== before && cur && ['home','list','kanji'].includes(cur.name)) render();
+      if (JSON.stringify([prog, AV, settings, META]) !== before && cur && ['home','list','kanji'].includes(cur.name)) render();
     }
     cloud.state = 'on';
     await pushCloud();
@@ -846,7 +1234,7 @@ function render(){
   if (practice){ practice.destroy(); practice = null; }
   const s = document.getElementById('s-' + cur.name);
   s.innerHTML = '';
-  ({home:renderHome, list:renderList, kanji:renderKanji, practice:renderPractice, test:renderTest, avatar:renderAvatar})[cur.name](s, cur.params);
+  ({home:renderHome, list:renderList, kanji:renderKanji, practice:renderPractice, test:renderTest, avatar:renderAvatar, record:renderRecord})[cur.name](s, cur.params);
   s.classList.add('on');
   requestAnimationFrame(layout);
   $('#backBtn').classList.toggle('hide', cur.name === 'home');
@@ -865,8 +1253,8 @@ $('#soundBtn').onclick = () => { settings.sound = !settings.sound; saveSet(); up
 function updSound(){ $('#soundBtn').textContent = settings.sound ? '🔊' : '🔇'; }
 $('#setBtn').onclick = openSettings;
 const setTitle = t => $('#title').textContent = t;
-const APP_VERSION = '1.6.0', APP_BUILD = '2026-11-22 16:09';
-const CHANGELOG = [["1.6.0", "2026-11-22", "あたらしい はんを じどうで たしかめて、ボタン ひとつで こうしん できる。ほぞんの ひょうじを わかりやすく。"], ["1.5.0", "2026-11-22", "バージョンを がめんの うえに ひょうじ。タップで こうしんりれき。"], ["1.4.0", "2026-11-22", "iPadの たて・よこ どちらでも スクロールなしで 1がめんに おさまる レイアウト。"], ["1.3.0", "2026-11-22", "きろくの バックアップ（ファイル・ひきつぎコード）。"], ["1.2.0", "2026-11-22", "じぶんの キャラ（アバター）を つくれる。★で こものが ふえる。"], ["1.1.0", "2026-11-22", "ペンの いろと ふとさを えらべる。"], ["1.0.0", "2026-11-22", "さいしょの はん。10きゅう〜5きゅうの かきじゅん・よみ・かきとりテスト。"]];
+const APP_VERSION = '1.7.0', APP_BUILD = '2026-11-22 16:20';
+const CHANGELOG = [["1.7.0", "2026-11-22", "キャラが パワーアップ（ふく・ペット・はいけい・エフェクト）。ポイントと ショップ、まいにちの ログインボーナス、きょうの ミッション、バッジ、きろく がめん。かんじごとの きろくも みられる。"], ["1.6.0", "2026-11-22", "あたらしい はんを じどうで たしかめて、ボタン ひとつで こうしん できる。ほぞんの ひょうじを わかりやすく。"], ["1.5.0", "2026-11-22", "バージョンを がめんの うえに ひょうじ。タップで こうしんりれき。"], ["1.4.0", "2026-11-22", "iPadの たて・よこ どちらでも スクロールなしで 1がめんに おさまる レイアウト。"], ["1.3.0", "2026-11-22", "きろくの バックアップ（ファイル・ひきつぎコード）。"], ["1.2.0", "2026-11-22", "じぶんの キャラ（アバター）を つくれる。★で こものが ふえる。"], ["1.1.0", "2026-11-22", "ペンの いろと ふとさを えらべる。"], ["1.0.0", "2026-11-22", "さいしょの はん。10きゅう〜5きゅうの かきじゅん・よみ・かきとりテスト。"]];
 $('#verBtn').onclick = () => {
   const box = openOv();
   box.appendChild(el('div',{class:'msg',text:`バージョン ${APP_VERSION}`}));
@@ -898,12 +1286,16 @@ function renderHome(s){
   setTitle('かんけん かんじ れんしゅう');
   const total = totalStars();
   const nextAcc = ACCS.find(a => a[2] > total);
-  const me = el('button',{class:'me'});
-  me.innerHTML = `<div class="me-av">${avatarSVG(AV, 'happy')}</div><div class="me-t">
+  const me = el('div',{class:'me'});
+  const ms = todaysMissions(); const mst = META.mis[today()] || {}; const mdone = ms.filter(m => mst[m.id]).length;
+  me.innerHTML = `<button class="me-av av-bob">${avatarSVG(AV, 'happy', '0 0 120 120', true)}</button><div class="me-t">
     <div class="me-hi">${hasAV && AV.name ? esc(AV.name) + '、' : ''}きょうも がんばろう！</div>
-    <div class="me-st">★ <b>${total}</b>こ あつめたよ${nextAcc ? `<small>あと ${nextAcc[2]-total}こで「${nextAcc[1]}」が つかえるよ</small>` : ''}</div></div>
-    <div class="me-edit">${hasAV ? '✏️ キャラを<br>かえる' : '✨ キャラを<br>つくろう'}</div>`;
-  me.onclick = () => { beep('tap'); go('avatar'); };
+    <div class="me-stats"><span class="chip-s">🪙 <b class="coin-now">${META.pts}</b></span><span class="chip-s">🔥 <b>${META.streak}</b>にち</span><span class="chip-s">★ <b>${total}</b></span><span class="chip-s">👑 <b>${masterCount()}</b></span></div></div>
+    <div class="me-btns"><button class="mb1">🎯 ミッション <b>${mdone}/3</b></button><button class="mb2">📊 きろく</button><button class="mb3">🛍️ キャラ</button></div>`;
+  me.querySelector('.me-av').onclick = () => { beep('tap'); go('avatar'); };
+  me.querySelector('.mb1').onclick = () => { beep('tap'); openMissions(); };
+  me.querySelector('.mb2').onclick = () => { beep('tap'); go('record'); };
+  me.querySelector('.mb3').onclick = () => { beep('tap'); go('avatar'); };
   s.appendChild(me);
   s.appendChild(el('p',{class:'pick',text:'れんしゅうする きゅうを えらんでね'}));
   const box = el('div',{class:'levels'});
@@ -1021,7 +1413,8 @@ function renderKanji(s, {k, ctx}){
     `<div class="fact"><div class="l">かくすう</div><div class="v">${d.s.length}<small>かく</small></div></div>
      <div class="fact"><div class="l">きゅう</div><div class="v" style="color:${L.color}">${L.lv}<small>きゅう</small></div></div>
      ${d.r ? `<div class="fact"><div class="l">ぶしゅ</div><div class="v">${esc(d.r)}</div></div>` : ''}
-     <div class="fact"><div class="l">れんしゅう</div><div class="v" style="color:#f5b301;font-size:22px">${starStr(k)}</div></div>`}));
+     <div class="fact frec"><div class="l">きみの きろく</div><div class="v" style="color:#f5b301;font-size:20px">${starStr(k)}</div>
+       <div class="kr">${(() => { const p = prog[k] || {}; return `✏️${p.tr||0} ✍️${p.fr||0} 📝<span class="ok">○${p.ts||0}</span><span class="ng">×${p.tm||0}</span>` + (p.ld ? `<br>さいご ${md(p.ld)}` : '<br>まだ れんしゅう してないよ'); })()}</div></div>`}));
   // よみ
   const yomi = el('div',{class:'sec'});
   yomi.appendChild(el('h3',{html:'🗣️ よみかた <span class="tag">タッチで よみあげ</span>'}));
@@ -1266,9 +1659,15 @@ function renderPractice(s, {k, mode, ctx}){
     finished = true; updDots(); updGuide();
     dots.querySelectorAll('span').forEach(x => x.className = 'done');
     const p = P(k);
-    if (trace) p.tr = (p.tr||0) + 1; else { p.fr = (p.fr||0) + 1; if (miss === 0) p.wk = 0; }
-    saveProg(); checkUnlock();
+    const isNew = !(p.tr || p.fr);
     const perfect = miss === 0;
+    if (trace) p.tr = (p.tr||0) + 1; else { p.fr = (p.fr||0) + 1; if (miss === 0) p.wk = 0; }
+    p.ld = today();
+    saveProg(); checkUnlock();
+    bump('done'); bump(trace ? 'tr' : 'fr'); if (isNew) bump('newk');
+    if (perfect){ bump('hana'); META.hana++; }
+    const gain = trace ? (perfect ? 2 : 1) : (perfect ? 4 : 2);
+    addPts(gain); progressChanged();
     say2('🎉', perfect ? 'ぜんぶ ただしく かけたね！ はなまる！' : `できた！ まちがいは ${miss}かい。もういちど やってみよう`, 'good');
     beep('win'); if (perfect) confetti();
     setTimeout(() => {
@@ -1278,7 +1677,7 @@ function renderPractice(s, {k, mode, ctx}){
       const top = el('div',{class:'ov-top'}); top.appendChild(el('div',{class:'ov-av hop',html:avatarSVG(AV,'cheer')})); top.appendChild(perfect ? hanamaru() : el('div',{class:'mark',style:'color:#20b26b',text:'○'})); box.appendChild(top);
       const nmx = AV.name ? esc(AV.name) + '、' : '';
       box.appendChild(el('div',{class:'msg',html: perfect ? nmx + 'はなまる！ よく できました' : nmx + 'よく がんばったね！'}));
-      box.appendChild(el('div',{style:'color:#f5b301;font-size:30px',text:starStr(k)}));
+      box.appendChild(el('div',{style:'color:#f5b301;font-size:30px',html:`${starStr(k)} <span class="gain">+${gain} 🪙</span>`}));
       const btns = el('div',{class:'btns'});
       if (trace){ const b = el('button',{class:'big-btn green',html:'✍️ つぎは じぶんで かく'}); b.onclick = () => go('practice',{k, mode:'free', ctx}, true); btns.appendChild(b); }
       const again = el('button',{class:'big-btn gray',html:'🔁 もういちど'}); again.onclick = () => go('practice',{k, mode, ctx}, true); btns.appendChild(again);
@@ -1364,8 +1763,9 @@ function renderTest(s, params){
     res.push({k:q.k, mark:r.mark});
     const p = P(q.k);
     if (r.mark === '×'){ p.wk = 1; p.tm = (p.tm||0) + 1; beep('ng'); }
-    else { p.ts = (p.ts||0) + 1; p.wk = 0; beep('ok'); if (r.mark === '◎') confetti(12); }
-    saveProg(); checkUnlock();
+    else { p.ts = (p.ts||0) + 1; p.wk = 0; beep('ok'); if (r.mark === '◎') confetti(12); addPts(r.mark === '◎' ? 3 : 2); }
+    p.ld = today();
+    saveProg(); checkUnlock(); saveMeta();
     const box = openOv();
     const top = el('div',{class:'ov-top'}); top.appendChild(el('div',{class:'ov-av hop',html:avatarSVG(AV, r.mark === '×' ? 'think' : r.mark === '◎' ? 'cheer' : 'happy')}));
     top.appendChild(el('div',{class:'mark',style:`color:${r.mark === '×' ? '#ef476f' : '#20b26b'}`,text:r.mark})); box.appendChild(top);
@@ -1383,6 +1783,12 @@ function renderTest(s, params){
 function renderTestEnd(s, {qs, res, label}){
   setTitle('テストの けっか');
   const good = res.filter(r => r.mark !== '×').length;
+  const pr = cur.params;
+  if (!pr.awarded){
+    pr.awarded = true; META.tests++; bump('tests'); const r0 = dayRec(); r0.bestTest = Math.max(r0.bestTest || 0, good);
+    if (good === res.length && res.length >= 5){ META.perfect++; addPts(20, '💯', 'ぜんもん せいかい ボーナス！'); }
+    progressChanged();
+  }
   const c = el('div',{class:'card',style:'text-align:center;max-width:640px;margin:0 auto'});
   c.appendChild(el('div',{class:'ov-av hop',style:'margin:0 auto 6px',html:avatarSVG(AV, good >= res.length*0.7 ? 'cheer' : 'think')}));
   c.appendChild(el('div',{style:'font-size:22px',text:`${label} かきとり テスト`}));
@@ -1523,7 +1929,7 @@ function applyUpdate(){
   const v = update.remote ? update.remote.version : Date.now();
   location.replace(location.pathname + '?v=' + encodeURIComponent(v) + '-' + Date.now());
 }
-document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && Date.now() - update.last > 60000) checkUpdate(false); });
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible'){ if (Date.now() - update.last > 60000) checkUpdate(false); if (META.last !== today()) checkLogin(); } });
 setInterval(() => { if (document.visibilityState === 'visible') checkUpdate(false); }, 30 * 60000);
 
 /* ===== 起動 ===== */
@@ -1535,6 +1941,8 @@ lastTotal = totalStars();
 home();
 initCloud();
 checkUpdate(false);
+checkLogin();
+setTimeout(progressChanged, 1500);
 </script>
 </body>
 </html>
