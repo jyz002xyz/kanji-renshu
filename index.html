@@ -329,13 +329,19 @@ main.scroll{overflow-y:auto;-webkit-overflow-scrolling:touch}
 .ver{font-size:11px;color:var(--sub);padding:1px 8px;border-radius:8px;background:rgba(0,0,0,.04);margin-top:2px;white-space:nowrap}
 .chlog{text-align:left;font-size:15px;line-height:1.5;display:grid;gap:8px}
 .chlog small{color:var(--sub)}
+
+.ver.new{background:var(--accent);color:#fff;font-weight:bold;font-size:12px;animation:pulse2 1.6s ease-in-out infinite}
+@keyframes pulse2{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.updbox{display:grid;gap:8px;margin:0 0 14px;padding:12px;border-radius:16px;background:#f7f4ee}
+.updst{font-size:15px;min-height:20px}
+.updbox .big-btn{min-height:52px;font-size:18px}
 </style>
 </head>
 <body>
 <div id="app">
   <header>
     <button class="hbtn" id="backBtn" aria-label="もどる">◀<span class="bt"> もどる</span></button>
-    <div class="htitle"><h1 id="title">かんじ れんしゅう</h1><button class="ver" id="verBtn" aria-label="バージョン">v1.5.0・2026-11-22 16:02</button></div>
+    <div class="htitle"><h1 id="title">かんじ れんしゅう</h1><button class="ver" id="verBtn" aria-label="バージョン">v1.6.0・2026-11-22 16:09</button></div>
     <button class="hbtn" id="soundBtn" aria-label="おと">🔊</button>
     <button class="hbtn" id="setBtn" aria-label="せってい">⚙️</button>
   </header>
@@ -760,8 +766,8 @@ async function pushCloud(){
 }
 function cloudLabel(){
   return {on:'☁️ クラウドに じどうで ほぞん されています', loading:'☁️ クラウドと つないでいます…',
-    readonly:'📱 この たんまつだけに ほぞん（クラウドは つかえない アカウントです）', error:'📱 この たんまつだけに ほぞん（クラウドに つながりません）'}[cloud.state]
-    || '📱 この たんまつだけに ほぞん　→ ときどき「バックアップ」してね';
+    readonly:'✅ じどうで ほぞん しています（この たんまつ）', error:'✅ じどうで ほぞん しています（この たんまつ）'}[cloud.state]
+    || '✅ じどうで ほぞん しています（この たんまつ）';
 }
 function updCloudBadge(){ document.querySelectorAll('.cloud-badge').forEach(e => e.textContent = cloudLabel()); }
 /* コード化 */
@@ -859,12 +865,28 @@ $('#soundBtn').onclick = () => { settings.sound = !settings.sound; saveSet(); up
 function updSound(){ $('#soundBtn').textContent = settings.sound ? '🔊' : '🔇'; }
 $('#setBtn').onclick = openSettings;
 const setTitle = t => $('#title').textContent = t;
-const APP_VERSION = '1.5.0', APP_BUILD = '2026-11-22 16:02';
-const CHANGELOG = [["1.5.0", "2026-11-22", "バージョンを がめんの うえに ひょうじ。タップで こうしんりれき。"], ["1.4.0", "2026-11-22", "iPadの たて・よこ どちらでも スクロールなしで 1がめんに おさまる レイアウト。"], ["1.3.0", "2026-11-22", "きろくの バックアップ（ファイル・ひきつぎコード）。"], ["1.2.0", "2026-11-22", "じぶんの キャラ（アバター）を つくれる。★で こものが ふえる。"], ["1.1.0", "2026-11-22", "ペンの いろと ふとさを えらべる。"], ["1.0.0", "2026-11-22", "さいしょの はん。10きゅう〜5きゅうの かきじゅん・よみ・かきとりテスト。"]];
+const APP_VERSION = '1.6.0', APP_BUILD = '2026-11-22 16:09';
+const CHANGELOG = [["1.6.0", "2026-11-22", "あたらしい はんを じどうで たしかめて、ボタン ひとつで こうしん できる。ほぞんの ひょうじを わかりやすく。"], ["1.5.0", "2026-11-22", "バージョンを がめんの うえに ひょうじ。タップで こうしんりれき。"], ["1.4.0", "2026-11-22", "iPadの たて・よこ どちらでも スクロールなしで 1がめんに おさまる レイアウト。"], ["1.3.0", "2026-11-22", "きろくの バックアップ（ファイル・ひきつぎコード）。"], ["1.2.0", "2026-11-22", "じぶんの キャラ（アバター）を つくれる。★で こものが ふえる。"], ["1.1.0", "2026-11-22", "ペンの いろと ふとさを えらべる。"], ["1.0.0", "2026-11-22", "さいしょの はん。10きゅう〜5きゅうの かきじゅん・よみ・かきとりテスト。"]];
 $('#verBtn').onclick = () => {
   const box = openOv();
   box.appendChild(el('div',{class:'msg',text:`バージョン ${APP_VERSION}`}));
   box.appendChild(el('div',{class:'muted',style:'font-size:14px;margin-bottom:10px',text:`つくった にちじ：${APP_BUILD}`}));
+  const upd = el('div',{class:'updbox'});
+  const st = el('div',{class:'updst'});
+  const bChk = el('button',{class:'big-btn blue',html:'🔄 こうしんを たしかめる'});
+  const bGo = el('button',{class:'big-btn green',html:'⬆️ こうしんする',style:'display:none'});
+  const show = () => {
+    if (update.state === 'new'){ st.textContent = `🆕 あたらしい はん v${update.remote.version}（${update.remote.build}）が あります`; bGo.style.display = ''; }
+    else if (update.state === 'latest') st.textContent = '✅ いまの はんが いちばん あたらしいよ';
+    else if (update.state === 'checking') st.textContent = 'たしかめています…';
+    else if (update.state === 'error') st.textContent = 'たしかめられませんでした（ネットに つながっているか みてね）';
+    else if (update.state === 'off') st.textContent = 'この ひらきかたでは こうしんの チェックが できません';
+    else st.textContent = '';
+  };
+  bChk.onclick = async () => { update.state = 'checking'; show(); await checkUpdate(true); show(); };
+  bGo.onclick = applyUpdate;
+  upd.appendChild(st); upd.appendChild(bChk); upd.appendChild(bGo);
+  box.appendChild(upd); show();
   const ul = el('div',{class:'chlog'});
   CHANGELOG.forEach(([v, d, txt]) => ul.appendChild(el('div',{html:`<b>v${esc(v)}</b> <small>${esc(d)}</small><br>${esc(txt)}`})));
   box.appendChild(ul);
@@ -1477,6 +1499,33 @@ window.addEventListener('orientationchange', () => setTimeout(relayout, 250));
 new MutationObserver(relayout).observe(document.getElementById('ovBox'), {childList:true});
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(relayout);
 
+/* ===== こうしんチェック ===== */
+const update = {state:'', remote:null, last:0};
+const verNum = v => String(v).split('.').map(n => parseInt(n,10) || 0);
+const newer = (a, b) => { const x = verNum(a), y = verNum(b); for (let i=0;i<3;i++){ if ((x[i]||0) !== (y[i]||0)) return (x[i]||0) > (y[i]||0); } return false; };
+async function checkUpdate(manual){
+  if (!/^https?:$/.test(location.protocol) || /claude\.ai|claudeusercontent/.test(location.hostname)){ update.state = 'off'; return; }
+  try{
+    const r = await fetch('version.json?t=' + Date.now(), {cache:'no-store'});
+    if (!r.ok) throw new Error('http');
+    const j = await r.json(); update.last = Date.now();
+    if (j && j.version && newer(j.version, APP_VERSION)){ update.state = 'new'; update.remote = j; }
+    else update.state = 'latest';
+  }catch(e){ update.state = 'error'; }
+  updVerBadge();
+}
+function updVerBadge(){
+  const b = document.getElementById('verBtn');
+  if (update.state === 'new'){ b.classList.add('new'); b.textContent = `🆕 あたらしい はん（v${update.remote.version}）`; }
+  else { b.classList.remove('new'); b.textContent = `v${APP_VERSION}・${APP_BUILD}`; }
+}
+function applyUpdate(){
+  const v = update.remote ? update.remote.version : Date.now();
+  location.replace(location.pathname + '?v=' + encodeURIComponent(v) + '-' + Date.now());
+}
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && Date.now() - update.last > 60000) checkUpdate(false); });
+setInterval(() => { if (document.visibilityState === 'visible') checkUpdate(false); }, 30 * 60000);
+
 /* ===== 起動 ===== */
 document.addEventListener('gesturestart', e => e.preventDefault());
 document.addEventListener('dblclick', e => e.preventDefault());
@@ -1485,6 +1534,7 @@ updSound();
 lastTotal = totalStars();
 home();
 initCloud();
+checkUpdate(false);
 </script>
 </body>
 </html>
