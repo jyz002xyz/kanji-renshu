@@ -323,13 +323,19 @@ main.scroll{overflow-y:auto;-webkit-overflow-scrolling:touch}
 .word{font-size:20px}
 .stage .ctrl button{font-size:14px;white-space:normal;line-height:1.25;min-height:50px;padding:4px}
 .tool{font-size:14px;line-height:1.2}
+
+.htitle{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;line-height:1.15}
+.htitle h1{flex:none;max-width:100%}
+.ver{font-size:11px;color:var(--sub);padding:1px 8px;border-radius:8px;background:rgba(0,0,0,.04);margin-top:2px;white-space:nowrap}
+.chlog{text-align:left;font-size:15px;line-height:1.5;display:grid;gap:8px}
+.chlog small{color:var(--sub)}
 </style>
 </head>
 <body>
 <div id="app">
   <header>
     <button class="hbtn" id="backBtn" aria-label="もどる">◀<span class="bt"> もどる</span></button>
-    <h1 id="title">かんじ れんしゅう</h1>
+    <div class="htitle"><h1 id="title">かんじ れんしゅう</h1><button class="ver" id="verBtn" aria-label="バージョン">v1.5.0・2026-11-22 16:02</button></div>
     <button class="hbtn" id="soundBtn" aria-label="おと">🔊</button>
     <button class="hbtn" id="setBtn" aria-label="せってい">⚙️</button>
   </header>
@@ -853,6 +859,17 @@ $('#soundBtn').onclick = () => { settings.sound = !settings.sound; saveSet(); up
 function updSound(){ $('#soundBtn').textContent = settings.sound ? '🔊' : '🔇'; }
 $('#setBtn').onclick = openSettings;
 const setTitle = t => $('#title').textContent = t;
+const APP_VERSION = '1.5.0', APP_BUILD = '2026-11-22 16:02';
+const CHANGELOG = [["1.5.0", "2026-11-22", "バージョンを がめんの うえに ひょうじ。タップで こうしんりれき。"], ["1.4.0", "2026-11-22", "iPadの たて・よこ どちらでも スクロールなしで 1がめんに おさまる レイアウト。"], ["1.3.0", "2026-11-22", "きろくの バックアップ（ファイル・ひきつぎコード）。"], ["1.2.0", "2026-11-22", "じぶんの キャラ（アバター）を つくれる。★で こものが ふえる。"], ["1.1.0", "2026-11-22", "ペンの いろと ふとさを えらべる。"], ["1.0.0", "2026-11-22", "さいしょの はん。10きゅう〜5きゅうの かきじゅん・よみ・かきとりテスト。"]];
+$('#verBtn').onclick = () => {
+  const box = openOv();
+  box.appendChild(el('div',{class:'msg',text:`バージョン ${APP_VERSION}`}));
+  box.appendChild(el('div',{class:'muted',style:'font-size:14px;margin-bottom:10px',text:`つくった にちじ：${APP_BUILD}`}));
+  const ul = el('div',{class:'chlog'});
+  CHANGELOG.forEach(([v, d, txt]) => ul.appendChild(el('div',{html:`<b>v${esc(v)}</b> <small>${esc(d)}</small><br>${esc(txt)}`})));
+  box.appendChild(ul);
+  const c = el('button',{class:'big-btn gray',style:'margin-top:12px;width:100%',text:'とじる'}); c.onclick = closeOv; box.appendChild(c);
+};
 
 /* ===== ホーム ===== */
 function renderHome(s){
