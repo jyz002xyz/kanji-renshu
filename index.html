@@ -451,13 +451,56 @@ body[data-theme=sora] .big-btn{box-shadow:0 5px 0 #1a75cc}
 body[data-theme=sora] .big-btn.gray{box-shadow:0 5px 0 var(--line)}
 .av-tabs{grid-template-columns:repeat(9,1fr)}
 @media (max-width:699px){.av-tabs{grid-template-columns:repeat(5,1fr)}}
+
+/* ---- イベント ---- */
+.evbar{display:flex;align-items:center;gap:10px;width:100%;margin:0 0 8px;padding:8px 14px;border-radius:18px;background:linear-gradient(90deg, color-mix(in srgb, var(--ec) 18%, #fff), #fff);box-shadow:0 3px 0 var(--line), inset 0 0 0 2px color-mix(in srgb, var(--ec) 45%, #fff);text-align:left}
+.evbar .ei{font-size:28px}
+.evbar .et{flex:1;font-weight:bold;font-size:18px;color:var(--ec)}
+.evbar .et small{display:block;font-size:11px;color:var(--sub);font-weight:normal}
+.evbar .ep{font-size:15px;color:var(--ink)}
+.evbar .ea{color:var(--ec);font-size:18px}
+.evw{display:grid;grid-template-columns:minmax(300px,38%) 1fr;gap:12px;align-items:start}
+@media (max-width:699px){.evw{grid-template-columns:1fr}}
+.evw .card{padding:12px 14px;margin-bottom:12px}
+.evw h3{margin:0 0 8px;font-size:16px}
+.evw h3 small{font-weight:normal;color:var(--sub);font-size:12px;margin-left:4px}
+.evban{display:flex;gap:12px;align-items:center;background:linear-gradient(135deg, color-mix(in srgb, var(--ec) 22%, #fff), #fff)}
+.evic{font-size:56px;line-height:1}
+.evt{font-size:24px;font-weight:bold;color:var(--ec)}
+.evd{font-size:13px;color:var(--sub)}
+.evds{font-size:15px;margin-top:4px;line-height:1.5}
+.evrw{display:flex;gap:12px;align-items:center}
+.evrav{width:110px;height:110px;flex:none}
+.evrt{font-size:13px;color:var(--sub)}
+.evrl{font-size:20px;font-weight:bold;color:var(--ec)}
+.evrs{font-size:13px;line-height:1.5;margin-top:2px}
+.evwords{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.evword{position:relative;border-radius:14px;background:#f7f4ee;padding:8px 36px 8px 10px;cursor:pointer}
+.evword.did{background:color-mix(in srgb, var(--ec) 12%, #fff)}
+.evword .ew{font-size:24px;line-height:1.3}
+.evword .ew rt{font-size:11px;color:var(--sub)}
+.evword .ew em{font-style:normal;color:var(--ec);font-weight:bold}
+.evword .ok{font-size:14px;margin-left:4px}
+.evword .em{font-size:12px;color:var(--sub);line-height:1.4;margin-top:2px}
+.evword .esp{position:absolute;top:6px;right:6px;width:28px;height:28px;border-radius:50%;background:#fff;font-size:14px}
+.evprov{position:relative;border-radius:14px;background:#fff6df;padding:8px 92px 8px 12px;margin-bottom:8px}
+.evprov.did{background:#e6f8ee}
+.evprov .pt{font-size:20px;font-weight:bold}
+.evprov .prr{font-size:12px;color:var(--sub)}
+.evprov .pm{font-size:14px;margin-top:2px;line-height:1.45}
+.evprov .pbtn{position:absolute;right:8px;top:50%;transform:translateY(-50%);min-width:76px;min-height:44px;border-radius:14px;background:var(--ec);color:#fff;font-weight:bold;font-size:14px}
+.evprov.did .pbtn{background:var(--ok)}
+.login-ev{margin-top:8px;padding:8px 10px;border-radius:12px;background:#fff6df;font-size:15px;font-weight:bold}
+.av-opt.evonly{background:linear-gradient(135deg,#fff6df,#ffe2ef)}
+.av-opt.evonly span{color:#d9480f}
+.av-opt.evonly::after{content:'🎁'}
 </style>
 </head>
 <body>
 <div id="app">
   <header>
     <button class="hbtn" id="backBtn" aria-label="もどる">◀<span class="bt"> もどる</span></button>
-    <div class="htitle"><h1 id="title">かんじ れんしゅう</h1><button class="ver" id="verBtn" aria-label="バージョン">v1.9.0・2026-11-22 16:46</button></div>
+    <div class="htitle"><h1 id="title">かんじ れんしゅう</h1><button class="ver" id="verBtn" aria-label="バージョン">v2.0.0・2026-11-22 17:13</button></div>
     <button class="hbtn" id="soundBtn" aria-label="おと">🔊</button>
     <button class="hbtn" id="setBtn" aria-label="せってい">⚙️</button>
   </header>
@@ -469,6 +512,7 @@ body[data-theme=sora] .big-btn.gray{box-shadow:0 5px 0 var(--line)}
     <section class="screen" id="s-test"></section>
     <section class="screen" id="s-avatar"></section>
     <section class="screen" id="s-record"></section>
+    <section class="screen" id="s-event"></section>
   </main>
 </div>
 <div class="ov" id="ov"><div class="box" id="ovBox"></div></div>
@@ -643,13 +687,13 @@ const EYES = [['kira','うるうる'],['heart','ハート'],['star','ほし'],['
 const MOUTHS = [['smile','にこっ'],['open','わーい'],['grin','にかっ'],['cat','ねこ'],['small','おちょぼ'],['flat','まじめ'],['fang','キバ']];
 const CLOTHES = ['#3a9bff','#ff6b6b','#3cc47c','#f2b705','#9b7bff','#ff9f43','#ff7eb6','#2b2d42','#ffffff','#ffc2dc','#d9c8ff','#bdf0dc','#bfe3ff'];
 const BGS = ['#ffe8a3','#cdeefd','#ffd6e0','#d8f5d0','#e7dcff','#ffe0c2','#ffffff'];
-const BG_PATTERNS = [['p_yume','ゆめかわ',80],['p_cloud','そらと くも',60],['p_candy','キャンディ',60],['p_stars','ほしぞら',60],['p_hearts','ハート',60],['p_sunset','ゆうやけ',80],['p_rainbow','にじ',100],['p_space','うちゅう',150]];
-const OUTFITS = [['tshirt','Tシャツ',0],['hoodie','パーカー',0],['jersey','ユニフォーム',60],['sailor','セーラー',60],['suit','スーツ',80],['kimono','きもの',100],['hero','ヒーロー',120],['frill','フリルドレス',80],['magical','まほうの ドレス',150]];
+const BG_PATTERNS = [['p_sakura','さくら',-1],['p_moon','おつきみ',-1],['p_yume','ゆめかわ',80],['p_cloud','そらと くも',60],['p_candy','キャンディ',60],['p_stars','ほしぞら',60],['p_hearts','ハート',60],['p_sunset','ゆうやけ',80],['p_rainbow','にじ',100],['p_space','うちゅう',150]];
+const OUTFITS = [['tshirt','Tシャツ',0],['hoodie','パーカー',0],['jersey','ユニフォーム',60],['sailor','セーラー',60],['suit','スーツ',80],['kimono','きもの',100],['hero','ヒーロー',120],['frill','フリルドレス',80],['magical','まほうの ドレス',150],['yukata','ゆかた',-1]];
 const ACCS = [['none','なし',0],['glasses','めがね',0],['ribbon','リボン',0],['cap','ぼうし',0],['headphones','ヘッドホン',0],['star','ほしピン',0],
-  ['heartclip','ハートピン',30],['flowerclip','はなピン',30],['bigribbon','おおきな リボン',60],['tiara','ティアラ',150],['bunny','うさみみ',100],['headband','はちまき',40],['flower','はなかんむり',60],['sunglasses','サングラス',80],['catears','ねこみみ',100],['wizard','まほうの ぼうし',120],['horns','ドラゴンの つの',120],['halo','てんしの わ',150],['crown','おうかん',200]];
+  ['santa','あかい ぼうし',-1],['heartclip','ハートピン',30],['flowerclip','はなピン',30],['bigribbon','おおきな リボン',60],['tiara','ティアラ',150],['bunny','うさみみ',100],['headband','はちまき',40],['flower','はなかんむり',60],['sunglasses','サングラス',80],['catears','ねこみみ',100],['wizard','まほうの ぼうし',120],['horns','ドラゴンの つの',120],['halo','てんしの わ',150],['crown','おうかん',200]];
 const PETS = [['none','なし',0],['chick','ひよこ',50],['hamster','ハムスター',60],['bunny','うさぎ',80],['bear','くま',80],['cat','ねこ',80],['dog','いぬ',80],['unicorn','ユニコーン',200],['robot','ロボ',150],['dragon','ドラゴン',200]];
-const ITEMS = [['none','なし',0],['balloon','ふうせん',40],['icecream','ソフトクリーム',50],['bouquet','はなたば',60],['starwand','ほしの ステッキ',100],['heartwand','ハートの ステッキ',100]];
-const EFFECTS = [['none','なし',0],['sparkle','キラキラ',80],['bubbles','しゃぼんだま',80],['petals','はなびら',80],['hearts','ハート',100],['rainbow','にじの わく',100],['aura','オーラ',120],['fire','ほのお',150]];
+const ITEMS = [['none','なし',0],['kite','たこ',-1],['fukumame','ふくまめ',-1],['diploma','そつぎょうしょうしょ',-1],['koinobori','こいのぼり',-1],['umbrella','かさ',-1],['sasa','ささかざり',-1],['pumpkin','かぼちゃランタン',-1],['balloon','ふうせん',40],['icecream','ソフトクリーム',50],['bouquet','はなたば',60],['starwand','ほしの ステッキ',100],['heartwand','ハートの ステッキ',100]];
+const EFFECTS = [['none','なし',0],['momiji','もみじ',-1],['sparkle','キラキラ',80],['bubbles','しゃぼんだま',80],['petals','はなびら',80],['hearts','ハート',100],['rainbow','にじの わく',100],['aura','オーラ',120],['fire','ほのお',150]];
 const SHOP = {outfit:OUTFITS, acc:ACCS, pet:PETS, effect:EFFECTS, bg:BG_PATTERNS, item:ITEMS};
 const priceOf = (key, val) => { const l = SHOP[key]; if (!l) return 0; const f = l.find(x => x[0] === val); return f ? f[2] : 0; };
 const owns = (key, val) => priceOf(key, val) === 0 || (META.owned || []).includes(key + ':' + val);
@@ -664,6 +708,7 @@ function avatarSVG(a, expr='normal', vb='0 0 120 120', live=false){
   const star = (cx, cy, r, f, cls='') => { let p=''; for (let i=0;i<10;i++){ const rr = i%2 ? r*0.45 : r; const an = -Math.PI/2 + i*Math.PI/5; p += (i?'L':'M') + (cx+Math.cos(an)*rr).toFixed(1) + ',' + (cy+Math.sin(an)*rr).toFixed(1); } return `<path class="${cls}" d="${p}Z" fill="${f}" stroke="#e0a100" stroke-width=".8"/>`; };
   const spark = (x, y, r, f) => `<path class="av-tw" d="M${x},${y-r} Q${x+r*.18},${y-r*.18} ${x+r},${y} Q${x+r*.18},${y+r*.18} ${x},${y+r} Q${x-r*.18},${y+r*.18} ${x-r},${y} Q${x-r*.18},${y-r*.18} ${x},${y-r}Z" fill="${f}"/>`;
   const heart = (x, y, s, f) => `<path d="M${x},${y+3*s} C${x-6*s},${y-3*s} ${x-3*s},${y-8*s} ${x},${y-4*s} C${x+3*s},${y-8*s} ${x+6*s},${y-3*s} ${x},${y+3*s}Z" fill="${f}"/>`;
+  const flower = (x, y, c) => [0,1,2,3,4].map(i => { const an = i*Math.PI*2/5; return `<circle cx="${(x+Math.cos(an)*3.6).toFixed(1)}" cy="${(y+Math.sin(an)*3.6).toFixed(1)}" r="3" fill="${c}"/>`; }).join('') + `<circle cx="${x}" cy="${y}" r="2.4" fill="#ffd23f"/>`;
   let defs = `<clipPath id="${id}c"><circle cx="60" cy="60" r="60"/></clipPath>`;
   // background
   let bg = '';
@@ -671,6 +716,8 @@ function avatarSVG(a, expr='normal', vb='0 0 120 120', live=false){
   if (A.bg === 'p_yume'){ defs += `<linearGradient id="${id}y" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd1ea"/><stop offset=".5" stop-color="#e3d3ff"/><stop offset="1" stop-color="#c9f5e6"/></linearGradient>`; bg = `<rect width="120" height="120" fill="url(#${id}y)"/>` + STARPTS.map(([x,y],i) => i%3 === 0 ? heart(x,y,.7,'#ff9ccc') : spark(x,y,i%2?2.2:3.2,'#fff')).join(''); }
   else if (A.bg === 'p_cloud') bg = `<rect width="120" height="120" fill="#bfe6ff"/>` + [[22,26,1],[92,18,.8],[100,62,.9],[14,74,.85]].map(([x,y,s]) => `<g fill="#fff" opacity=".95"><circle cx="${x}" cy="${y}" r="${7*s}"/><circle cx="${x+8*s}" cy="${y-3*s}" r="${8*s}"/><circle cx="${x+16*s}" cy="${y}" r="${6.5*s}"/><rect x="${x}" y="${y}" width="${16*s}" height="${6*s}"/></g>`).join('');
   else if (A.bg === 'p_candy') bg = `<rect width="120" height="120" fill="#fff0f6"/>` + [0,1,2,3,4,5,6,7].map(i => `<rect x="${-60 + i*30}" y="-20" width="12" height="170" fill="${['#ffc2dc','#c9f5e6','#e3d3ff','#fff1a8'][i%4]}" transform="rotate(30 60 60)"/>`).join('');
+  else if (A.bg === 'p_sakura') bg = `<rect width="120" height="120" fill="#ffe3ef"/><path d="M-4,20 Q24,26 44,8 M18,22 Q24,34 36,36" stroke="#8a5a2b" stroke-width="3" fill="none" stroke-linecap="round"/>` + [[30,14],[44,8],[14,28],[100,20],[108,56],[12,70],[96,96],[24,104],[60,6],[36,36]].map(([x,y],i) => flower(x, y, i%2 ? '#ffb3d1' : '#ffc9de')).join('');
+  else if (A.bg === 'p_moon') bg = `<rect width="120" height="120" fill="#1d2a55"/>` + STARPTS.slice(0,7).map(([x,y]) => spark(x,y,1.8,'#fff')).join('') + `<circle cx="84" cy="32" r="18" fill="#fff3b0"/><circle cx="84" cy="32" r="18" fill="none" stroke="#ffe36e" stroke-width="2" opacity=".6"/>` + [8,16,24,104,112].map((x,i) => `<path d="M${x},122 Q${x+2},${92-i*2} ${x+10},${74+i*3}" stroke="#c9a227" stroke-width="2" fill="none"/>`).join('');
   else if (A.bg === 'p_stars') bg = `<rect width="120" height="120" fill="#2b3a67"/>` + STARPTS.map(([x,y],i) => spark(x,y,i%3?2.4:3.6,i%2?'#fff':'#ffd23f')).join('');
   else if (A.bg === 'p_hearts') bg = `<rect width="120" height="120" fill="#ffd6e0"/>` + [[16,22],[100,18],[14,70],[106,66],[30,104],[92,104],[60,6]].map(([x,y],i) => heart(x,y,i%2?.9:1.2,i%2?'#ff8fb1':'#ff5d8f')).join('');
   else if (A.bg === 'p_sunset'){ defs += `<linearGradient id="${id}s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffcf6b"/><stop offset=".55" stop-color="#ff7a9a"/><stop offset="1" stop-color="#8a63d2"/></linearGradient>`; bg = `<rect width="120" height="120" fill="url(#${id}s)"/><circle cx="96" cy="30" r="10" fill="#fff3b0" opacity=".9"/>`; }
@@ -722,6 +769,7 @@ function avatarSVG(a, expr='normal', vb='0 0 120 120', live=false){
     case 'suit': outfit = `<path d="M50,91 L60,116 L70,91Z" fill="#fff"/><path d="M58,94 L62,94 L64.5,108 L60,113 L55.5,108Z" fill="#ef476f"/><path d="M50,91 L57,108 M70,91 L63,108" stroke="${Cd}" stroke-width="2.4"/>`; break;
     case 'kimono': outfit = `<path d="M48,90 L55,90 L74,123 L65,123Z" fill="#fff"/><path d="M72,90 L65,90 L57,104 L61,108Z" fill="#fff"/><rect x="20" y="110" width="80" height="8" fill="#ffd23f"/>`; break;
     case 'hero': cape = `<path d="M34,94 Q16,108 8,124 L112,124 Q104,108 86,94Z" fill="#ef476f"/>`; outfit = star(60, 108, 7, '#ffd23f') + `<path d="M50,92 Q60,99 70,92" fill="none" stroke="${Cd}" stroke-width="2.4"/>`; break;
+    case 'yukata': outfit = [[34,104],[48,114],[78,104],[90,116],[62,118]].map(([x,y]) => flower(x, y, '#fff')).join('') + `<path d="M48,90 L55,90 L74,123 L65,123Z" fill="#fff"/><path d="M72,90 L65,90 L57,104 L61,108Z" fill="#fff"/><rect x="20" y="108" width="80" height="9" fill="#ff7eb6"/><path d="M60,112 L52,107 L52,117Z M60,112 L68,107 L68,117Z" fill="#ffd23f"/>`; break;
     case 'frill': outfit = `<circle cx="25" cy="108" r="9" fill="${shade(C,1.08)}"/><circle cx="95" cy="108" r="9" fill="${shade(C,1.08)}"/>` + [44,49,54,59,64,69,74].map((x,i) => `<circle cx="${x+1}" cy="${92 + Math.abs(i-3)*-0.6 + 1}" r="3.4" fill="#fff"/>`).join('') + `<path d="M60,103 L50,97 L50,109Z M60,103 L70,97 L70,109Z" fill="#ff7eb6"/><circle cx="60" cy="103" r="2.6" fill="#ff5d9e"/>` + [30,42,54,66,78,90].map(x => `<circle cx="${x}" cy="121" r="4" fill="#fff" opacity=".85"/>`).join(''); break;
     case 'magical': outfit = `<circle cx="24" cy="106" r="10" fill="#fff"/><circle cx="96" cy="106" r="10" fill="#fff"/><circle cx="24" cy="106" r="10" fill="none" stroke="${Cd}" stroke-width="1.4"/><circle cx="96" cy="106" r="10" fill="none" stroke="${Cd}" stroke-width="1.4"/><path d="M60,104 L42,94 Q38,104 42,114Z M60,104 L78,94 Q82,104 78,114Z" fill="#ff4f8b"/><path d="M58,106 L52,122 M62,106 L68,122" stroke="#ff4f8b" stroke-width="3.2" stroke-linecap="round"/>` + heart(60, 104, 1, '#ffd23f') + spark(60, 101.6, 1.4, '#fff'); break;
     default: outfit = `<path d="M52,91 L60,100 L68,91" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
@@ -765,7 +813,6 @@ function avatarSVG(a, expr='normal', vb='0 0 120 120', live=false){
   const cheeks = ck === 'heart' ? heart(40,70,.75,'#ff8fb1') + heart(80,70,.75,'#ff8fb1')
     : ck === 'tere' ? `<g opacity=".6"><ellipse cx="40" cy="70" rx="5.5" ry="3.5" fill="#ff8fa3"/><ellipse cx="80" cy="70" rx="5.5" ry="3.5" fill="#ff8fa3"/></g><path d="M36,68.5 L37.5,71.5 M39.5,68.5 L41,71.5 M43,68.5 L44.5,71.5 M76,68.5 L77.5,71.5 M79.5,68.5 L81,71.5 M83,68.5 L84.5,71.5" stroke="#e8577a" stroke-width="1.1" stroke-linecap="round"/>`
     : ck === 'none' ? '' : `<ellipse cx="40" cy="70" rx="5.5" ry="3.5" fill="#ff8fa3" opacity=".55"/><ellipse cx="80" cy="70" rx="5.5" ry="3.5" fill="#ff8fa3" opacity=".55"/>`;
-  const flower = (x, y, c) => [0,1,2,3,4].map(i => { const an = i*Math.PI*2/5; return `<circle cx="${(x+Math.cos(an)*3.6).toFixed(1)}" cy="${(y+Math.sin(an)*3.6).toFixed(1)}" r="3" fill="${c}"/>`; }).join('') + `<circle cx="${x}" cy="${y}" r="2.4" fill="#ffd23f"/>`;
   const acc = {
     none:'',
     glasses:`<g fill="rgba(255,255,255,.18)" stroke="${dk}" stroke-width="2.2"><circle cx="48" cy="60" r="8"/><circle cx="72" cy="60" r="8"/></g><path d="M56,60 Q60,57 64,60 M40,59 L31,57 M80,59 L89,57" fill="none" stroke="${dk}" stroke-width="2.2" stroke-linecap="round"/>`,
@@ -774,6 +821,7 @@ function avatarSVG(a, expr='normal', vb='0 0 120 120', live=false){
     cap:`<path d="M27,47 Q28,15 60,15 Q92,15 93,47Z" fill="#ef476f"/><path d="M78,45 Q100,42 108,48 Q98,52 78,50Z" fill="#c9304f"/><circle cx="60" cy="15" r="3.5" fill="#c9304f"/>`,
     headphones:`<path d="M27,60 Q27,15 60,15 Q93,15 93,60" fill="none" stroke="#4a4f63" stroke-width="5" stroke-linecap="round"/><rect x="20" y="52" width="12" height="20" rx="5" fill="#ff7a2f"/><rect x="88" y="52" width="12" height="20" rx="5" fill="#ff7a2f"/>`,
     star: star(84, 30, 9, '#ffd23f'),
+    santa:`<path d="M28,46 Q30,16 62,12 Q86,10 98,32 L91,35 Q82,24 72,26 Q88,32 90,46Z" fill="#e5383b"/><rect x="25" y="40" width="68" height="10" rx="5" fill="#fff"/><circle cx="96" cy="34" r="6.5" fill="#fff"/>`,
     heartclip: heart(82, 34, 1.4, '#ff5d8f') + `<circle cx="84" cy="30" r="1.2" fill="#fff"/>`,
     flowerclip: flower(82, 34, '#ffb3d1'),
     bigribbon:`<path d="M60,22 L34,8 Q28,22 34,36Z M60,22 L86,8 Q92,22 86,36Z" fill="#ff7eb6" stroke="#e8577a" stroke-width="1.4" stroke-linejoin="round"/><path d="M40,14 Q37,22 40,30 M80,14 Q83,22 80,30" stroke="#fff" stroke-width="1.6" fill="none" opacity=".7"/><circle cx="60" cy="22" r="5.5" fill="#ff5d9e" stroke="#e8577a" stroke-width="1.4"/>`,
@@ -791,6 +839,7 @@ function avatarSVG(a, expr='normal', vb='0 0 120 120', live=false){
   // outside the circle
   let outside = '';
   if (A.effect === 'rainbow'){ defs += `<linearGradient id="${id}r" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff6b6b"/><stop offset=".25" stop-color="#ffd23f"/><stop offset=".5" stop-color="#3cc47c"/><stop offset=".75" stop-color="#3a9bff"/><stop offset="1" stop-color="#9b7bff"/></linearGradient>`; outside += `<circle cx="60" cy="60" r="57.5" fill="none" stroke="url(#${id}r)" stroke-width="5"/>`; }
+  if (A.effect === 'momiji') outside += [[12,24,20],[106,22,-25],[112,66,40],[8,78,-15],[102,104,30],[60,5,10]].map(([x,y,a],i) => `<g class="av-tw" transform="rotate(${a} ${x} ${y})">${star(x, y, 6.5, i%2 ? '#ff922b' : '#e8590c').replace('stroke="#e0a100"','stroke="#c2410c"')}</g>`).join('');
   if (A.effect === 'bubbles') outside += [[12,30,6],[106,24,5],[110,70,7],[8,80,5],[96,108,4],[20,110,3.5],[60,5,3.5]].map(([x,y,r]) => `<g class="av-tw"><circle cx="${x}" cy="${y}" r="${r}" fill="rgba(180,230,255,.35)" stroke="#9ad0ff" stroke-width="1.2"/><circle cx="${x-r*.35}" cy="${y-r*.35}" r="${r*.25}" fill="#fff"/></g>`).join('');
   if (A.effect === 'petals') outside += [[14,22,20],[104,18,-30],[110,62,60],[8,72,-10],[100,104,40],[18,108,80],[60,6,10]].map(([x,y,a],i) => `<ellipse class="av-tw" cx="${x}" cy="${y}" rx="5" ry="3" fill="${i%2 ? '#ffc2dc' : '#ffb3d1'}" transform="rotate(${a} ${x} ${y})"/>`).join('');
   if (A.effect === 'hearts') outside += [[12,24,1.2],[106,20,1],[112,66,.9],[8,78,1],[104,104,.8],[60,4,.8]].map(([x,y,s],i) => `<g class="av-tw">${heart(x,y,s,i%2 ? '#ff8fb1' : '#ff5d8f')}</g>`).join('');
@@ -809,6 +858,13 @@ function avatarSVG(a, expr='normal', vb='0 0 120 120', live=false){
   }[A.pet];
   if (pets) outside += `<g class="av-pet">${pets}</g>`;
   const items = {
+    kite:`<path d="M14,119 Q18,106 24,98" fill="none" stroke="#9a9282" stroke-width="1"/><path d="M24,68 L37,84 L24,100 L11,84Z" fill="#e5383b" stroke="#fff" stroke-width="1.6"/><path d="M24,68 L24,100 M11,84 L37,84" stroke="#ffd23f" stroke-width="1.6"/><circle cx="24" cy="84" r="4" fill="#ffd23f"/><path d="M24,100 Q18,106 24,110 Q30,114 24,119" fill="none" stroke="#3a9bff" stroke-width="1.6"/><path d="M21,106 L27,104 L26,109Z" fill="#3a9bff"/>`,
+    fukumame:`<path d="M7,104 L33,104 L30,119 L10,119Z" fill="#d9a066" stroke="#fff" stroke-width="1.4"/>` + [[12,101],[17,99],[22,100],[27,102],[19,103],[14,104],[25,104]].map(([x,y]) => `<circle cx="${x}" cy="${y}" r="3" fill="#f2d6a0" stroke="#d1a85f" stroke-width=".8"/>`).join('') + `<text x="20" y="116" font-size="9" fill="#c0392b" text-anchor="middle" font-weight="bold">ふく</text>`,
+    diploma:`<g transform="rotate(-28 21 102)"><rect x="5" y="97" width="32" height="10" rx="5" fill="#fffaf0" stroke="#d9c49a" stroke-width="1.2"/><ellipse cx="36" cy="102" rx="2.5" ry="5" fill="#f3e6c8"/></g><path d="M20,102 L12,96 L12,108Z M20,102 L28,96 L28,108Z" fill="#e5383b"/><circle cx="20" cy="102" r="2.4" fill="#c9302c"/><path d="M19,104 L16,114 M21,104 L24,114" stroke="#e5383b" stroke-width="2"/>`,
+    koinobori:`<path d="M10,119 L10,62" stroke="#8a5a2b" stroke-width="2.4" stroke-linecap="round"/><circle cx="10" cy="61" r="2.6" fill="#ffd23f"/><path d="M11,66 L36,66 Q42,71 36,76 L11,76 L15,71Z" fill="#3a9bff" stroke="#fff" stroke-width="1"/><circle cx="31" cy="69.5" r="1.8" fill="#fff"/><circle cx="31" cy="69.5" r=".9" fill="#2b2d42"/><path d="M11,80 L32,80 Q37,84.5 32,89 L11,89 L15,84.5Z" fill="#ef476f" stroke="#fff" stroke-width="1"/><circle cx="27.5" cy="83" r="1.6" fill="#fff"/><circle cx="27.5" cy="83" r=".8" fill="#2b2d42"/><path d="M18,66 Q20,71 18,76 M22,66 Q24,71 22,76 M18,80 Q20,84.5 18,89" stroke="#fff" stroke-width=".8" fill="none" opacity=".7"/>`,
+    umbrella:`<path d="M22,86 L22,114 Q22,119 17,119" fill="none" stroke="#8a5a2b" stroke-width="2.2" stroke-linecap="round"/><path d="M6,88 Q8,70 22,70 Q36,70 38,88 Q34,85 30,88 Q26,85 22,88 Q18,85 14,88 Q10,85 6,88Z" fill="#9ad0ff" stroke="#fff" stroke-width="1.4"/><path d="M22,70 L22,88 M14,72 Q14,80 14,88 M30,72 Q30,80 30,88" stroke="#fff" stroke-width="1" opacity=".8"/>` + heart(16, 79, .55, '#fff') + heart(28, 79, .55, '#fff'),
+    sasa:`<path d="M12,119 Q16,96 26,66" fill="none" stroke="#3cc47c" stroke-width="2.6" stroke-linecap="round"/>` + [[20,84,-40],[24,74,-30],[16,98,-50],[28,90,20],[30,78,30]].map(([x,y,a]) => `<ellipse cx="${x}" cy="${y}" rx="7" ry="2.4" fill="#2fa463" transform="rotate(${a} ${x} ${y})"/>`).join('') + [[22,90,'#ff8fb1'],[30,82,'#ffd23f'],[14,104,'#9ad0ff'],[26,98,'#c9b6ff']].map(([x,y,c]) => `<rect x="${x-2}" y="${y}" width="4" height="10" fill="${c}" stroke="#fff" stroke-width=".6"/>`).join('') + star(34, 72, 4, '#ffd23f'),
+    pumpkin:`<path d="M20,93 Q20,89 23,88" stroke="#2fa463" stroke-width="2.6" fill="none" stroke-linecap="round"/><ellipse cx="20" cy="105" rx="14" ry="12" fill="#ff922b" stroke="#fff" stroke-width="1.6"/><path d="M14,94 Q10,105 14,116 M26,94 Q30,105 26,116 M20,93 L20,117" stroke="#e8590c" stroke-width="1.2" fill="none"/><path d="M13,101 L17,101 L15,98Z M23,101 L27,101 L25,98Z" fill="#ffe066"/><path d="M13,108 Q20,114 27,108 L24,109 L22,107 L20,110 L18,107 L16,109Z" fill="#ffe066"/>`,
     balloon:`<path d="M20,93 Q16,104 22,118" fill="none" stroke="#9a9282" stroke-width="1.2"/><ellipse cx="20" cy="81" rx="10" ry="12" fill="#ff6b9a" stroke="#fff" stroke-width="1.6"/><ellipse cx="16.5" cy="76" rx="2.5" ry="3.6" fill="#fff" opacity=".7"/><path d="M18,93 L22,93 L20,96Z" fill="#ff6b9a"/>`,
     icecream:`<path d="M12,99 L28,99 L20,119Z" fill="#e8b46a" stroke="#fff" stroke-width="1.4"/><path d="M14,103 L24,103 M16,108 L22,108" stroke="#c98b3a" stroke-width="1"/><circle cx="20" cy="94" r="8" fill="#ffb3d1" stroke="#fff" stroke-width="1.4"/><circle cx="20" cy="85" r="6.4" fill="#bdf0dc" stroke="#fff" stroke-width="1.4"/><circle cx="21" cy="77.5" r="2.6" fill="#ef476f"/>`,
     bouquet: flower(13, 93, '#ff8fb1') + flower(27, 93, '#c9b6ff') + flower(20, 86, '#fff1a8') + flower(20, 97, '#ffb3d1') + `<path d="M9,99 L31,99 L20,119Z" fill="#ffc2dc" stroke="#fff" stroke-width="1.4"/><path d="M15,104 Q20,108 25,104" fill="none" stroke="#ff5d9e" stroke-width="2" stroke-linecap="round"/>`,
@@ -867,8 +923,9 @@ function renderAvatar(s){
     list.forEach(item => {
       const [v, label] = item; const price = priceOf(key, v); const mine = owns(key, v);
       const b = el('button',{class:'av-opt' + (AV[key] === v ? ' on' : '') + (mine ? '' : ' locked')});
-      b.innerHTML = avatarSVG(Object.assign({}, AV, {[key]:v}), 'normal', opts.vb || '0 0 120 120') + `<span>${mine ? esc(label) : '🪙' + price}</span>`;
-      b.onclick = () => mine ? set({[key]:v}) : openBuy(key, v, label, price, () => { draw(); fill(); });
+      b.innerHTML = avatarSVG(Object.assign({}, AV, {[key]:v}), 'normal', opts.vb || '0 0 120 120') + `<span>${mine ? esc(label) : price < 0 ? '🎁イベント' : '🪙' + price}</span>`;
+      if (price < 0 && !mine) b.classList.add('evonly');
+      b.onclick = () => mine ? set({[key]:v}) : price < 0 ? toast(`「${label}」は ${evMonthOf(key, v)}がつの イベントで もらえるよ`) : openBuy(key, v, label, price, () => { draw(); fill(); });
       g.appendChild(b);
     });
     panel.appendChild(g);
@@ -913,6 +970,91 @@ function renderAvatar(s){
   wrap.appendChild(left); wrap.appendChild(right);
   s.appendChild(wrap);
   draw(); fill();
+}
+
+/* ===== きせつの イベント ===== */
+const EVENTS = [{"m":1,"id":"m01","icon":"🎍","title":"おしょうがつ","color":"#ef476f","desc":"あたらしい としの はじまり。おしょうがつの ことばを おぼえよう！","words":[["正月","しょうがつ","1ねんの はじめを いわう ころ。","正"],["新年","しんねん","あたらしい とし。","新"],["元日","がんじつ","1がつ1にち。1ねんの さいしょの ひ。","元"],["初日の出","はつひので","1がつ1にちの あさに のぼる おひさま。","初"],["年賀状","ねんがじょう","しんねんの あいさつを かいた はがき。","賀"],["書き初め","かきぞめ","しんねんに はじめて ふでで じを かく こと。","書"],["お年玉","おとしだま","おしょうがつに こどもが もらう おかね。","玉"],["七草","ななくさ","1がつ7かに おかゆに いれる 7しゅるいの くさ。","草"]],"prov":[["一年の計は元旦にあり","いちねんの けいは がんたんに あり","1ねんの けいかくは さいしょの ひに たてるのが よい。"],["笑う門には福来る","わらう かどには ふく きたる","いつも にこにこ している いえには しあわせが やってくる。"]],"reward":["item","kite","たこ"]},{"m":2,"id":"m02","icon":"👹","title":"せつぶん","color":"#7b61ff","desc":"まめまきで わるい ものを おいはらおう！ はるは もうすぐ。","words":[["節分","せつぶん","はるの まえの ひ。まめまきを する。","節"],["豆まき","まめまき","まめを まいて わるい ものを おいだす こと。","豆"],["立春","りっしゅん","こよみの うえで はるが はじまる ひ。","春"],["福の神","ふくのかみ","しあわせを はこぶ かみさま。","福"],["寒さ","さむさ","さむい こと。","寒"],["雪合戦","ゆきがっせん","ゆきだまを なげあう あそび。","雪"],["春一番","はるいちばん","はるの はじめに ふく つよい みなみかぜ。","番"],["梅の花","うめのはな","さむい ころに さく しろや ピンクの はな。","梅"]],"prov":[["石の上にも三年","いしの うえにも さんねん","つめたい いしも 3ねん すわれば あたたまる。がまんすれば うまく いく。"],["福は内","ふくは うち","しあわせは いえの なかへ。まめまきの かけごえ。"]],"reward":["item","fukumame","ふくまめ"]},{"m":3,"id":"m03","icon":"🌷","title":"はると そつぎょう","color":"#ff7eb6","desc":"はるが きた！ そつぎょうの きせつの ことばを まなぼう。","words":[["卒業","そつぎょう","がっこうを おえる こと。","卒"],["春分","しゅんぶん","ひると よるの ながさが おなじに なる はるの ひ。","分"],["菜の花","なのはな","はるに さく きいろい はな。","菜"],["春風","はるかぜ","はるに ふく あたたかい かぜ。","風"],["思い出","おもいで","こころに のこって いる むかしの こと。","思"],["感謝","かんしゃ","ありがとうと おもう きもち。","感"],["旅立ち","たびだち","あたらしい ところへ でかける こと。","旅"],["春休み","はるやすみ","はるの やすみ。","休"]],"prov":[["立つ鳥あとをにごさず","たつ とり あとを にごさず","さる ときは あとを きれいに して いこう。"],["暑さ寒さも彼岸まで","あつさ さむさも ひがんまで","あつさも さむさも ひがんの ころには やわらぐ。"]],"reward":["item","diploma","そつぎょうしょうしょ"]},{"m":4,"id":"m04","icon":"🌸","title":"さくらと にゅうがく","color":"#ff8fb1","desc":"あたらしい がくねんの はじまり！ さくらの ことばを まなぼう。","words":[["入学","にゅうがく","がっこうに はいる こと。","入"],["新学期","しんがっき","あたらしい がっきの はじまり。","期"],["花見","はなみ","さくらの はなを みて たのしむ こと。","花"],["満開","まんかい","はなが ぜんぶ ひらく こと。","満"],["友達","ともだち","いっしょに あそぶ なかよしの ひと。","友"],["始業式","しぎょうしき","がっきの はじめの しき。","始"],["校庭","こうてい","がっこうの にわ。","庭"],["桜色","さくらいろ","さくらの はなのような うすい ピンク。","桜"]],"prov":[["花より団子","はなより だんご","きれいな ものより おいしい ものの ほうが いい。"],["三日坊主","みっか ぼうず","あきっぽくて ながつづき しない こと。"]],"reward":["bg","p_sakura","さくらの はいけい"]},{"m":5,"id":"m05","icon":"🎏","title":"こどもの ひ","color":"#3a9bff","desc":"5がつ5かは こどもの ひ。げんきに そだつ ねがいを こめて！","words":[["子供","こども","おとなに なる まえの ひと。","供"],["新緑","しんりょく","はるから なつの わかい はっぱの みどり。","緑"],["母の日","ははのひ","おかあさんに ありがとうを つたえる ひ。","母"],["五月晴れ","さつきばれ","5がつごろの よく はれた そら。","晴"],["遠足","えんそく","みんなで とおくへ あるいて いく ぎょうじ。","遠"],["田植え","たうえ","たんぼに いねの なえを うえる こと。","植"],["青葉","あおば","あおあおと した はっぱ。","葉"],["若葉","わかば","でて まもない わかい はっぱ。","若"]],"prov":[["親の心子知らず","おやの こころ こ しらず","おやの きもちは こどもには なかなか わからない。"],["かわいい子には旅をさせよ","かわいい こには たびを させよ","だいじな こどもほど いろいろな けいけんを させよう。"]],"reward":["item","koinobori","こいのぼり"]},{"m":6,"id":"m06","icon":"☔","title":"つゆ","color":"#5bb4d9","desc":"あめの きせつ。あめに かんけい する ことばが たくさん！","words":[["梅雨","つゆ","6がつごろの あめの おおい きせつ。","梅"],["雨具","あまぐ","かさや かっぱなど、あめの ひの どうぐ。","具"],["父の日","ちちのひ","おとうさんに ありがとうを つたえる ひ。","父"],["夏至","げし","1ねんで いちばん ひるが ながい ひ。","至"],["水玉","みずたま","まるい みずの つぶ。まるい もよう。","玉"],["晴れ間","はれま","あめの あいだの はれた とき。","間"],["雨上がり","あめあがり","あめが やんだ あと。","雨"],["長雨","ながあめ","なんにちも ふりつづく あめ。","長"]],"prov":[["雨降って地固まる","あめ ふって じ かたまる","けんかの あとは かえって なかよく なる。"],["急がば回れ","いそがば まわれ","いそぐ ときほど あんぜんな みちを えらぼう。"]],"reward":["item","umbrella","かさ"]},{"m":7,"id":"m07","icon":"🎋","title":"たなばた・なつやすみ","color":"#2fb3a6","desc":"ささに ねがいごとを かざろう！ もうすぐ なつやすみ。","words":[["七夕","たなばた","7がつ7かに ささに ねがいごとを かざる ひ。","夕"],["天の川","あまのがわ","よぞらに みえる ほしの あつまり。","川"],["夏休み","なつやすみ","なつの ながい やすみ。","夏"],["海水浴","かいすいよく","うみで およいで あそぶ こと。","浴"],["星空","ほしぞら","ほしが たくさん みえる よぞら。","星"],["願い事","ねがいごと","こうなって ほしいと おもう こと。","願"],["朝顔","あさがお","なつの あさに さく はな。","顔"],["自由研究","じゆうけんきゅう","すきな ことを しらべる なつやすみの しゅくだい。","研"]],"prov":[["千里の道も一歩から","せんりの みちも いっぽから","おおきな ことも ちいさな いっぽから はじまる。"],["好きこそものの上手なれ","すきこそ ものの じょうずなれ","すきな ことは しぜんに じょうずに なる。"]],"reward":["item","sasa","ささかざり"]},{"m":8,"id":"m08","icon":"🎆","title":"なつまつり","color":"#ff7a2f","desc":"はなびに おまつり！ なつの ことばを まなぼう。","words":[["花火","はなび","よぞらに ぱっと ひらく ひかりの はな。","火"],["夏祭り","なつまつり","なつに ある たのしい おまつり。","祭"],["金魚","きんぎょ","あかくて きれいな ちいさい さかな。","魚"],["夕立","ゆうだち","なつの ゆうがたに きゅうに ふる つよい あめ。","立"],["入道雲","にゅうどうぐも","なつに もくもく たかく のびる くも。","雲"],["日焼け","ひやけ","おひさまで はだが くろく なる こと。","焼"],["宿題","しゅくだい","いえで する べんきょう。","宿"],["帰省","きせい","ふるさとに かえる こと。","省"]],"prov":[["飛んで火に入る夏の虫","とんで ひに いる なつの むし","じぶんから あぶない ところに とびこむ こと。"],["早起きは三文の徳","はやおきは さんもんの とく","あさ はやく おきると いい ことが ある。"]],"reward":["outfit","yukata","ゆかた"]},{"m":9,"id":"m09","icon":"🎑","title":"おつきみ","color":"#c9a227","desc":"まんまるの つきを ながめよう。あきの はじまりの ことば。","words":[["月見","つきみ","つきを ながめて たのしむ こと。","見"],["満月","まんげつ","まんまるの つき。","月"],["秋分","しゅうぶん","ひると よるの ながさが おなじに なる あきの ひ。","秋"],["虫の音","むしのね","あきの よるに なく むしの こえ。","虫"],["敬老の日","けいろうのひ","おとしよりを たいせつに する ひ。","敬"],["秋風","あきかぜ","あきに ふく すずしい かぜ。","風"],["運動会","うんどうかい","かけっこや たまいれを する がっこうの ぎょうじ。","運"],["新米","しんまい","ことし とれた おこめ。","米"]],"prov":[["月とすっぽん","つきと すっぽん","まるい ところは にているけれど、まるで ちがう もの。"],["一石二鳥","いっせき にちょう","ひとつの ことで ふたつの いい ことが ある こと。"]],"reward":["bg","p_moon","おつきみの はいけい"]},{"m":10,"id":"m10","icon":"🎃","title":"スポーツと どくしょ","color":"#e8774f","desc":"からだを うごかして、ほんも よもう！ みのりの あき。","words":[["運動","うんどう","からだを うごかす こと。","動"],["読書","どくしょ","ほんを よむ こと。","読"],["秋晴れ","あきばれ","あきの よく はれた そら。","晴"],["実り","みのり","こめや くだものが よく できる こと。","実"],["図書館","としょかん","ほんを かりて よめる ところ。","館"],["芸術","げいじゅつ","えや おんがくなど、うつくしい ものを つくる こと。","術"],["食欲","しょくよく","たべたいと おもう きもち。","欲"],["紅茶","こうちゃ","あかっぽい いろの おちゃ。","紅"]],"prov":[["習うより慣れよ","ならうより なれよ","ならうより じっさいに やって みる ほうが はやく おぼえる。"],["継続は力なり","けいぞくは ちからなり","つづける ことが ちからに なる。"]],"reward":["item","pumpkin","かぼちゃランタン"]},{"m":11,"id":"m11","icon":"🍁","title":"あきの みのり","color":"#d9480f","desc":"もみじが きれいな きせつ。あきの ことばを おぼえよう！","words":[["紅葉","もみじ","あかや きいろに いろが かわった はっぱ。","葉"],["落ち葉","おちば","きから おちた はっぱ。","落"],["七五三","しちごさん","3さい・5さい・7さいの こどもの せいちょうを いわう ぎょうじ。","三"],["文化の日","ぶんかのひ","11がつ3かの きゅうじつ。","化"],["勤労感謝の日","きんろうかんしゃのひ","はたらく ひとに ありがとうを いう ひ。","労"],["実り","みのり","こめや くだものが よく できる こと。","実"],["夕焼け","ゆうやけ","ゆうがた そらが あかく なる こと。","焼"],["冬支度","ふゆじたく","さむい ふゆに そなえて じゅんびを する こと。","支"]],"prov":[["実るほど頭を垂れる稲穂かな","みのるほど こうべを たれる いなほかな","えらく なるほど ひとは ひかえめに なる。"],["ちりも積もれば山となる","ちりも つもれば やまと なる","ちいさな ことでも つみかさねると おおきく なる。"]],"reward":["effect","momiji","もみじの エフェクト"]},{"m":12,"id":"m12","icon":"⛄","title":"ふゆと おおみそか","color":"#3a7bd5","desc":"ゆきの きせつ。1ねんの おわりの ことばを まなぼう！","words":[["冬至","とうじ","1ねんで いちばん ひるが みじかい ひ。","冬"],["大みそか","おおみそか","12がつ31にち。1ねんの さいごの ひ。","大"],["年末","ねんまつ","1ねんの おわりの ころ。","末"],["銀世界","ぎんせかい","ゆきで いちめん まっしろに なった けしき。","銀"],["雪だるま","ゆきだるま","ゆきを まるめて つくる にんぎょう。","雪"],["冬休み","ふゆやすみ","ふゆの やすみ。","休"],["初雪","はつゆき","その ふゆ はじめて ふる ゆき。","初"],["来年","らいねん","ことしの つぎの とし。","来"]],"prov":[["終わりよければ全てよし","おわり よければ すべて よし","さいごが うまく いけば ぜんぶ よい。"],["備えあれば憂いなし","そなえ あれば うれい なし","じゅんびを して おけば しんぱいは いらない。"]],"reward":["acc","santa","あかい ぼうし"]}];
+const currentEvent = (d = new Date()) => EVENTS.find(e => e.m === d.getMonth() + 1);
+const evKey = e => e.id + '-' + new Date().getFullYear();
+function evState(e){ META.ev = META.ev || {}; const k = evKey(e); return META.ev[k] = META.ev[k] || {pr:[], read:[], best:0, done:{}, claimed:false}; }
+const evKanji = e => [...new Set(e.words.map(w => w[3]))];
+const EV_MISSIONS = e => [
+  {id:'p', t:'きせつの かんじを 5こ れんしゅう', goal:5, prog:s => s.pr.length},
+  {id:'r', t:'ことわざを ぜんぶ よむ', goal:e.prov.length, prog:s => s.read.length},
+  {id:'t', t:'きせつの かきとりテストで 6もん いじょう せいかい', goal:6, prog:s => s.best}
+];
+const evMonthOf = (key, val) => { const e = EVENTS.find(x => x.reward[0] === key && x.reward[1] === val); return e ? e.m : '?'; };
+function checkEvent(){
+  const e = currentEvent(); if (!e) return; const s = evState(e);
+  EV_MISSIONS(e).forEach(m => { if (!s.done[m.id] && m.prog(s) >= m.goal){ s.done[m.id] = 1; addPts(20, e.icon, 'イベント ミッション クリア！ ' + m.t); } });
+  if (!s.claimed && EV_MISSIONS(e).every(m => s.done[m.id])){
+    s.claimed = true; const [key, val, label] = e.reward; const id = key + ':' + val;
+    if (!META.owned.includes(id)) META.owned.push(id);
+    META.evDone = (META.evDone || 0) + 1;
+    addPts(50, '🎁', `イベント コンプリート！「${label}」を ゲット！`);
+  }
+}
+function evNote(k){ const e = currentEvent(); if (e && evKanji(e).includes(k)){ const s = evState(e); if (!s.pr.includes(k)) s.pr.push(k); } }
+function startEventTest(e){
+  const qs = shuffle(e.words).map(w => ({k:w[3], w:[w[0], w[1], w[2]]}));
+  go('test', {qs, i:0, res:[], label:e.icon + ' きせつの', ev:e.id});
+}
+function evBar(){
+  const e = currentEvent(); if (!e) return null;
+  const s = evState(e); const n = EV_MISSIONS(e).filter(m => s.done[m.id]).length;
+  const b = el('button',{class:'evbar',style:`--ec:${e.color}`,html:`<span class="ei">${e.icon}</span><span class="et"><small>${e.m}がつの イベント</small>「${esc(e.title)}」</span><span class="ep">${s.claimed ? '🎁 コンプリート！' : `ミッション <b>${n}/3</b>`}</span><span class="ea">▶</span>`});
+  b.onclick = () => { beep('tap'); go('event'); };
+  return b;
+}
+function renderEvent(s){
+  const e = currentEvent(); if (!e){ home(); return; }
+  const st = evState(e);
+  setTitle(`${e.icon} ${e.m}がつの イベント`);
+  const wrap = el('div',{class:'evw',style:`--ec:${e.color}`});
+  const left = el('div',{class:'evl'});
+  const last = new Date(new Date().getFullYear(), e.m, 0).getDate();
+  left.appendChild(el('div',{class:'card evban',html:`<div class="evic">${e.icon}</div><div><div class="evt">${esc(e.title)}</div><div class="evd">${e.m}/1 〜 ${e.m}/${last}</div><div class="evds">${esc(e.desc)}</div></div>`}));
+  const ml = el('div',{class:'card mlist'});
+  ml.appendChild(el('div',{class:'mh',html:`🎯 イベント ミッション <small>1つ +20🪙・ぜんぶで げんてい アイテム！</small>`}));
+  EV_MISSIONS(e).forEach(m => { const p = Math.min(m.goal, m.prog(st)), done = st.done[m.id];
+    ml.appendChild(el('div',{class:'mi' + (done ? ' done' : ''),html:`<div class="mt">${done ? '✅' : '⬜'} ${esc(m.t)}</div><div class="mb"><i style="width:${p/m.goal*100}%"></i></div><div class="mr">${p}/${m.goal}</div>`})); });
+  left.appendChild(ml);
+  const [rk, rv, rl] = e.reward;
+  const rw = el('div',{class:'card evrw'});
+  rw.innerHTML = `<div class="evrav">${avatarSVG(Object.assign({}, AV, {[rk]:rv}), st.claimed ? 'cheer' : 'happy', '0 0 120 120', true)}</div><div><div class="evrt">🎁 げんてい アイテム</div><div class="evrl">「${esc(rl)}」</div><div class="evrs">${st.claimed ? 'ゲットしたよ！ キャラ・ショップで つけてみよう' : 'ミッションを 3つ ぜんぶ クリアすると もらえるよ（+50🪙）'}</div></div>`;
+  if (st.claimed){ const b = el('button',{class:'big-btn green',style:'margin-top:8px;width:100%;min-height:48px;font-size:17px',text:'🛍️ つけてみる'}); b.onclick = () => { AV[rk] = rv; saveAV(); go('avatar'); }; rw.lastChild.appendChild(b); }
+  left.appendChild(rw);
+  const right = el('div',{class:'evr'});
+  const wc = el('div',{class:'card'});
+  wc.appendChild(el('h3',{html:'📚 きせつの ことば <small>タッチで れんしゅう・🔈で よみあげ</small>'}));
+  const wg = el('div',{class:'evwords'});
+  const ctx = evKanji(e);
+  e.words.forEach(([w, r, m, f]) => {
+    const did = st.pr.includes(f);
+    const c = el('div',{class:'evword' + (did ? ' did' : '')});
+    c.innerHTML = `<div class="ew"><ruby>${[...w].map(ch => ch === f ? `<em>${ch}</em>` : esc(ch)).join('')}<rt>${esc(r)}</rt></ruby>${did ? '<span class="ok">✅</span>' : ''}</div><div class="em">${esc(m)}</div>`;
+    const sp = el('button',{class:'esp',text:'🔈'}); sp.onclick = ev => { ev.stopPropagation(); say(r); };
+    c.appendChild(sp);
+    c.onclick = () => { beep('tap'); go('kanji',{k:f, ctx}); };
+    wg.appendChild(c);
+  });
+  wc.appendChild(wg); right.appendChild(wc);
+  const pc = el('div',{class:'card'});
+  pc.appendChild(el('h3',{html:'📜 きせつの ことわざ <small>🔈 よむ で よんだ ことに なるよ</small>'}));
+  e.prov.forEach(([p, r, m], i) => {
+    const read = st.read.includes(i);
+    const c = el('div',{class:'evprov' + (read ? ' did' : '')});
+    c.innerHTML = `<div class="pt">${esc(p)}</div><div class="prr">${esc(r)}</div><div class="pm">💡 ${esc(m)}</div>`;
+    const b = el('button',{class:'pbtn',text: read ? '✅ よんだ' : '🔈 よむ'});
+    b.onclick = () => { say(r); if (!st.read.includes(i)){ st.read.push(i); progressChanged(); setTimeout(() => render(), 300); } };
+    c.appendChild(b); pc.appendChild(c);
+  });
+  right.appendChild(pc);
+  const tb = el('button',{class:'big-btn blue',style:'width:100%',html:`📝 きせつの かきとり テスト（${e.words.length}もん）${st.best ? `　さいこう ${st.best}もん` : ''}`});
+  tb.onclick = () => startEventTest(e);
+  right.appendChild(tb);
+  wrap.appendChild(left); wrap.appendChild(right);
+  s.appendChild(wrap);
 }
 
 /* ===== ポイント・ログインボーナス・ミッション・バッジ ===== */
@@ -990,6 +1132,9 @@ const BADGES = [
   {id:'s3', icon:'🔥', t:'3にち れんぞく', d:'3にち つづけて ひらいた', pts:20, ok:() => META.best >= 3},
   {id:'s7', icon:'☄️', t:'7にち れんぞく', d:'7にち つづけて ひらいた', pts:50, ok:() => META.best >= 7},
   {id:'s30', icon:'🏆', t:'30にち れんぞく', d:'30にち つづけて ひらいた', pts:200, ok:() => META.best >= 30},
+  {id:'ev1', icon:'🎉', t:'イベント デビュー', d:'きせつの イベントを 1かい コンプリート', pts:30, ok:() => (META.evDone || 0) >= 1},
+  {id:'ev3', icon:'🎊', t:'イベント マスター', d:'きせつの イベントを 3かい コンプリート', pts:80, ok:() => (META.evDone || 0) >= 3},
+  {id:'ev12', icon:'🗓️', t:'1ねん まるごと', d:'きせつの イベントを 12かい コンプリート', pts:300, ok:() => (META.evDone || 0) >= 12},
   {id:'d10', icon:'📅', t:'10にち れんしゅう', d:'れんしゅうした ひが 10にち', pts:40, ok:() => practicedDays() >= 10},
   {id:'d50', icon:'🗓️', t:'50にち れんしゅう', d:'れんしゅうした ひが 50にち', pts:150, ok:() => practicedDays() >= 50},
   ...LEVELS.flatMap(L => [
@@ -1000,7 +1145,7 @@ const BADGES = [
 function checkBadges(){
   BADGES.forEach(b => { if (!META.badges[b.id] && b.ok()){ META.badges[b.id] = today(); addPts(b.pts, b.icon, 'バッジ ゲット！「' + b.t + '」'); } });
 }
-function progressChanged(){ checkMissions(); checkBadges(); saveMeta(); }
+function progressChanged(){ checkMissions(); checkEvent(); checkBadges(); saveMeta(); }
 /* ログインボーナス */
 function checkLogin(){
   const t = today();
@@ -1022,6 +1167,7 @@ function checkLogin(){
     box.appendChild(el('div',{class:'login-lines',html:lines.map(esc).join('<br>')}));
     box.appendChild(el('div',{class:'login-week',html:weekDots()}));
     box.appendChild(missionList());
+    const ce = currentEvent(); if (ce) box.appendChild(el('div',{class:'login-ev',html:`${ce.icon} いまは ${ce.m}がつの イベント「${esc(ce.title)}」！ げんてい アイテムを ゲットしよう`}));
     const b = el('button',{class:'big-btn',style:'width:100%;margin-top:12px',text:'きょうも がんばる！'});
     b.onclick = () => { closeOv(); progressChanged(); if (cur && cur.name === 'home') render(); };
     box.appendChild(b);
@@ -1137,7 +1283,9 @@ function sanitizeMeta(m){
   const days = {}; if (m.days && typeof m.days === 'object') Object.entries(m.days).forEach(([d, r]) => { if (DATE_RE.test(d) && r && typeof r === 'object'){ const o = {}; Object.entries(r).forEach(([k, v]) => { if (/^[a-zA-Z]{1,12}$/.test(k)) o[k] = num(v); }); days[d] = o; } });
   const badges = {}; if (m.badges && typeof m.badges === 'object') Object.entries(m.badges).forEach(([k, v]) => { if (badgeIds.has(k) && DATE_RE.test(String(v))) badges[k] = String(v); });
   const mis = {}; if (m.mis && typeof m.mis === 'object') Object.entries(m.mis).forEach(([d, r]) => { if (DATE_RE.test(d) && r && typeof r === 'object'){ const o = {}; Object.keys(r).forEach(k => { if (/^[a-z0-9]{1,10}$/.test(k)) o[k] = 1; }); mis[d] = o; } });
-  return {pts:num(m.pts), earned:num(m.earned), owned:(Array.isArray(m.owned) ? m.owned : []).filter(x => validOwn.has(x)), badges, days, mis,
+  const ev = {}; if (m.ev && typeof m.ev === 'object') Object.entries(m.ev).forEach(([k, s]) => { if (/^m\d{2}-\d{4}$/.test(k) && s && typeof s === 'object') ev[k] = {pr:(Array.isArray(s.pr) ? s.pr : []).filter(x => BYK[x]).slice(0, 20), read:(Array.isArray(s.read) ? s.read : []).filter(x => Number.isInteger(x) && x >= 0 && x < 10), best:num(s.best), done:{p:s.done && s.done.p ? 1 : undefined, r:s.done && s.done.r ? 1 : undefined, t:s.done && s.done.t ? 1 : undefined}, claimed:!!s.claimed}; });
+  Object.values(ev).forEach(s => Object.keys(s.done).forEach(k => { if (!s.done[k]) delete s.done[k]; }));
+  return {ev, evDone:num(m.evDone), pts:num(m.pts), earned:num(m.earned), owned:(Array.isArray(m.owned) ? m.owned : []).filter(x => validOwn.has(x)), badges, days, mis,
     last: DATE_RE.test(String(m.last)) ? String(m.last) : '', streak:num(m.streak), best:num(m.best), hana:num(m.hana), tests:num(m.tests), perfect:num(m.perfect), welcomed: !!m.welcomed};
 }
 function mergeMeta(a, b, bNewer){
@@ -1147,6 +1295,7 @@ function mergeMeta(a, b, bNewer){
   base.badges = Object.assign({}, b.badges, a.badges);
   base.days = Object.assign({}, b.days); Object.entries(a.days || {}).forEach(([d, r]) => { const o = Object.assign({}, base.days[d] || {}); Object.entries(r).forEach(([k, v]) => { o[k] = Math.max(o[k] || 0, v || 0); }); base.days[d] = o; });
   base.mis = Object.assign({}, b.mis, a.mis);
+  base.ev = Object.assign({}, b.ev, a.ev || {}); base.evDone = Math.max(a.evDone || 0, b.evDone || 0);
   ['earned','best','hana','tests','perfect'].forEach(k => base[k] = Math.max(a[k] || 0, b[k] || 0));
   base.welcomed = !!(a.welcomed || b.welcomed);
   return base;
@@ -1303,7 +1452,7 @@ function render(){
   if (practice){ practice.destroy(); practice = null; }
   const s = document.getElementById('s-' + cur.name);
   s.innerHTML = '';
-  ({home:renderHome, list:renderList, kanji:renderKanji, practice:renderPractice, test:renderTest, avatar:renderAvatar, record:renderRecord})[cur.name](s, cur.params);
+  ({home:renderHome, list:renderList, kanji:renderKanji, practice:renderPractice, test:renderTest, avatar:renderAvatar, record:renderRecord, event:renderEvent})[cur.name](s, cur.params);
   s.classList.add('on');
   requestAnimationFrame(layout);
   $('#backBtn').classList.toggle('hide', cur.name === 'home');
@@ -1322,8 +1471,8 @@ $('#soundBtn').onclick = () => { settings.sound = !settings.sound; saveSet(); up
 function updSound(){ $('#soundBtn').textContent = settings.sound ? '🔊' : '🔇'; }
 $('#setBtn').onclick = openSettings;
 const setTitle = t => $('#title').textContent = t;
-const APP_VERSION = '1.9.0', APP_BUILD = '2026-11-22 16:46';
-const CHANGELOG = [["1.9.0", "2026-11-22", "キャラが もっと かわいく！ うるうる・ハート・ほしの め、ひとみの いろ、かみの つやと キラキラ、ほっぺ、ティアラや うさみみ、ドレス、もちもの（ステッキなど）、かわいい ペット・はいけい・エフェクト。がめんの ふんいき（ゆめかわ・そらいろ）も えらべる。"], ["1.8.0", "2026-11-22", "かきとりテストで ことばの いみが さいしょから みられる（1026じ ぜんぶ）。ボタンを もんだいの すぐ したに ならべた。"], ["1.7.0", "2026-11-22", "キャラが パワーアップ（ふく・ペット・はいけい・エフェクト）。ポイントと ショップ、まいにちの ログインボーナス、きょうの ミッション、バッジ、きろく がめん。かんじごとの きろくも みられる。"], ["1.6.0", "2026-11-22", "あたらしい はんを じどうで たしかめて、ボタン ひとつで こうしん できる。ほぞんの ひょうじを わかりやすく。"], ["1.5.0", "2026-11-22", "バージョンを がめんの うえに ひょうじ。タップで こうしんりれき。"], ["1.4.0", "2026-11-22", "iPadの たて・よこ どちらでも スクロールなしで 1がめんに おさまる レイアウト。"], ["1.3.0", "2026-11-22", "きろくの バックアップ（ファイル・ひきつぎコード）。"], ["1.2.0", "2026-11-22", "じぶんの キャラ（アバター）を つくれる。★で こものが ふえる。"], ["1.1.0", "2026-11-22", "ペンの いろと ふとさを えらべる。"], ["1.0.0", "2026-11-22", "さいしょの はん。10きゅう〜5きゅうの かきじゅん・よみ・かきとりテスト。"]];
+const APP_VERSION = '2.0.0', APP_BUILD = '2026-11-22 17:13';
+const CHANGELOG = [["2.0.0", "2026-11-22", "きせつの イベント スタート！ まいつき かわる きせつの ことば・ことわざ・イベント ミッション。ぜんぶ クリアで その つきだけの げんてい アイテム。"], ["1.9.0", "2026-11-22", "キャラが もっと かわいく！ うるうる・ハート・ほしの め、ひとみの いろ、かみの つやと キラキラ、ほっぺ、ティアラや うさみみ、ドレス、もちもの（ステッキなど）、かわいい ペット・はいけい・エフェクト。がめんの ふんいき（ゆめかわ・そらいろ）も えらべる。"], ["1.8.0", "2026-11-22", "かきとりテストで ことばの いみが さいしょから みられる（1026じ ぜんぶ）。ボタンを もんだいの すぐ したに ならべた。"], ["1.7.0", "2026-11-22", "キャラが パワーアップ（ふく・ペット・はいけい・エフェクト）。ポイントと ショップ、まいにちの ログインボーナス、きょうの ミッション、バッジ、きろく がめん。かんじごとの きろくも みられる。"], ["1.6.0", "2026-11-22", "あたらしい はんを じどうで たしかめて、ボタン ひとつで こうしん できる。ほぞんの ひょうじを わかりやすく。"], ["1.5.0", "2026-11-22", "バージョンを がめんの うえに ひょうじ。タップで こうしんりれき。"], ["1.4.0", "2026-11-22", "iPadの たて・よこ どちらでも スクロールなしで 1がめんに おさまる レイアウト。"], ["1.3.0", "2026-11-22", "きろくの バックアップ（ファイル・ひきつぎコード）。"], ["1.2.0", "2026-11-22", "じぶんの キャラ（アバター）を つくれる。★で こものが ふえる。"], ["1.1.0", "2026-11-22", "ペンの いろと ふとさを えらべる。"], ["1.0.0", "2026-11-22", "さいしょの はん。10きゅう〜5きゅうの かきじゅん・よみ・かきとりテスト。"]];
 $('#verBtn').onclick = () => {
   const box = openOv();
   box.appendChild(el('div',{class:'msg',text:`バージョン ${APP_VERSION}`}));
@@ -1366,7 +1515,7 @@ function renderHome(s){
   me.querySelector('.mb2').onclick = () => { beep('tap'); go('record'); };
   me.querySelector('.mb3').onclick = () => { beep('tap'); go('avatar'); };
   s.appendChild(me);
-  s.appendChild(el('p',{class:'pick',text:'れんしゅうする きゅうを えらんでね'}));
+  const eb = evBar(); if (eb) s.appendChild(eb); else s.appendChild(el('p',{class:'pick',text:'れんしゅうする きゅうを えらんでね'}));
   const box = el('div',{class:'levels'});
   LEVELS.forEach(L => {
     const tot = L.list.length * 3; const got = L.list.reduce((a,k) => a + stars(k), 0);
@@ -1732,7 +1881,7 @@ function renderPractice(s, {k, mode, ctx}){
     const perfect = miss === 0;
     if (trace) p.tr = (p.tr||0) + 1; else { p.fr = (p.fr||0) + 1; if (miss === 0) p.wk = 0; }
     p.ld = today();
-    saveProg(); checkUnlock();
+    saveProg(); checkUnlock(); evNote(k);
     bump('done'); bump(trace ? 'tr' : 'fr'); if (isNew) bump('newk');
     if (perfect){ bump('hana'); META.hana++; }
     const gain = trace ? (perfect ? 2 : 1) : (perfect ? 4 : 2);
@@ -1842,7 +1991,7 @@ function renderTest(s, params){
     const ksvg = kanjiSVG(d,{nums:true, width:4}); box.appendChild(ksvg); setTimeout(() => animateSVG(ksvg,{speed:1.5}), 150);
     const btns = el('div',{class:'btns'});
     const nx = el('button',{class:'big-btn',html: i+1 < qs.length ? 'つぎの もんだい ▶' : 'けっかを みる 🏁'});
-    nx.onclick = () => go('test',{qs, i:i+1, res, label}, true);
+    nx.onclick = () => go('test', Object.assign({}, params, {i:i+1}), true);
     btns.appendChild(nx); box.appendChild(btns);
   };
   check.onclick = () => finish(grade(pad.strokes, d));
@@ -1853,7 +2002,8 @@ function renderTestEnd(s, {qs, res, label}){
   const good = res.filter(r => r.mark !== '×').length;
   const pr = cur.params;
   if (!pr.awarded){
-    pr.awarded = true; META.tests++; bump('tests'); const r0 = dayRec(); r0.bestTest = Math.max(r0.bestTest || 0, good);
+    pr.awarded = true; META.tests++;
+    if (pr.ev){ const ce = currentEvent(); if (ce && ce.id === pr.ev){ const es = evState(ce); es.best = Math.max(es.best || 0, good); } } bump('tests'); const r0 = dayRec(); r0.bestTest = Math.max(r0.bestTest || 0, good);
     if (good === res.length && res.length >= 5){ META.perfect++; addPts(20, '💯', 'ぜんもん せいかい ボーナス！'); }
     progressChanged();
   }
@@ -1868,7 +2018,7 @@ function renderTestEnd(s, {qs, res, label}){
   const wrong = res.filter(r => r.mark === '×').map(r => r.k);
   const btns = el('div',{class:'row',style:'margin-top:12px'});
   if (wrong.length){ const b = el('button',{class:'big-btn',html:'🔁 まちがえた かんじを れんしゅう'}); b.onclick = () => { home(); go('kanji',{k:wrong[0], ctx:wrong}); }; btns.appendChild(b); }
-  const again = el('button',{class:'big-btn blue',html:'📝 もういちど テスト'}); again.onclick = () => { const list = [...new Set(qs.map(q=>q.k))]; back(); startTest(cur.params.weak ? DATA.filter(d=>(prog[d.k]||{}).wk).map(d=>d.k) : (cur.params.g ? levelOf(cur.params.g).list : list), label); };
+  const again = el('button',{class:'big-btn blue',html:'📝 もういちど テスト'}); again.onclick = () => { if (pr.ev && currentEvent()){ back(); startEventTest(currentEvent()); return; } const list = [...new Set(qs.map(q=>q.k))]; back(); startTest(cur.params.weak ? DATA.filter(d=>(prog[d.k]||{}).wk).map(d=>d.k) : (cur.params.g ? levelOf(cur.params.g).list : list), label); };
   const hm = el('button',{class:'big-btn gray',html:'🏠 ホーム'}); hm.onclick = home;
   btns.appendChild(again); btns.appendChild(hm);
   c.appendChild(btns);
