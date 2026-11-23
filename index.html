@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="かんじ れんしゅう">
 <meta name="theme-color" content="#fff6e5">
 <title>かんじ れんしゅう</title>
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-xWYQ5JHsClo9iCufZD4uLI5Sl5WbyD0dJWJIfhyCB2Q='; style-src 'unsafe-inline'; img-src data: blob:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-UdZ2EGpO4LLtfDE7GQt94rXJxS85k+4xdieMtVWvj7g='; style-src 'unsafe-inline'; img-src data: blob:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="no-referrer">
 <!--
   かんじ れんしゅう（小学校で習う1026字・漢字検定10級〜5級相当）
@@ -163,8 +163,13 @@ h2{font-size:20px;margin:6px 0 10px}
 .ov .msg{font-size:24px;font-weight:bold;margin:8px 0 14px}
 .ov .btns{display:grid;gap:10px;margin-top:14px}
 .ov svg.kv{width:180px;height:180px;background:#fffdf8;border-radius:14px}
-.hanamaru{width:180px;height:180px}
-.hanamaru path{fill:none;stroke:#ef476f;stroke-width:7;stroke-linecap:round}
+.hanamaru{width:200px;height:215px;overflow:visible}
+.hanamaru.small{width:150px;height:139px}
+.hanamaru .hm-pt,.hanamaru .hm-c,.hanamaru .hm-leaf,.hanamaru .hm-bn{transform-box:fill-box;transform-origin:50% 100%}
+.hanamaru .hm-c{transform-origin:50% 50%}
+.hanamaru .hm-bn{transform-origin:50% 50%}
+.hanamaru .hm-tw{transform-box:fill-box;transform-origin:center;animation:tw 1.6s ease-in-out infinite}
+.hanamaru .hm-tw:nth-of-type(2n){animation-delay:.5s}
 .conf{position:fixed;top:-20px;font-size:28px;z-index:60;pointer-events:none;animation:fall linear forwards}
 @keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
 .result-list{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0}
@@ -509,7 +514,7 @@ body[data-theme=sora] .big-btn.gray{box-shadow:0 5px 0 var(--line)}
 <div id="app">
   <header>
     <button class="hbtn" id="backBtn" aria-label="もどる">◀<span class="bt"> もどる</span></button>
-    <div class="htitle"><h1 id="title">かんじ れんしゅう</h1><button class="ver" id="verBtn" aria-label="バージョン">v2.1.0・2026-11-22 17:37</button></div>
+    <div class="htitle"><h1 id="title">かんじ れんしゅう</h1><button class="ver" id="verBtn" aria-label="バージョン">v2.1.1・2026-11-23 09:45</button></div>
     <button class="hbtn" id="soundBtn" aria-label="おと">🔊</button>
     <button class="hbtn" id="setBtn" aria-label="せってい">⚙️</button>
   </header>
@@ -1484,8 +1489,8 @@ $('#soundBtn').onclick = () => { settings.sound = !settings.sound; saveSet(); up
 function updSound(){ $('#soundBtn').textContent = settings.sound ? '🔊' : '🔇'; }
 $('#setBtn').onclick = openSettings;
 const setTitle = t => $('#title').textContent = t;
-const APP_VERSION = '2.1.0', APP_BUILD = '2026-11-22 17:37';
-const CHANGELOG = [["2.1.0", "2026-11-22", "なまえを「かんじ れんしゅう」に へんこう。プライバシー・りようじょうけんの がめん、ニックネームと バックアップの ちゅういがき、セキュリティの つよか（CSPなど）。"], ["2.0.1", "2026-11-22", "ミッション たっせいの おしらせが がめんに のこる ことが あるのを なおした。おしらせは タッチでも けせる。"], ["2.0.0", "2026-11-22", "きせつの イベント スタート！ まいつき かわる きせつの ことば・ことわざ・イベント ミッション。ぜんぶ クリアで その つきだけの げんてい アイテム。"], ["1.9.0", "2026-11-22", "キャラが もっと かわいく！ うるうる・ハート・ほしの め、ひとみの いろ、かみの つやと キラキラ、ほっぺ、ティアラや うさみみ、ドレス、もちもの（ステッキなど）、かわいい ペット・はいけい・エフェクト。がめんの ふんいき（ゆめかわ・そらいろ）も えらべる。"], ["1.8.0", "2026-11-22", "かきとりテストで ことばの いみが さいしょから みられる（1026じ ぜんぶ）。ボタンを もんだいの すぐ したに ならべた。"], ["1.7.0", "2026-11-22", "キャラが パワーアップ（ふく・ペット・はいけい・エフェクト）。ポイントと ショップ、まいにちの ログインボーナス、きょうの ミッション、バッジ、きろく がめん。かんじごとの きろくも みられる。"], ["1.6.0", "2026-11-22", "あたらしい はんを じどうで たしかめて、ボタン ひとつで こうしん できる。ほぞんの ひょうじを わかりやすく。"], ["1.5.0", "2026-11-22", "バージョンを がめんの うえに ひょうじ。タップで こうしんりれき。"], ["1.4.0", "2026-11-22", "iPadの たて・よこ どちらでも スクロールなしで 1がめんに おさまる レイアウト。"], ["1.3.0", "2026-11-22", "きろくの バックアップ（ファイル・ひきつぎコード）。"], ["1.2.0", "2026-11-22", "じぶんの キャラ（アバター）を つくれる。★で こものが ふえる。"], ["1.1.0", "2026-11-22", "ペンの いろと ふとさを えらべる。"], ["1.0.0", "2026-11-22", "さいしょの はん。10きゅう〜5きゅうの かきじゅん・よみ・かきとりテスト。"]];
+const APP_VERSION = '2.1.1', APP_BUILD = '2026-11-23 09:45';
+const CHANGELOG = [["2.1.1", "2026-11-23", "はなまるを かわいく リニューアル（はなびらが ひらいて、うずまきと「よくできました」の リボン）。テストの ◎ も はなまるに。"], ["2.1.0", "2026-11-22", "なまえを「かんじ れんしゅう」に へんこう。プライバシー・りようじょうけんの がめん、ニックネームと バックアップの ちゅういがき、セキュリティの つよか（CSPなど）。"], ["2.0.1", "2026-11-22", "ミッション たっせいの おしらせが がめんに のこる ことが あるのを なおした。おしらせは タッチでも けせる。"], ["2.0.0", "2026-11-22", "きせつの イベント スタート！ まいつき かわる きせつの ことば・ことわざ・イベント ミッション。ぜんぶ クリアで その つきだけの げんてい アイテム。"], ["1.9.0", "2026-11-22", "キャラが もっと かわいく！ うるうる・ハート・ほしの め、ひとみの いろ、かみの つやと キラキラ、ほっぺ、ティアラや うさみみ、ドレス、もちもの（ステッキなど）、かわいい ペット・はいけい・エフェクト。がめんの ふんいき（ゆめかわ・そらいろ）も えらべる。"], ["1.8.0", "2026-11-22", "かきとりテストで ことばの いみが さいしょから みられる（1026じ ぜんぶ）。ボタンを もんだいの すぐ したに ならべた。"], ["1.7.0", "2026-11-22", "キャラが パワーアップ（ふく・ペット・はいけい・エフェクト）。ポイントと ショップ、まいにちの ログインボーナス、きょうの ミッション、バッジ、きろく がめん。かんじごとの きろくも みられる。"], ["1.6.0", "2026-11-22", "あたらしい はんを じどうで たしかめて、ボタン ひとつで こうしん できる。ほぞんの ひょうじを わかりやすく。"], ["1.5.0", "2026-11-22", "バージョンを がめんの うえに ひょうじ。タップで こうしんりれき。"], ["1.4.0", "2026-11-22", "iPadの たて・よこ どちらでも スクロールなしで 1がめんに おさまる レイアウト。"], ["1.3.0", "2026-11-22", "きろくの バックアップ（ファイル・ひきつぎコード）。"], ["1.2.0", "2026-11-22", "じぶんの キャラ（アバター）を つくれる。★で こものが ふえる。"], ["1.1.0", "2026-11-22", "ペンの いろと ふとさを えらべる。"], ["1.0.0", "2026-11-22", "さいしょの はん。10きゅう〜5きゅうの かきじゅん・よみ・かきとりテスト。"]];
 $('#verBtn').onclick = () => {
   const box = openOv();
   box.appendChild(el('div',{class:'msg',text:`バージョン ${APP_VERSION}`}));
@@ -1907,7 +1912,7 @@ function renderPractice(s, {k, mode, ctx}){
       const box = openOv();
       const top = el('div',{class:'ov-top'}); top.appendChild(el('div',{class:'ov-av hop',html:avatarSVG(AV,'cheer')})); top.appendChild(perfect ? hanamaru() : el('div',{class:'mark',style:'color:#20b26b',text:'○'})); box.appendChild(top);
       const nmx = AV.name ? esc(AV.name) + '、' : '';
-      box.appendChild(el('div',{class:'msg',html: perfect ? nmx + 'はなまる！ よく できました' : nmx + 'よく がんばったね！'}));
+      box.appendChild(el('div',{class:'msg',html: perfect ? nmx + 'ぜんぶ ただしく かけたね！' : nmx + 'よく がんばったね！'}));
       box.appendChild(el('div',{style:'color:#f5b301;font-size:30px',html:`${starStr(k)} <span class="gain">+${gain} 🪙</span>`}));
       const btns = el('div',{class:'btns'});
       if (trace){ const b = el('button',{class:'big-btn green',html:'✍️ つぎは じぶんで かく'}); b.onclick = () => go('practice',{k, mode:'free', ctx}, true); btns.appendChild(b); }
@@ -1998,7 +2003,7 @@ function renderTest(s, params){
     saveProg(); checkUnlock(); saveMeta();
     const box = openOv();
     const top = el('div',{class:'ov-top'}); top.appendChild(el('div',{class:'ov-av hop',html:avatarSVG(AV, r.mark === '×' ? 'think' : r.mark === '◎' ? 'cheer' : 'happy')}));
-    top.appendChild(el('div',{class:'mark',style:`color:${r.mark === '×' ? '#ef476f' : '#20b26b'}`,text:r.mark})); box.appendChild(top);
+    top.appendChild(r.mark === '◎' ? hanamaru({banner:false}) : el('div',{class:'mark',style:`color:${r.mark === '×' ? '#ef476f' : '#20b26b'}`,text:r.mark})); box.appendChild(top);
     box.appendChild(el('div',{class:'msg',html:esc(r.msg)}));
     box.appendChild(el('div',{style:'font-size:30px;margin-bottom:6px',html:`<ruby>${[...word].map(c => c === q.k ? `<span style="color:#ff7a2f">${c}</span>` : esc(c)).join('')}<rt style="font-size:15px">${esc(rd)}</rt></ruby>` + (mean ? `<div style="font-size:17px;line-height:1.5;margin:4px auto 6px;padding:6px 10px;border-radius:12px;background:#fff6df;color:#5a4500;max-width:440px">${esc(mean)}</div>` : '')}));
     const ksvg = kanjiSVG(d,{nums:true, width:4}); box.appendChild(ksvg); setTimeout(() => animateSVG(ksvg,{speed:1.5}), 150);
@@ -2042,14 +2047,41 @@ function renderTestEnd(s, {qs, res, label}){
 /* ===== オーバーレイ・演出 ===== */
 function openOv(){ const ov = $('#ov'); const box = $('#ovBox'); box.innerHTML = ''; ov.classList.add('on'); return box; }
 function closeOv(){ $('#ov').classList.remove('on'); }
-function hanamaru(){
-  const svg = sel('svg',{viewBox:'0 0 200 200',class:'hanamaru'});
-  let d = ''; const cx=100, cy=100;
-  for (let t=0;t<=Math.PI*2*3.2;t+=0.06){ const r = 18 + t*5.2; const x = cx + Math.cos(t)*r*0.9, y = cy + Math.sin(t)*r*0.85; d += (d ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1); }
-  let pet = ''; for (let i=0;i<14;i++){ const a = i/14*Math.PI*2; const r1 = 86, r2 = 98; const a2 = a + Math.PI/14;
-    pet += `M${(cx+Math.cos(a)*r1).toFixed(1)},${(cy+Math.sin(a)*r1).toFixed(1)} Q${(cx+Math.cos(a+Math.PI/28)*r2*1.08).toFixed(1)},${(cy+Math.sin(a+Math.PI/28)*r2*1.08).toFixed(1)} ${(cx+Math.cos(a2)*r1).toFixed(1)},${(cy+Math.sin(a2)*r1).toFixed(1)} `; }
-  [d, pet].forEach((pd, i) => { const p = sel('path',{d:pd}); svg.appendChild(p);
-    requestAnimationFrame(() => { const len = p.getTotalLength(); p.style.strokeDasharray = len + ' ' + (len+10); p.animate([{strokeDashoffset:len},{strokeDashoffset:0}],{duration:i?900:1000, delay:i?900:0, fill:'both', easing:'ease-out'}); }); });
+let hmSeq = 0;
+function hanamaru(opts = {}){
+  const banner = opts.banner !== false;
+  const W = 220, H = banner ? 236 : 204, cx = 110, cy = 100, id = 'hm' + (++hmSeq);
+  const svg = sel('svg',{viewBox:`0 0 ${W} ${H}`, class:'hanamaru' + (banner ? '' : ' small')});
+  const sp4 = (x, y, r, f) => `<path class="hm-tw" d="M${x},${y-r} Q${x+r*.2},${y-r*.2} ${x+r},${y} Q${x+r*.2},${y+r*.2} ${x},${y+r} Q${x-r*.2},${y+r*.2} ${x-r},${y} Q${x-r*.2},${y-r*.2} ${x},${y-r}Z" fill="${f}"/>`;
+  let sp = '';
+  for (let a = 0; a <= Math.PI * 2 * 2.25; a += 0.12){ const r = 4 + a * 2.15; const x = cx + Math.cos(a - Math.PI/2) * r * 1.04, y = cy + Math.sin(a - Math.PI/2) * r * .96; sp += (sp ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1); }
+  let s = `<defs>
+    <radialGradient id="${id}g"><stop offset="0" stop-color="#fff0f6"/><stop offset=".7" stop-color="#ffe0ee" stop-opacity=".9"/><stop offset="1" stop-color="#ffd6e7" stop-opacity="0"/></radialGradient>
+    <linearGradient id="${id}p" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffc9de"/><stop offset="1" stop-color="#ff6f9f"/></linearGradient>
+    <linearGradient id="${id}q" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe3ee"/><stop offset="1" stop-color="#ff96bd"/></linearGradient></defs>
+    <circle cx="${cx}" cy="${cy}" r="98" fill="url(#${id}g)"/>
+    <g class="hm-leaf"><path d="M${cx-24},${cy+62} Q${cx-66},${cy+74} ${cx-78},${cy+42} Q${cx-40},${cy+30} ${cx-24},${cy+62}Z" fill="#5cd08f" stroke="#fff" stroke-width="3"/><path d="M${cx-30},${cy+58} Q${cx-52},${cy+52} ${cx-68},${cy+46}" stroke="#3aa96d" stroke-width="2" fill="none"/>
+      <path d="M${cx+24},${cy+62} Q${cx+66},${cy+74} ${cx+78},${cy+42} Q${cx+40},${cy+30} ${cx+24},${cy+62}Z" fill="#5cd08f" stroke="#fff" stroke-width="3"/><path d="M${cx+30},${cy+58} Q${cx+52},${cy+52} ${cx+68},${cy+46}" stroke="#3aa96d" stroke-width="2" fill="none"/></g>`;
+  for (let i = 0; i < 10; i++) s += `<g transform="rotate(${i*36} ${cx} ${cy})"><ellipse class="hm-pt" cx="${cx}" cy="${cy-55}" rx="25" ry="33" fill="url(#${id}${i%2 ? 'q' : 'p'})" stroke="#fff" stroke-width="3.2"/><ellipse class="hm-pt" cx="${cx-7}" cy="${cy-70}" rx="5" ry="8" fill="#fff" opacity=".55"/></g>`;
+  s += `<circle class="hm-c" cx="${cx}" cy="${cy}" r="47" fill="#fffaf3" stroke="#ffc2d6" stroke-width="4"/>
+    <path class="hm-sp" d="${sp}" fill="none" stroke="#ef476f" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round"/>
+    ${sp4(24, 30, 10, '#ffd23f')}${sp4(198, 38, 8, '#ffd23f')}${sp4(206, 148, 7, '#fff')}${sp4(14, 140, 8, '#ffb3d1')}${sp4(186, 186 - (banner ? 0 : 20), 5, '#ffd23f')}`;
+  if (banner) s += `<g class="hm-bn"><path d="M12,198 L38,192 L38,228 L12,222 L22,210Z" fill="#e8577a"/><path d="M208,198 L182,192 L182,228 L208,222 L198,210Z" fill="#e8577a"/>
+    <rect x="30" y="186" width="160" height="38" rx="10" fill="#ff6f9f" stroke="#fff" stroke-width="3"/>
+    <text x="110" y="211.5" font-size="19" font-weight="bold" fill="#fff" text-anchor="middle" letter-spacing="1">よくできました</text></g>`;
+  svg.innerHTML = s;
+  requestAnimationFrame(() => {
+    try{
+      const E = 'cubic-bezier(.2,.9,.3,1.35)';
+      svg.querySelectorAll('.hm-pt').forEach((p, i) => p.animate([{transform:'scale(0)', opacity:0},{transform:'scale(1.15)', opacity:1, offset:.7},{transform:'scale(1)', opacity:1}], {duration:420, delay:Math.floor(i/2)*60, easing:E, fill:'both'}));
+      svg.querySelector('.hm-c').animate([{transform:'scale(0)'},{transform:'scale(1.12)', offset:.7},{transform:'scale(1)'}], {duration:420, delay:300, easing:E, fill:'both'});
+      svg.querySelector('.hm-leaf').animate([{opacity:0, transform:'translateY(14px)'},{opacity:1, transform:'none'}], {duration:400, delay:450, fill:'both'});
+      const p = svg.querySelector('.hm-sp'); const len = p.getTotalLength(); p.style.strokeDasharray = len + ' ' + (len + 10);
+      p.animate([{strokeDashoffset:len},{strokeDashoffset:0}], {duration:750, delay:620, easing:'ease-in-out', fill:'both'});
+      const bn = svg.querySelector('.hm-bn'); if (bn) bn.animate([{opacity:0, transform:'translateY(18px) scale(.9)'},{opacity:1, transform:'translateY(-3px) scale(1.04)', offset:.7},{opacity:1, transform:'none'}], {duration:450, delay:1250, easing:E, fill:'both'});
+      svg.animate([{transform:'rotate(0)'},{transform:'rotate(-5deg)'},{transform:'rotate(4deg)'},{transform:'rotate(0)'}], {duration:600, delay:1500, easing:'ease-in-out'});
+    }catch(e){}
+  });
   return svg;
 }
 function confetti(n=26){
