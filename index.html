@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-xvNb1yVDVVYt+AscKGQL0mxCmFwfVhrHMXm/H5sW0rM='; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; object-src 'none';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-1yAnBhLUUSOgnbpDqCVt3hvvQWK5gHEHZipPTeWqHEU='; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; object-src 'none';">
 <meta name="referrer" content="no-referrer">
 <title>かんじ れんしゅう は おひっこし しました</title>
 <style>
@@ -16,6 +16,8 @@ p{font-size:17px;line-height:1.7;margin:.6em 0}
 textarea{width:100%;box-sizing:border-box;font-size:12px;border-radius:10px;border:2px solid #eadcc6;padding:8px;display:none}
 .muted{font-size:13px;color:#7a7a88}
 .hide{display:none}
+hr{border:0;border-top:2px dashed #eadcc6;margin:18px 0 8px}
+.warn{background:#ef476f;color:#fff;box-shadow:0 4px 0 #b8304f}
 .url,.url2{color:#3a7bd5}
 .sum{background:#fff6e5;border-radius:14px;padding:10px;font-size:19px;margin:10px 0}
 ol{text-align:left;font-size:16px;line-height:1.8;padding-left:1.6em;margin:8px 0}
@@ -44,6 +46,12 @@ ol{text-align:left;font-size:16px;line-height:1.8;padding-left:1.6em;margin:8px 
   <button id="cp" class="btn sub hide">🔑 ひきつぎコードを コピー</button>
   <textarea id="code" rows="3" readonly></textarea>
   <p class="muted">ホームがめんの ふるい アイコンは、おひっこしが おわったら けして だいじょうぶ。</p>
+  <div id="del" class="hide">
+    <hr>
+    <p class="muted">あたらしい ページで「おひっこし かんりょう！」が でたら、この ページに のこっている ふるい きろくは けして だいじょうぶ。</p>
+    <button id="delBtn" class="btn sub">🧹 この ページの ふるい きろくを けす</button>
+  </div>
+  <p id="deleted" class="hide">✅ ふるい きろくを けしました。</p>
 </div>
 <script>
 (function(){
@@ -72,6 +80,16 @@ ol{text-align:left;font-size:16px;line-height:1.8;padding-left:1.6em;margin:8px 
       go.parentNode.insertBefore(cp, go); cp.classList.remove('sub'); go.classList.add('sub'); go.textContent = 'あたらしい ページを みる';
     }
   }
+  if (has) document.getElementById('del').classList.remove('hide');
+  var armed = false;
+  document.getElementById('delBtn').onclick = function(){
+    var b = this;
+    if (!armed){ armed = true; b.textContent = '⚠️ ほんとうに けす？（もういちど おす）'; b.classList.remove('sub'); b.classList.add('warn'); return; }
+    try{ Object.keys(localStorage).filter(function(k){ return /^kkr\./.test(k); }).forEach(function(k){ localStorage.removeItem(k); }); }catch(e){}
+    ['has','del','cp','code'].forEach(function(id){ var e = document.getElementById(id); if (e){ e.classList.add('hide'); e.style.display = 'none'; } });
+    document.getElementById('deleted').classList.remove('hide');
+    has = false;
+  };
   document.getElementById('go').onclick = function(){
     ready.then(function(){ location.href = has ? NEW + '#import=' + code : NEW; });
   };
