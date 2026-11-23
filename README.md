@@ -1,4 +1,10 @@
-# かんじ れんしゅう
+# かんじ れんしゅう（移転しました）
+
+このアプリは **https://kanji-renshu.github.io/** に移転しました（2026-11-23）。
+
+このリポジトリの公開ページ（https://jyz002xyz.github.io/kanji-renshu/）は、端末に残っている記録を新しいページへ引き継ぐための案内ページだけになっています。ソースと更新は https://github.com/kanji-renshu/kanji-renshu.github.io で行います。
+
+---
 
 小学校で習う1026字（漢字検定10級〜5級相当）の書き順・読み・かきとりを練習するアプリです。
 HTML 1枚（`index.html`）で動作し、iPad + Apple Pencil での練習に対応しています。
