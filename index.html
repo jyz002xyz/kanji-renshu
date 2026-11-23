@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="かんじ れんしゅう">
 <meta name="theme-color" content="#fff6e5">
 <title>かんじ れんしゅう</title>
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-eJ73+7d8XVRvfWbdvX8blLh+a67QlY3BYntcOx32tXo='; style-src 'unsafe-inline'; img-src data: blob:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-uy7p67UHQkkurbo7jSLb3TVug6QMk2rrgSz8dJdZW7U='; style-src 'unsafe-inline'; img-src data: blob:; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="no-referrer">
 <!--
   かんじ れんしゅう（小学校で習う1026字・漢字検定10級〜5級相当）
@@ -520,13 +520,15 @@ body[data-theme=sora] .big-btn.gray{box-shadow:0 5px 0 var(--line)}
 .av-opt.tall svg{width:60px;height:100px}
 .av-tabs{grid-template-columns:repeat(10,1fr)}
 @media (max-width:699px){.av-tabs{grid-template-columns:repeat(5,1fr)}}
+.av-opt.wide svg{width:86px;height:55px}
+.sw-auto{width:auto;padding:0 10px;border-radius:18px;background:#fff;font-size:12px;font-weight:bold;color:var(--sub)}
 </style>
 </head>
 <body>
 <div id="app">
   <header>
     <button class="hbtn" id="backBtn" aria-label="もどる">◀<span class="bt"> もどる</span></button>
-    <div class="htitle"><h1 id="title">かんじ れんしゅう</h1><button class="ver" id="verBtn" aria-label="バージョン">v2.2.0・2026-11-23 10:08</button></div>
+    <div class="htitle"><h1 id="title">かんじ れんしゅう</h1><button class="ver" id="verBtn" aria-label="バージョン">v2.3.0・2026-11-23 10:27</button></div>
     <button class="hbtn" id="soundBtn" aria-label="おと">🔊</button>
     <button class="hbtn" id="setBtn" aria-label="せってい">⚙️</button>
   </header>
@@ -695,7 +697,7 @@ function judge(u, r, tol){
 }
 
 /* ===== アバター ===== */
-const AV_DEFAULT = {pose:'stand', face:'round', skin:'#f7cfae', cheek:'normal', hair:'short', hairColor:'#2b211c', hairShine:'none', eyes:'round', eyeColor:'#2b2d42', mouth:'smile', outfit:'tshirt', clothes:'#3a9bff', bg:'#ffe8a3', acc:'none', item:'none', pet:'none', effect:'none', name:''};
+const AV_DEFAULT = {shoes:'auto', shoeColor:'', pose:'stand', face:'round', skin:'#f7cfae', cheek:'normal', hair:'short', hairColor:'#2b211c', hairShine:'none', eyes:'round', eyeColor:'#2b2d42', mouth:'smile', outfit:'tshirt', clothes:'#3a9bff', bg:'#ffe8a3', acc:'none', item:'none', pet:'none', effect:'none', name:''};
 let AV = store.get('kkr.avatar', null);
 let hasAV = !!AV;
 AV = Object.assign({}, AV_DEFAULT, AV || {});
@@ -719,9 +721,11 @@ const OUTFITS = [['tshirt','Tシャツ',0],['hoodie','パーカー',0],['jersey'
 const ACCS = [['none','なし',0],['glasses','めがね',0],['ribbon','リボン',0],['cap','ぼうし',0],['headphones','ヘッドホン',0],['star','ほしピン',0],
   ['santa','あかい ぼうし',-1],['heartclip','ハートピン',30],['flowerclip','はなピン',30],['bigribbon','おおきな リボン',60],['tiara','ティアラ',150],['bunny','うさみみ',100],['headband','はちまき',40],['flower','はなかんむり',60],['sunglasses','サングラス',80],['catears','ねこみみ',100],['wizard','まほうの ぼうし',120],['horns','ドラゴンの つの',120],['halo','てんしの わ',150],['crown','おうかん',200]];
 const PETS = [['none','なし',0],['chick','ひよこ',50],['hamster','ハムスター',60],['bunny','うさぎ',80],['bear','くま',80],['cat','ねこ',80],['dog','いぬ',80],['unicorn','ユニコーン',200],['robot','ロボ',150],['dragon','ドラゴン',200]];
+const SHOES = [['auto','おまかせ',0],['sneaker','スニーカー',0],['loafer','ローファー',0],['ribbon','リボンの くつ',30],['rainboots','ながぐつ',40],['geta','げた',40],['boots','ブーツ',50],['starsneaker','ほしの スニーカー',60],['slippers','うさぎ スリッパ',60],['glass','ガラスの くつ',150]];
+const SHOE_COLORS = ['#ff7a2f','#ef476f','#ff8fb1','#ffd23f','#3cc47c','#3a9bff','#9b7bff','#5a3a26','#2b2d42','#ffffff'];
 const ITEMS = [['none','なし',0],['kite','たこ',-1],['fukumame','ふくまめ',-1],['diploma','そつぎょうしょうしょ',-1],['koinobori','こいのぼり',-1],['umbrella','かさ',-1],['sasa','ささかざり',-1],['pumpkin','かぼちゃランタン',-1],['balloon','ふうせん',40],['icecream','ソフトクリーム',50],['bouquet','はなたば',60],['starwand','ほしの ステッキ',100],['heartwand','ハートの ステッキ',100]];
 const EFFECTS = [['none','なし',0],['momiji','もみじ',-1],['sparkle','キラキラ',80],['bubbles','しゃぼんだま',80],['petals','はなびら',80],['hearts','ハート',100],['rainbow','にじの わく',100],['aura','オーラ',120],['fire','ほのお',150]];
-const SHOP = {outfit:OUTFITS, acc:ACCS, pet:PETS, effect:EFFECTS, bg:BG_PATTERNS, item:ITEMS};
+const SHOP = {outfit:OUTFITS, acc:ACCS, pet:PETS, effect:EFFECTS, bg:BG_PATTERNS, item:ITEMS, shoes:SHOES};
 const priceOf = (key, val) => { const l = SHOP[key]; if (!l) return 0; const f = l.find(x => x[0] === val); return f ? f[2] : 0; };
 const owns = (key, val) => priceOf(key, val) === 0 || (META.owned || []).includes(key + ':' + val);
 const totalStars = () => DATA.reduce((a,d) => a + stars(d.k), 0);
@@ -844,7 +848,23 @@ function avatarSVG(a, expr='normal', vb='0 0 120 120', live=false, full=false){
     if (S.lo === 'pants') legs.forEach(g => { o += `<path d="${pl([g[0], g[1], mid(g[1], g[2], .82)])}" fill="none" stroke="${L}" stroke-width="11.5" stroke-linecap="round" stroke-linejoin="round"/>`; });
     if (S.lo === 'shorts') legs.forEach(g => { o += `<path d="${pl([g[0], mid(g[0], g[1], .55)])}" fill="none" stroke="${L}" stroke-width="12.5" stroke-linecap="round"/>`; });
     if (A.outfit === 'pajama') legs.forEach(g => { [.3,.6,.9].forEach(f => { const p = mid(g[0], g[1], f); o += `<circle cx="${p[0]}" cy="${p[1]}" r="1.4" fill="#fff"/>`; }); });
-    legs.forEach(g => { const f = g[2]; o += `<ellipse cx="${f[0]}" cy="${f[1] + 2}" rx="6.6" ry="3.9" fill="${S.sh}" stroke="${shade(S.sh === '#ffffff' ? '#dddddd' : S.sh, .8)}" stroke-width="1"/>`; });
+    const SHOE_DEF = {sneaker:'#ff7a2f', starsneaker:'#3a9bff', loafer:'#5a3a26', ribbon:'#ff8fb1', boots:'#8a5a2b', rainboots:'#ffd23f', geta:'#ef476f', glass:'#bfe6ff', slippers:'#ffffff'};
+    const shoe = (g, side) => {
+      const f = g[2], ty = A.shoes && A.shoes !== 'auto' ? A.shoes : null;
+      const c = ty ? (/^#[0-9a-f]{6}$/i.test(A.shoeColor) ? A.shoeColor : SHOE_DEF[ty]) : S.sh;
+      const dk2 = shade(c === '#ffffff' ? '#dddddd' : c, .78);
+      const base = (fill = c, st = dk2) => `<ellipse cx="${f[0]}" cy="${f[1] + 2}" rx="6.8" ry="4" fill="${fill}" stroke="${st}" stroke-width="1"/>`;
+      if (!ty) return base();
+      if (ty === 'sneaker' || ty === 'starsneaker') return base() + `<path d="M${f[0]-6.2},${f[1]+3.4} Q${f[0]},${f[1]+6.6} ${f[0]+6.2},${f[1]+3.4}" stroke="#fff" stroke-width="1.7" fill="none"/><path d="M${f[0]-2},${f[1]-.4} L${f[0]+1},${f[1]+.4} M${f[0]-2},${f[1]+1.4} L${f[0]+1},${f[1]+2.2}" stroke="#fff" stroke-width=".9"/>` + (ty === 'starsneaker' ? star(f[0] + side*2.6, f[1] + 2, 2.4, '#ffd23f') : '');
+      if (ty === 'loafer') return base() + `<path d="M${f[0]-3.2},${f[1]+.6} L${f[0]+3.2},${f[1]+.6}" stroke="${shade(c, 1.5)}" stroke-width="1.4"/>`;
+      if (ty === 'ribbon') return base() + `<path d="M${f[0]},${f[1]} L${f[0]-4},${f[1]-2.6} L${f[0]-4},${f[1]+2.6}Z M${f[0]},${f[1]} L${f[0]+4},${f[1]-2.6} L${f[0]+4},${f[1]+2.6}Z" fill="#ff5d9e"/><circle cx="${f[0]}" cy="${f[1]}" r="1.3" fill="#fff"/>`;
+      if (ty === 'boots' || ty === 'rainboots') return `<path d="${pl([mid(g[1], g[2], .3), g[2]])}" fill="none" stroke="${c}" stroke-width="11" stroke-linecap="round"/>` + base() + (ty === 'boots' ? `<path d="${pl([mid(g[1], g[2], .3), mid(g[1], g[2], .32)])}" stroke="${dk2}" stroke-width="12" stroke-linecap="round"/>` : `<path d="${pl([mid(g[1], g[2], .4), mid(g[1], g[2], .85)])}" stroke="#fff" stroke-width="1.8" stroke-linecap="round" opacity=".6"/>`);
+      if (ty === 'geta') return `<rect x="${f[0]-7}" y="${f[1]+1.6}" width="14" height="3.2" rx="1.2" fill="#d9a066"/><rect x="${f[0]-5.5}" y="${f[1]+4.6}" width="3" height="2.6" fill="#b07a4f"/><rect x="${f[0]+2.5}" y="${f[1]+4.6}" width="3" height="2.6" fill="#b07a4f"/><path d="M${f[0]-3.4},${f[1]+1.8} L${f[0]},${f[1]-1.2} L${f[0]+3.4},${f[1]+1.8}" stroke="${c}" stroke-width="2" fill="none" stroke-linecap="round"/>`;
+      if (ty === 'glass') return base('rgba(205,238,255,.8)', '#8ac4ef') + `<ellipse cx="${f[0] - 2}" cy="${f[1] + .8}" rx="2.2" ry="1" fill="#fff" opacity=".9"/>` + spark(f[0] + side*4, f[1] - 2, 2.2, '#fff8c4');
+      if (ty === 'slippers') return base() + `<ellipse cx="${f[0]-2.4}" cy="${f[1]-2.6}" rx="1.4" ry="3.2" fill="${c}" stroke="${dk2}" stroke-width=".7"/><ellipse cx="${f[0]+1.4}" cy="${f[1]-3}" rx="1.4" ry="3.2" fill="${c}" stroke="${dk2}" stroke-width=".7"/><circle cx="${f[0]-.5}" cy="${f[1]+1.6}" r=".9" fill="#ff7a9a"/>`;
+      return base();
+    };
+    legs.forEach((g, i) => { o += shoe(g, i ? 1 : -1); });
     if (S.lo === 'shorts' || S.lo === 'pants') o += `<path d="M42,128 L78,128 L79,142 L41,142Z" fill="${L}"/>`;
     // スカート
     const frillHem = (y0, x0, x1, c) => { let r = ''; for (let x = x0; x <= x1; x += 6) r += `<circle cx="${x}" cy="${y0}" r="3.6" fill="${c}"/>`; return r; };
@@ -1017,7 +1037,7 @@ function avatarSVG(a, expr='normal', vb='0 0 120 120', live=false, full=false){
   const GRIP = {balloon:[21,112], icecream:[20,112], bouquet:[20,112], starwand:[17,110], heartwand:[17,110], kite:[16,114], fukumame:[20,112], diploma:[20,104], koinobori:[10,110], umbrella:[22,112], sasa:[16,110], pumpkin:[21,93]};
   if (items && full){ if (FB.hold){ const g = GRIP[A.item] || [20,112]; outside += `<g transform="translate(${(FB.hold[0]-g[0]).toFixed(1)},${(FB.hold[1]-g[1]).toFixed(1)})"><g class="av-pet">${items}</g></g>`; } else outside += `<g transform="translate(2,72)"><g class="av-pet">${items}</g></g>`; }
   else if (items) outside += `<g class="av-pet">${items}</g>`;
-  return `<svg viewBox="${full ? '0 0 120 200' : vb}" class="av${live ? ' av-live' : ''}${full ? ' av-full' : ''}" xmlns="http://www.w3.org/2000/svg"><defs>${defs}</defs><g clip-path="url(#${id}c)">${bg}${behind}${back}${body}${ears}${head}${front}${shine}${cheeks}${eyes}${mouth}${acc}${sweat}</g>${outside}</svg>`;
+  return `<svg viewBox="${full ? (vb && vb !== '0 0 120 120' ? vb : '0 0 120 200') : vb}" class="av${live ? ' av-live' : ''}${full ? ' av-full' : ''}" xmlns="http://www.w3.org/2000/svg"><defs>${defs}</defs><g clip-path="url(#${id}c)">${bg}${behind}${back}${body}${ears}${head}${front}${shine}${cheeks}${eyes}${mouth}${acc}${sweat}</g>${outside}</svg>`;
 }
 function hop(node){ node.classList.remove('hop'); void node.offsetWidth; node.classList.add('hop'); }
 let lastTotal = 0;
@@ -1068,7 +1088,7 @@ function renderAvatar(s){
     list.forEach(item => {
       const [v, label] = item; const price = priceOf(key, v); const mine = owns(key, v);
       const b = el('button',{class:'av-opt' + (AV[key] === v ? ' on' : '') + (mine ? '' : ' locked')});
-      if (opts.full) b.classList.add('tall');
+      if (opts.full) b.classList.add(opts.wide ? 'wide' : 'tall');
       b.innerHTML = avatarSVG(Object.assign({}, AV, {[key]:v}), 'normal', opts.vb || '0 0 120 120', false, !!opts.full) + `<span>${mine ? esc(label) : price < 0 ? '🎁イベント' : '🪙' + price}</span>`;
       if (price < 0 && !mine) b.classList.add('evonly');
       b.onclick = () => mine ? set({[key]:v}) : price < 0 ? toast(`「${label}」は ${evMonthOf(key, v)}がつの イベントで もらえるよ`) : openBuy(key, v, label, price, () => { draw(); fill(); });
@@ -1089,7 +1109,7 @@ function renderAvatar(s){
     if (tab === 'face'){ thumbs('かおの かたち', FACES, 'face'); swatches('はだの いろ', SKINS, 'skin'); thumbs('ほっぺ', CHEEKS, 'cheek', {vb:FACEVB}); }
     if (tab === 'hair'){ thumbs('', HAIRS, 'hair'); swatches('かみの いろ', HAIR_COLORS, 'hairColor'); thumbs('かみの ひかり', HAIR_SHINES, 'hairShine', {vb:'14 0 92 70'}); }
     if (tab === 'eyes'){ thumbs('め', EYES, 'eyes', {vb:FACEVB}); swatches('ひとみの いろ', EYE_COLORS, 'eyeColor'); thumbs('くち', MOUTHS, 'mouth', {vb:FACEVB}); }
-    if (tab === 'outfit'){ thumbs('', OUTFITS, 'outfit', {full:true}); swatches('ふくの いろ', CLOTHES, 'clothes'); }
+    if (tab === 'outfit'){ thumbs('', OUTFITS, 'outfit', {full:true}); thumbs('くつ', SHOES, 'shoes', {full:true, vb:'24 152 72 46', wide:true}); swatches('くつの いろ', SHOE_COLORS, 'shoeColor'); { const g = panel.lastChild; const b = el('button',{class:'sw sw-auto' + (!AV.shoeColor ? ' on' : ''), text:'おまかせ'}); b.onclick = () => set({shoeColor:''}); g.insertBefore(b, g.firstChild); } swatches('ふくの いろ', CLOTHES, 'clothes'); }
     if (tab === 'acc') thumbs('', ACCS, 'acc');
     if (tab === 'pet') thumbs('', PETS, 'pet', {full:true});
     if (tab === 'item') thumbs('', ITEMS, 'item', {full:true});
@@ -1110,7 +1130,7 @@ function renderAvatar(s){
     const pick = (a, key) => { const ok = key ? a.filter(x => owns(key, x[0])) : a; return ok[Math.floor(Math.random()*ok.length)]; };
     const any = a => a[Math.floor(Math.random()*a.length)];
     Object.assign(AV, {face:any(FACES)[0], skin:any(SKINS), hair:any(HAIRS)[0], hairColor:any(HAIR_COLORS), eyes:any(EYES)[0], mouth:any(MOUTHS)[0],
-      outfit:pick(OUTFITS,'outfit')[0], clothes:any(CLOTHES), bg:any(BGS), acc:pick(ACCS,'acc')[0], pet:pick(PETS,'pet')[0], effect:pick(EFFECTS,'effect')[0], item:pick(ITEMS,'item')[0], eyeColor:any(EYE_COLORS), hairShine:any(HAIR_SHINES)[0], cheek:any(CHEEKS)[0], pose:any(POSES)[0]});
+      outfit:pick(OUTFITS,'outfit')[0], shoes:pick(SHOES,'shoes')[0], shoeColor:Math.random() < .5 ? '' : any(SHOE_COLORS), clothes:any(CLOTHES), bg:any(BGS), acc:pick(ACCS,'acc')[0], pet:pick(PETS,'pet')[0], effect:pick(EFFECTS,'effect')[0], item:pick(ITEMS,'item')[0], eyeColor:any(EYE_COLORS), hairShine:any(HAIR_SHINES)[0], cheek:any(CHEEKS)[0], pose:any(POSES)[0]});
     saveAV(); expr = 'happy'; draw(); hop(big); beep('ok'); fill();
   };
   ok.onclick = () => { saveAV(); progressChanged(); beep('win'); back(); };
@@ -1416,7 +1436,7 @@ function sanitizeAV(a){
   const ids = l => l.map(x => x[0]);
   return {
     face: pick(a.face, ids(FACES), AV_DEFAULT.face), skin: pick(a.skin, SKINS, AV_DEFAULT.skin), cheek: a.cheek === false ? 'none' : a.cheek === true ? 'normal' : pick(a.cheek, ids(CHEEKS), 'normal'),
-    pose: pick(a.pose, ids(POSES), 'stand'), hairShine: pick(a.hairShine, ids(HAIR_SHINES), 'none'), eyeColor: pick(a.eyeColor, EYE_COLORS, AV_DEFAULT.eyeColor), item: pick(a.item, ids(ITEMS), 'none'),
+    pose: pick(a.pose, ids(POSES), 'stand'), shoes: pick(a.shoes, ids(SHOES), 'auto'), shoeColor: pick(a.shoeColor, SHOE_COLORS.concat(['']), ''), hairShine: pick(a.hairShine, ids(HAIR_SHINES), 'none'), eyeColor: pick(a.eyeColor, EYE_COLORS, AV_DEFAULT.eyeColor), item: pick(a.item, ids(ITEMS), 'none'),
     hair: pick(a.hair, ids(HAIRS), AV_DEFAULT.hair), hairColor: pick(a.hairColor, HAIR_COLORS, AV_DEFAULT.hairColor),
     eyes: pick(a.eyes, ids(EYES), AV_DEFAULT.eyes), mouth: pick(a.mouth, ids(MOUTHS), AV_DEFAULT.mouth),
     outfit: pick(a.outfit, ids(OUTFITS), 'tshirt'), clothes: pick(a.clothes, CLOTHES, AV_DEFAULT.clothes),
@@ -1622,8 +1642,8 @@ $('#soundBtn').onclick = () => { settings.sound = !settings.sound; saveSet(); up
 function updSound(){ $('#soundBtn').textContent = settings.sound ? '🔊' : '🔇'; }
 $('#setBtn').onclick = openSettings;
 const setTitle = t => $('#title').textContent = t;
-const APP_VERSION = '2.2.0', APP_BUILD = '2026-11-23 10:08';
-const CHANGELOG = [["2.2.0", "2026-11-23", "キャラが ぜんしんに！ ポーズ（てを ふる・ピース・ハート・ジャンプなど 8しゅるい）、しょうじょまんがの め・ほそあご・ちょこんな くち、ばらの はいけい、ふくが 8しゅるい ふえた（プリンセス・アイドル・ブレザー・チアなど）。"], ["2.1.1", "2026-11-23", "はなまるを かわいく リニューアル（はなびらが ひらいて、うずまきと「よくできました」の リボン）。テストの ◎ も はなまるに。"], ["2.1.0", "2026-11-22", "なまえを「かんじ れんしゅう」に へんこう。プライバシー・りようじょうけんの がめん、ニックネームと バックアップの ちゅういがき、セキュリティの つよか（CSPなど）。"], ["2.0.1", "2026-11-22", "ミッション たっせいの おしらせが がめんに のこる ことが あるのを なおした。おしらせは タッチでも けせる。"], ["2.0.0", "2026-11-22", "きせつの イベント スタート！ まいつき かわる きせつの ことば・ことわざ・イベント ミッション。ぜんぶ クリアで その つきだけの げんてい アイテム。"], ["1.9.0", "2026-11-22", "キャラが もっと かわいく！ うるうる・ハート・ほしの め、ひとみの いろ、かみの つやと キラキラ、ほっぺ、ティアラや うさみみ、ドレス、もちもの（ステッキなど）、かわいい ペット・はいけい・エフェクト。がめんの ふんいき（ゆめかわ・そらいろ）も えらべる。"], ["1.8.0", "2026-11-22", "かきとりテストで ことばの いみが さいしょから みられる（1026じ ぜんぶ）。ボタンを もんだいの すぐ したに ならべた。"], ["1.7.0", "2026-11-22", "キャラが パワーアップ（ふく・ペット・はいけい・エフェクト）。ポイントと ショップ、まいにちの ログインボーナス、きょうの ミッション、バッジ、きろく がめん。かんじごとの きろくも みられる。"], ["1.6.0", "2026-11-22", "あたらしい はんを じどうで たしかめて、ボタン ひとつで こうしん できる。ほぞんの ひょうじを わかりやすく。"], ["1.5.0", "2026-11-22", "バージョンを がめんの うえに ひょうじ。タップで こうしんりれき。"], ["1.4.0", "2026-11-22", "iPadの たて・よこ どちらでも スクロールなしで 1がめんに おさまる レイアウト。"], ["1.3.0", "2026-11-22", "きろくの バックアップ（ファイル・ひきつぎコード）。"], ["1.2.0", "2026-11-22", "じぶんの キャラ（アバター）を つくれる。★で こものが ふえる。"], ["1.1.0", "2026-11-22", "ペンの いろと ふとさを えらべる。"], ["1.0.0", "2026-11-22", "さいしょの はん。10きゅう〜5きゅうの かきじゅん・よみ・かきとりテスト。"]];
+const APP_VERSION = '2.3.0', APP_BUILD = '2026-11-23 10:27';
+const CHANGELOG = [["2.3.0", "2026-11-23", "くつを はきかえられる！ スニーカー・ローファー・リボンの くつ・ブーツ・ながぐつ・げた・うさぎスリッパ・ガラスの くつなど 10しゅるいと、くつの いろ。"], ["2.2.0", "2026-11-23", "キャラが ぜんしんに！ ポーズ（てを ふる・ピース・ハート・ジャンプなど 8しゅるい）、しょうじょまんがの め・ほそあご・ちょこんな くち、ばらの はいけい、ふくが 8しゅるい ふえた（プリンセス・アイドル・ブレザー・チアなど）。"], ["2.1.1", "2026-11-23", "はなまるを かわいく リニューアル（はなびらが ひらいて、うずまきと「よくできました」の リボン）。テストの ◎ も はなまるに。"], ["2.1.0", "2026-11-22", "なまえを「かんじ れんしゅう」に へんこう。プライバシー・りようじょうけんの がめん、ニックネームと バックアップの ちゅういがき、セキュリティの つよか（CSPなど）。"], ["2.0.1", "2026-11-22", "ミッション たっせいの おしらせが がめんに のこる ことが あるのを なおした。おしらせは タッチでも けせる。"], ["2.0.0", "2026-11-22", "きせつの イベント スタート！ まいつき かわる きせつの ことば・ことわざ・イベント ミッション。ぜんぶ クリアで その つきだけの げんてい アイテム。"], ["1.9.0", "2026-11-22", "キャラが もっと かわいく！ うるうる・ハート・ほしの め、ひとみの いろ、かみの つやと キラキラ、ほっぺ、ティアラや うさみみ、ドレス、もちもの（ステッキなど）、かわいい ペット・はいけい・エフェクト。がめんの ふんいき（ゆめかわ・そらいろ）も えらべる。"], ["1.8.0", "2026-11-22", "かきとりテストで ことばの いみが さいしょから みられる（1026じ ぜんぶ）。ボタンを もんだいの すぐ したに ならべた。"], ["1.7.0", "2026-11-22", "キャラが パワーアップ（ふく・ペット・はいけい・エフェクト）。ポイントと ショップ、まいにちの ログインボーナス、きょうの ミッション、バッジ、きろく がめん。かんじごとの きろくも みられる。"], ["1.6.0", "2026-11-22", "あたらしい はんを じどうで たしかめて、ボタン ひとつで こうしん できる。ほぞんの ひょうじを わかりやすく。"], ["1.5.0", "2026-11-22", "バージョンを がめんの うえに ひょうじ。タップで こうしんりれき。"], ["1.4.0", "2026-11-22", "iPadの たて・よこ どちらでも スクロールなしで 1がめんに おさまる レイアウト。"], ["1.3.0", "2026-11-22", "きろくの バックアップ（ファイル・ひきつぎコード）。"], ["1.2.0", "2026-11-22", "じぶんの キャラ（アバター）を つくれる。★で こものが ふえる。"], ["1.1.0", "2026-11-22", "ペンの いろと ふとさを えらべる。"], ["1.0.0", "2026-11-22", "さいしょの はん。10きゅう〜5きゅうの かきじゅん・よみ・かきとりテスト。"]];
 $('#verBtn').onclick = () => {
   const box = openOv();
   box.appendChild(el('div',{class:'msg',text:`バージョン ${APP_VERSION}`}));
