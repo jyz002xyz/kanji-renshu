@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-1yAnBhLUUSOgnbpDqCVt3hvvQWK5gHEHZipPTeWqHEU='; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; object-src 'none';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-iejtM4LfqCjlIQPznMjwwsaUphTGZvE/jFkJs2lgyGA='; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'; object-src 'none';">
 <meta name="referrer" content="no-referrer">
 <title>かんじ れんしゅう は おひっこし しました</title>
 <style>
@@ -55,6 +55,8 @@ ol{text-align:left;font-size:16px;line-height:1.8;padding-left:1.6em;margin:8px 
 </div>
 <script>
 (function(){
+  var framed = false; try{ framed = window.top !== window.self; }catch(e){ framed = true; }
+  if (framed){ document.body.textContent = ''; return; }
   var NEW = 'https://kanji-renshu.github.io/';
   document.getElementById('url').textContent = NEW.replace(/^https?:\/\//,'').replace(/\/$/,''); document.querySelector('.url2').textContent = NEW.replace(/^https?:\/\//,'').replace(/\/$/,'');
   var get = function(k){ try{ var v = localStorage.getItem(k); return v ? JSON.parse(v) : null; }catch(e){ return null; } };
